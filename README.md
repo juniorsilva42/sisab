@@ -3,7 +3,7 @@
 #### Sistema Integrado gerador de Agência Bancária
 
 Disciplina: Linguagem de Programação e Algoritmos II    
-Docente: Prof. MSc. Geovânio      
+Docente: Prof. MSc. Giovane Sousa      
 Discentes: Ivanicio Junior, Ítallo Giullian e Luís Henrique
 
 ### Descrição
