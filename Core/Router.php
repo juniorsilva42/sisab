@@ -33,6 +33,10 @@ class Router {
         return false;
     }
 
+    protected function removeQueryStringVariables($url) {
+
+    }
+
     public function getRoutes () {
         return $this->routes;
     }
