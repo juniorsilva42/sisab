@@ -18,6 +18,10 @@ class Router {
         $this->routes[$route] = $params;
     }
 
+    public function match ($url) {
+
+    }
+
     public function getRoutes () {
         return $this->routes;
     }
