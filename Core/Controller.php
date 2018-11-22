@@ -23,4 +23,12 @@ abstract class Controller {
             throw new \Exception("O método {$method} não existe no contexto do Controller ".get_class($this));
         }
     }
+
+    protected function before () {
+
+    }
+
+    protected function after () {
+
+    }
 }
