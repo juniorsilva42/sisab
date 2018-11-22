@@ -10,7 +10,8 @@
   "autoload": {
     "psr-4": {
       "Core\\": "Core/",
-      "App\\": "App/"
+      "App\\": "App/",
+      "Config\\": "Config/"
     }
   },
   "require-dev": {

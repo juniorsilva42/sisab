@@ -13,8 +13,8 @@ class ContasModel extends \Core\Model {
     }
 
     public static function getAll () {
-
-        $stmt = self::$db_instance->query('SELECT DISTINCT id, nome, numero FROM contas');
+        $db = static::getConnection();
+        $stmt = $db->query('SELECT * FROM teste');
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

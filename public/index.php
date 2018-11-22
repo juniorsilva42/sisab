@@ -8,9 +8,6 @@ error_reporting(E_ALL);
  * */
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
 
-use App\Sisab\ContaEspecial;
+use App\Models\ContasModel;
 
-$cc = new ContaEspecial("123556");
-$cc->setSaldo(1500);
-
-echo $cc->extrato();
+print_r(ContasModel::getAll());

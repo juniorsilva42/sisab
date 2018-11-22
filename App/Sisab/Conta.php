@@ -8,6 +8,7 @@ abstract class Conta implements ContaInterface {
 
     protected $numero;
     protected $saldo;
+    protected $cliente;
 
     public function __construct($numeroConta) {
         $this->numero = $numeroConta;
