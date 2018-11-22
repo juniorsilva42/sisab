@@ -58,6 +58,10 @@ class Router {
         return $namespace;
     }
 
+    public function dispatch ($url) {
+
+    }
+
     public function getRoutes () {
         return $this->routes;
     }
