@@ -19,6 +19,6 @@ final class ContaCorrente extends Conta {
     }
 
     public function extrato() {
-        return "Numero da Conta Corrente: {$this->numero} - Saldo em conta: {$this->saldo}";
+        return "Conta Corrente: <br> Numero da Conta: {$this->numero} <br> Saldo: {$this->saldo}";
     }
 }

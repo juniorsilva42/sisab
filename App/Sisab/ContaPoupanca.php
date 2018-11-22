@@ -2,8 +2,6 @@
 
 namespace App\Sisab;
 
-use App\Sisab\Conta;
-
 final class ContaPoupanca extends Conta {
 
     private $rendimento;
@@ -14,6 +12,6 @@ final class ContaPoupanca extends Conta {
     }
 
     public function extrato() {
-
+        return "Conta Poupança: <br> Numero da Conta: {$this->numero} <br> Saldo: {$this->saldo}";
     }
 }

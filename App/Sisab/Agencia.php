@@ -4,11 +4,14 @@ namespace App\Sisab;
 
 class Agencia {
 
-    private $numero;
     private $nome;
+    private $numero;
+    private $endereco;
 
-    public function __construct (string $numero) {
+    public function __construct ($numero, $nome, $endereco) {
+        $this->nome = $nome;
         $this->numero = $numero;
+        $this->endereco = $endereco;
     }
 
     public function getNumero() {

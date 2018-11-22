@@ -8,9 +8,9 @@ final class ContaEspecial extends Conta {
 
     private $limite;
 
-    public function __construct($numConta) {
+    public function __construct($numConta, $limite = 1500) {
         parent::__construct($numConta);
-        $this->limite = 1500;
+        $this->limite = $limite;
     }
 
     public function ContaEspecial ($numConta, $valorLimite) {
@@ -18,7 +18,6 @@ final class ContaEspecial extends Conta {
         $limite = $valorLimite;
     }
 
-    public function extrato() {}
 
     public function saque ($valor) {
         if ($valor <= $this->saldo) {
@@ -30,5 +29,9 @@ final class ContaEspecial extends Conta {
         } else {
             throw new EstouroSaldoException("Saldo insuficiente");
         }
+    }
+
+    public function extrato() {
+        return "Conta Especial: <br> Numero da Conta: {$this->numero} <br> Saldo: {$this->saldo} <br> Limite: {$this->limite}";
     }
 }
