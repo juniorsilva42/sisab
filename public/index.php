@@ -1,3 +1,6 @@
 <?php
 
-echo dirname(__DIR__);
+// Composer autoload
+require dirname(__DIR__).'/vendor/autoload.php';
+
+error_reporting(E_ALL);
