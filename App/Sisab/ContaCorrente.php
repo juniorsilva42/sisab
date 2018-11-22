@@ -11,10 +11,11 @@ final class ContaCorrente extends Conta {
     }
 
     public function saque($valor) {
-        if ($valor < $this->saldo) {
+        if ($valor <= $this->saldo) {
             $this->saldo -= $valor;
+        } else {
+            throw new EstouroSaldoException("Saldo insuficiente");
         }
-        throw new EstouroSaldoException("Saldo insuficiente");
     }
 
     public function extrato() {

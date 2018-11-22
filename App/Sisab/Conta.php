@@ -27,11 +27,19 @@ abstract class Conta implements ContaInterface {
     }
 
     public function setSaldo($saldo) {
-        $this->nome = $saldo;
+        $this->saldo = $saldo;
     }
 
-    protected final function deposito($valor) {
+    public final function deposito ($valor) {
         $this->saldo += $valor;
+    }
+
+    public function saque($valor) {
+        if ($valor <= $this->saldo) {
+            $this->saldo -= $valor;
+        } else {
+            throw new EstouroSaldoException("Saldo insuficiente");
+        }
     }
 
     public function extrato () {
