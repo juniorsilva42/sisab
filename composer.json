@@ -1,0 +1,16 @@
+{
+  "name": "jsiilva1/agencia-bancaria",
+  "description": "Descrição padrão",
+  "license": "MIT",
+  "type": "project",
+  "require": {
+    "php": "^7.1.11",
+    "twig/twig": "~2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Core\\": "Core/",
+      "App\\": "App/"
+    }
+  }
+}
