@@ -30,7 +30,7 @@ abstract class Conta implements ContaInterface {
         $this->nome = $saldo;
     }
 
-    protected function deposito($valor) {
+    protected final function deposito($valor) {
         $this->saldo += $valor;
     }
 
