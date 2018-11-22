@@ -2,3 +2,4 @@
 /.idea
 .idea
 *.lock
+*.sql
