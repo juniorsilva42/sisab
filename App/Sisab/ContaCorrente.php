@@ -2,7 +2,6 @@
 
 namespace App\Sisab;
 
-use App\Sisab\Conta;
 use App\Sisab\Exception\EstouroSaldoException;
 
 final class ContaCorrente extends Conta {
@@ -15,7 +14,7 @@ final class ContaCorrente extends Conta {
         if ($valor < $this->saldo) {
             $this->saldo -= $valor;
         }
-        throw new EstouroSaldo("Saldo insuficiente");
+        throw new EstouroSaldoException("Saldo insuficiente");
     }
 
     public function extrato() {

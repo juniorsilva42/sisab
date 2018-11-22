@@ -2,9 +2,11 @@
 
 namespace App\Sisab\Exception;
 
-final class EstouroSaldoException extends \Exception {
+use Exception;
 
-    public function __construct(string $message = "", int $code = 0) {
-        parent::__construct($message, $code);
+final class EstouroSaldoException extends Exception {
+
+    public function __construct(string $message = "") {
+        parent::__construct($message);
     }
 }
