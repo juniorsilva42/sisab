@@ -11,11 +11,15 @@ abstract class Model {
 
         static $db = null;
 
-        if ($db == null) {
-            $uri = 'mysql:host=' . Database::DB_HOST . ';dbname=' . Database::DB_NAME . ';charset=utf8';
-            $db = new PDO($uri, Database::DB_PASSWORD);
+        try {
+            if ($db == null) {
+                $uri = 'mysql:host=' . Database::DB_HOST . ';dbname=' . Database::DB_NAME . ';charset=utf8';
+                $db = new PDO($uri, Database::DB_PASSWORD);
 
-            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            }
+        } catch (\PDOException $e) {
+            throw new \Exception("Erro ao tentar conectar-se à base de dados.");
         }
 
         return $db;

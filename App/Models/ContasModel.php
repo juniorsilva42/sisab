@@ -8,14 +8,13 @@ class ContasModel extends \Core\Model {
 
     private static $db_instance;
 
-    public function __construct() {
-        $this->db_instance = static::getConnection();
+    public function __construct () {
+        self::$db_instance = static::getConnection();
     }
 
-    public static function getAll () {
-        $db = static::getConnection();
-        $stmt = $db->query('SELECT * FROM teste');
+    static public function getAll () {
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = self::$db_instance->query("SELECT * FROM teste");
+        return $stmt->fetch(PDO::FETCH_ASSOC); // self::$db_instance
     }
 }

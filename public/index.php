@@ -10,4 +10,8 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR 
 
 use App\Models\ContasModel;
 
-print_r(ContasModel::getAll());
+$contasModel = new ContasModel();
+
+foreach($contasModel::getAll() as $key => $value) {
+    echo $key . "-" . $value . "<br/>";
+}
