@@ -13,8 +13,6 @@ class ContasModel extends \Core\Model {
 
         $stmt = $db->query("SELECT * FROM teste");
 
-        while ($stmt->fetchObject() != null) {
-            return $stmt->fetchObject();
-        }
+        return $stmt->fetchObject();
     }
 }

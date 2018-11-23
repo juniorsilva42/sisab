@@ -8,6 +8,13 @@ use Core\View;
 class ContasController extends \Core\Controller {
 
     public function indexAction () {
-        var_dump(ContasModel::getAll()->nome);
+        // var_dump(ContasModel::getAll()->nome);
+
+        $contas = ContasModel::getAll();
+
+        View::renderTemplate('Contas/index.html', [
+            'id' => $contas->id,
+            'nome' => $contas->nome
+        ]);
     }
 }
