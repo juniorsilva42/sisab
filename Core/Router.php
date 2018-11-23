@@ -66,6 +66,10 @@ class Router {
         return str_replace(' ', '', ucwords(str_replace('-', ' ', $string)));
     }
 
+    protected function convertToCamelCase($string) {
+        return lcfirst($this->convertToStudlyCaps($string));
+    }
+
     public function getRoutes () {
         return $this->routes;
     }
