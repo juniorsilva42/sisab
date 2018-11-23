@@ -11,13 +11,23 @@ final class HttpHelpers {
         }
     }
 
+    public static function getRestrictionId ($url) {
+
+        $brokedUrl = self::breakUrl($url);
+
+        if ($brokedUrl != null && isset($brokedUrl[1]))
+            return $brokedUrl[1];
+
+        return self::getRestrictionId($url);
+    }
+
+
     public static function getAction ($url) {
 
         $brokedUrl = self::breakUrl($url);
-        $url2 = [];
 
-        if ($brokedUrl != null)
-            return $brokedUrl[1];
+        if ($brokedUrl != null && isset($brokedUrl[0]))
+            return $brokedUrl[0];
 
         return self::getAction($url);
     }
