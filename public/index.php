@@ -12,5 +12,7 @@ $router = new Core\Router();
 
 // Adicionando as rotas
 $router->add('', ['controller' => 'HomeController', 'action' => 'index']);
+$router->add('test', ['controller' => 'OtherTestController', 'action' => 'index']);
+
 
 $router->dispatch($_SERVER['QUERY_STRING']);
