@@ -13,7 +13,6 @@ class ContasModel extends \Core\Model {
     }
 
     static public function getAll () {
-
         $stmt = self::$db_instance->query("SELECT * FROM teste");
         return $stmt->fetch(PDO::FETCH_ASSOC); // self::$db_instance
     }

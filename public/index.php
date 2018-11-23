@@ -11,4 +11,6 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR 
 $router = new Core\Router();
 
 // Adicionando as rotas
-$router->add('', ['controller' => 'Home', 'action' => 'index']);
+$router->add('', ['controller' => 'HomeController', 'action' => 'index']);
+
+$router->dispatch($_SERVER['QUERY_STRING']);
