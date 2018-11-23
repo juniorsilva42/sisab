@@ -6,7 +6,7 @@ final class ContasRoute {
 
     private static $prototype = [
         'contas' => [
-            'controller' => 'HomeController',
+            'controller' => 'ContasController',
             'action' => 'index'
         ],
         'contas/{id:([a-zA-Z0-9])\w+}' => [
