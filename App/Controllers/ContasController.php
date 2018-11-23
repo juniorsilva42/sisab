@@ -2,11 +2,12 @@
 
 namespace App\Controllers;
 
+use App\Models\ContasModel;
 use Core\View;
 
 class ContasController extends \Core\Controller {
 
     public function indexAction () {
-        View::renderTemplate('Contas/index.html');
+        var_dump(ContasModel::getAll()->nome);
     }
 }

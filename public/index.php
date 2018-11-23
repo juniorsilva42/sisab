@@ -15,3 +15,4 @@ $router->iterateRoutes(\App\Http\ClientesRoute::register());
 $router->iterateRoutes(\App\Http\ContasRoute::register());
 
 $router->dispatch($_SERVER['QUERY_STRING']);
+
