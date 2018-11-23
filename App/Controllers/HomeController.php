@@ -2,9 +2,11 @@
 
 namespace App\Controllers;
 
+use Core\View;
+
 class HomeController extends \Core\Controller {
 
     public function indexAction () {
-        echo 'IndexAction do HomeController funcionando!';
+        View::renderTemplate('Home/index.html');
     }
 }

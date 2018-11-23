@@ -6,7 +6,8 @@ class View {
 
     public static function render ($view, $args = []) {
         extract($args, EXTR_SKIP);
-        $file = dirname(__DIR__) . DIRECTORY_SEPARATOR . "App/Views/{$view}";
+        $file = dirname(__DIR__)
+            . DIRECTORY_SEPARATOR . 'App'.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR.$view;
 
         if (is_readable($file)):
             require $file;
@@ -15,12 +16,12 @@ class View {
         endif;
     }
 
-    public static function renderTemplate ($template, $args) {
+    public static function renderTemplate ($template, $args = []) {
         static $twig = null;
 
         if ($twig == null) {
-            $loader = new \Twig_Loader_Filesystem(dirname(__DIR__).DIRECTORY_SEPARATOR.'App/Views
-            ');
+            $loader = new \Twig_Loader_Filesystem(dirname(__DIR__)
+                .DIRECTORY_SEPARATOR.'App'.DIRECTORY_SEPARATOR.'Views');
             $twig = new \Twig_Environment($loader);
         }
 
