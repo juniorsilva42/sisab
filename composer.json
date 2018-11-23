@@ -11,7 +11,8 @@
     "psr-4": {
       "Core\\": "Core/",
       "App\\": "App/",
-      "Config\\": "Config/"
+      "Config\\": "Config/",
+      "Util\\": "Util/"
     }
   },
   "require-dev": {
