@@ -2,11 +2,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Titulo da Página{% endblock %}</title>
+    <title>{% block title %} Titulo da Página {% endblock %}</title>
 </head>
 <body>
 {% block body %}
-    <h1>asdasd</h1>
+    <p>Nome: {{ name }}</p>
+    <p>Mensagem: {{ message }}</p>
 {% endblock %}
 </body>
 </html>
