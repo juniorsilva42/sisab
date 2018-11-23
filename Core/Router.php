@@ -48,6 +48,10 @@ class Router {
         return $url;
     }
 
+    public function dispatch ($url) {
+
+    }
+
     protected function getNamespace () {
 
         $namespace = 'App\Controllers\\';
@@ -58,8 +62,8 @@ class Router {
         return $namespace;
     }
 
-    public function dispatch ($url) {
-
+    protected function convertToStudlyCaps($string) {
+        return str_replace(' ', '', ucwords(str_replace('-', ' ', $string)));
     }
 
     public function getRoutes () {
