@@ -8,10 +8,7 @@ error_reporting(E_ALL);
  * */
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
 
-use App\Models\ContasModel;
+$router = new Core\Router();
 
-$contasModel = new ContasModel();
-
-foreach($contasModel::getAll() as $key => $value) {
-    echo $key . "-" . $value . "<br/>";
-}
+// Adicionando as rotas
+$router->add('', ['controller' => 'Home', 'action' => 'index']);
