@@ -10,15 +10,13 @@ class Router {
     public function add($route, $params = []) {
 
         $route = preg_replace('/\//', '\\/', $route);
-
         $route = preg_replace('/\{([a-z]+)\}/', '(?P<\1>[a-z-]+)', $route);
-
         $route = preg_replace('/\{([a-z]+):([^\}]+)\}/', '(?P<\1>\2)', $route);
 
         $route = '/^' . $route . '$/i';
+
         $this->routes[$route] = $params;
     }
-
 
     public function getRoutes() {
         return $this->routes;
@@ -33,6 +31,7 @@ class Router {
                         $params[$key] = $match;
                     }
                 }
+
                 $this->params = $params;
                 return true;
             }
@@ -69,6 +68,16 @@ class Router {
             }
         } else {
             throw new \Exception('Rota não encontrada', 404);
+        }
+    }
+
+    public function iterateRoutes ($route_prototype) {
+
+        foreach ($route_prototype as $route => $routeBroked) {
+            $controller = (isset($routeBroked['controller']) ? $routeBroked['controller'] : null);
+            $action = (isset($routeBroked['action']) ? $routeBroked['action'] : null);
+
+            $this->add($route, ['controller' => $controller, 'action' => $action]);
         }
     }
 

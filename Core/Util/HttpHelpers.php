@@ -2,6 +2,8 @@
 
 namespace Core\Util;
 
+use Core\Router;
+
 final class HttpHelpers {
 
     public static function breakUrl ($url) {
@@ -31,4 +33,5 @@ final class HttpHelpers {
 
         return self::getAction($url);
     }
+
 }

@@ -17,11 +17,8 @@ final class PostsRoute {
         ]
     ];
 
-    public function __construct() {
-
+    public static function register () {
         $router = new Router();
-
-        // Adicionando as rotas
         $router->add('', ['controller' => 'HomeController', 'action' => 'index']);
     }
 }
