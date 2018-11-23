@@ -1,6 +1,6 @@
 <?php
 
-namespace Util;
+namespace Core\Util;
 
 final class HttpHelpers {
 
