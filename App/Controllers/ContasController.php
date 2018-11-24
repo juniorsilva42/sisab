@@ -11,9 +11,13 @@ class ContasController extends \Core\Controller {
 
         $contas = ContasModel::getAll();
 
-        View::renderTemplate('Contas/index', [
-            'id' => $contas->id,
-            'nome' => $contas->nome
-        ]);
+        foreach ($contas as $conta) {
+            $params = [
+                'id' => $conta->id,
+                'nome' => $conta->nome
+            ];
+
+            View::renderTemplate('Contas/index', $params);
+        }
     }
 }

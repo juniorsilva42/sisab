@@ -10,9 +10,19 @@ class ContasModel extends \Core\Model {
 
     static public function getAll () {
         $db = static::getConnection();
+        $sql = 'SELECT * FROM teste';
 
-        $stmt = $db->query("SELECT * FROM teste");
+        try {
+            $stmt = $db->prepare($sql, [PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL]);
+            $stmt->execute();
 
-        return $stmt->fetchObject();
+            $contas_list = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+            return $contas_list;
+
+            $stmt = null;
+        } catch (\PDOException $e) {
+            throw new \Exception("Erro model");
+        }
     }
 }
