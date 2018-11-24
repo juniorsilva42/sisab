@@ -8,6 +8,7 @@ class View {
 
     public static function render ($view, $args = []) {
         extract($args, EXTR_SKIP);
+
         $file = dirname(__DIR__)
             . DIRECTORY_SEPARATOR . 'App'.DIRECTORY_SEPARATOR.'Views'.DIRECTORY_SEPARATOR . $view . '.html';
 
