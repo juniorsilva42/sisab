@@ -10,8 +10,8 @@ final class ClientesRoute {
             'action' => 'index'
         ],
         'clientes/{id:([a-zA-Z0-9])\w+}' => [
-            'controller' => 'HomeController',
-            'action' => 'index'
+            'controller' => 'ClientesController',
+            'action' => 'getById'
         ]
     ];
 
