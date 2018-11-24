@@ -12,7 +12,7 @@ class ContasController extends \Core\Controller {
 
         $contas = ContasModel::getAll();
 
-        View::renderTemplate('Contas/index.html', [
+        View::renderTemplate('Contas/index', [
             'id' => $contas->id,
             'nome' => $contas->nome
         ]);
