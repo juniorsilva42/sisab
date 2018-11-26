@@ -5,8 +5,10 @@
 {% block body %}
 
 <h1>Contas</h1>
-<p>ID do cliente: {{ id }}</p>
-<p>Nome do cliente: {{ nome }}</p>
+
+{% for conta in contas %}
+    <p>{{ conta.id }} - {{ conta.nome }}</p>
+{% endfor %}
 
 {% endblock %}
 

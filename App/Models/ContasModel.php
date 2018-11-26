@@ -13,14 +13,13 @@ class ContasModel extends \Core\Model {
         $sql = 'SELECT * FROM teste';
 
         try {
-            $stmt = $db->prepare($sql, [PDO::ATTR_CURSOR, PDO::CURSOR_SCROLL]);
+            $stmt = $db->prepare($sql);
             $stmt->execute();
 
             $contas_list = $stmt->fetchAll(PDO::FETCH_OBJ);
 
             return $contas_list;
 
-            $stmt = null;
         } catch (\PDOException $e) {
             throw new \Exception("Erro model");
         }
