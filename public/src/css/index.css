@@ -3,7 +3,7 @@ body {
 }
 
 .container {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .menu-system-wrapper {
@@ -25,4 +25,14 @@ body {
 
 .menu-system-wrapper .card:hover {
     background-color: #f7fcf4;
+}
+
+#navbarNavDropdown {
+    float: right;
+    margin-left: 50%;
+
+}
+
+.h2-heading {
+    margin-bottom: 25px
 }

@@ -8,39 +8,46 @@
 
     <div class="container">
 
-        <h1>Lista de contas do sistema</h1>
-        <br>
+        <div class="row">
 
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Número</th>
-                <th scope="col">Saldo</th>
-                <th scope="col">Limite</th>
-                <th scope="col">Rendimento</th>
-                <th scope="col">Tipo</th>
-                <th scope="col">Número da Agência</th>
-            </tr>
-            </thead>
-            <tbody>
+            <h2 class="h2-heading">Lista de contas do sistema</h2>
 
-        {% for conta in contas %}
-            <tr>
-                <th scope="row">{{ conta.id }}</th>
-                <td>{{ conta.numero }}</td>
-                <td>{{ conta.saldo }}</td>
-                <td>{{ conta.limite }}</td>
-                <td>{{ conta.rendimento }}%</td>
-                <td>{{ conta.tipo }}</td>
-                <td>{{ conta.agencia_numero }}</td>
-            </tr>
-        {% endfor %}
+            <div class="col-12">
 
-            </tbody>
-        </table>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Número</th>
+                        <th scope="col">Saldo</th>
+                        <th scope="col">Limite</th>
+                        <th scope="col">Rendimento</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Número da Agência</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-    </div>
+                    {% for conta in contas %}
+                        <tr>
+                            <th scope="row">{{ conta.id }}</th>
+                            <td>{{ conta.numero }}</td>
+                            <td>{{ conta.saldo }}</td>
+                            <td>{{ conta.limite }}</td>
+                            <td>{{ conta.rendimento }}%</td>
+                            <td>{{ conta.tipo }}</td>
+                            <td>{{ conta.agencia_numero }}</td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+
+            </div> <!--col-sm-8-->
+
+        </div> <!--row-->
+
+    </div> <!--container-->
 
 {% endblock %}
 

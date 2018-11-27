@@ -22,8 +22,10 @@ class View {
     public static function renderTemplate ($template, $args = []) {
 
         static $twig = null;
+
         $template .= self::$defaultViewExtension;
-        $args = array_merge(['path' => 'http://localhost/sisab/'], $args);
+
+        $args = array_merge(['path' => 'http://localhost/sisab/', 'controller' => $_SERVER['QUERY_STRING']], $args);
 
         if ($twig == null) {
             $loader = new \Twig_Loader_Filesystem(dirname(__DIR__)
@@ -33,18 +35,5 @@ class View {
         }
 
         echo $twig->render($template, $args);
-    }
-
-    public static function getExtensionFromView ($fileExtensionWhiteList, $viewFile) {
-        $brokeTypeFileWhiteList = explode('|', $fileExtensionWhiteList);
-        $getFileExtensionFromFile = explode('.', $viewFile);
-
-        foreach ($brokeTypeFileWhiteList as $fileWhileList) {
-            if (in_array($fileWhileList, $getFileExtensionFromFile)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
