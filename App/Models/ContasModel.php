@@ -11,7 +11,7 @@ class ContasModel extends \Core\Model {
     static public function getAll () {
         $db = static::getConnection();
 
-        $sql = 'SELECT c.*, a.agencia_numero FROM contas c JOIN agencias a ON a.id = c.fk_id_agencia';
+        $sql = 'SELECT c.*, a.id_agencia, a.numero_agencia FROM contas c JOIN agencias a ON a.id_agencia = c.fk_id_agencia';
 
         try {
             $stmt = $db->prepare($sql);
