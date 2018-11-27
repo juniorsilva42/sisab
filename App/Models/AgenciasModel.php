@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Sisab\Agencia;
+use App\Sisab\Exception\ModelException;
 use PDO;
 
 class AgenciasModel extends \Core\Model {
@@ -71,7 +72,7 @@ class AgenciasModel extends \Core\Model {
 
             $db = null;
         } catch (\PDOException $e) {
-            throw new \Exception("Erro model");
+            throw new ModelException("Erro ao deletar o registro");
         }
     }
 }

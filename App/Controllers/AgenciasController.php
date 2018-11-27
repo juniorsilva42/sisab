@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Sisab\Agencia;
+use App\Sisab\Exception\ModelException;
 use Core\Util\HttpHelpers;
 use Core\View;
 
@@ -60,21 +61,28 @@ class AgenciasController extends \Core\Controller {
 
         $agencia_id = HttpHelpers::getId($_SERVER['QUERY_STRING']);
 
-        $state = AgenciasModel::delete($agencia_id);
+        try {
+            $state = AgenciasModel::delete($agencia_id);
 
-        // Controle as flash messages baseado no retorno do Model
-        if ($state):
-            $flashMessage = 'A agência foi deletada com sucesso!';
-            $alert = 'success';
-        else:
-            $flashMessage = 'Erro ao deletar a agência!';
+            // Controle as flash messages baseado no retorno do Model
+            if (isset($state)):
+                $flashMessage = 'A agência foi deletada com sucesso!';
+                $alert = 'success';
+            else:
+                $flashMessage = 'Erro ao deletar a agência!';
+                $alert = 'danger';
+            endif;
+
+            header('location: http://localhost/sisab/agencias/listar');
+        } catch (ModelException $e) {
+            $flashMessage = "Erro ao deletar a agência!";
             $alert = 'danger';
-        endif;
+        }
 
         // Renderiza o template implantando as variáveis de controle
         View::renderTemplate('Agencias/listar', [
             'flashMessage' => $flashMessage,
-            'flashAlert' => $alert,
+            'flashAlert' => isset($alert),
             'newMessage' => true
         ]);
     }
