@@ -1,9 +1,5 @@
-.card-style:hover {
-    text-decoration: none;
-}
-
-.card:hover {
-    background-color: #f7fcf4;
+.container {
+    margin-top: 15px;
 }
 
 .menu-system-wrapper {
@@ -13,8 +9,16 @@
     justify-content: center;
 }
 
-.card {
+.menu-system-wrapper .card {
     width: 100px;
     height: 120px;
     margin: 5px;
+}
+
+.menu-system-wrapper .card-style:hover {
+    text-decoration: none;
+}
+
+.menu-system-wrapper .card:hover {
+    background-color: #f7fcf4;
 }

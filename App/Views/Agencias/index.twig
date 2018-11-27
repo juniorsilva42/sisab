@@ -6,5 +6,76 @@
 
     {% include "partials/header.twig" %}
 
+    <div class="container">
+
+        <div class="card">
+            <div class="card-header">
+                Adicionar uma nova agência
+            </div>
+
+            <div class="card-body">
+                <form class="needs-validation" novalidate>
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3">
+                            <label for="validationCustom01">Nome da agência</label>
+                            <input type="text" class="form-control" id="validationCustom01" placeholder="Nome da Agência" required>
+                            <div class="valid-feedback">
+                                Parece bom!
+                            </div>
+                            <div class="invalid-feedback">
+                                Digite um nome para a agência
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="validationCustom02">Endereço</label>
+                            <input type="text" class="form-control" id="validationCustom02" placeholder="Endereço" required>
+                            <div class="valid-feedback">
+                                Parece Bom!
+                            </div>
+                            <div class="invalid-feedback">
+                                Digite um endereço para a agência
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="validationCustomUsername">Capacidade máxima de contas:</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="validationCustomUsername" placeholder="Capacidade Máxima" aria-describedby="inputGroupPrepend" required>
+                                <div class="invalid-feedback">
+                                    Digite uma capacidade máxima para a agencia
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Adicionar Agência</button>
+                </form>
+            </div>
+
+        </div>
+
+    </div> <!--container-->
+
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
 {% endblock %}
 
