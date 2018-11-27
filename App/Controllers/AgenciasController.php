@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Sisab\Agencia;
+use Core\Util\HttpHelpers;
 use Core\View;
 
 use App\Models\AgenciasModel;
@@ -36,7 +37,7 @@ class AgenciasController extends \Core\Controller {
         $agencia = new Agencia($numero, $nome, $endereco, $capacidade);
 
         // Seta o estado pro model, onde vai utilizar esses dados para inserir no banco de dados
-        $state = AgenciasModel::createNewAgency($agencia);
+        $state = AgenciasModel::create($agencia);
 
         // Controle as flash messages baseado no retorno do Model
         if ($state):
@@ -49,6 +50,29 @@ class AgenciasController extends \Core\Controller {
 
         // Renderiza o template implantando as variáveis de controle
         View::renderTemplate('Agencias/index', [
+            'flashMessage' => $flashMessage,
+            'flashAlert' => $alert,
+            'newMessage' => true
+        ]);
+    }
+
+    public function deletarAction () {
+
+        $agencia_id = HttpHelpers::getId($_SERVER['QUERY_STRING']);
+
+        $state = AgenciasModel::delete($agencia_id);
+
+        // Controle as flash messages baseado no retorno do Model
+        if ($state):
+            $flashMessage = 'A agência foi deletada com sucesso!';
+            $alert = 'success';
+        else:
+            $flashMessage = 'Erro ao deletar a agência!';
+            $alert = 'danger';
+        endif;
+
+        // Renderiza o template implantando as variáveis de controle
+        View::renderTemplate('Agencias/listar', [
             'flashMessage' => $flashMessage,
             'flashAlert' => $alert,
             'newMessage' => true

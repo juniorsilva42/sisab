@@ -28,7 +28,7 @@ class AgenciasModel extends \Core\Model {
         }
     }
 
-    static public function createNewAgency (Agencia $agencia) {
+    static public function create (Agencia $agencia) {
 
         $db = static::getConnection();
 
@@ -40,6 +40,28 @@ class AgenciasModel extends \Core\Model {
             $stmt->bindValue(2, $agencia->getNome(), PDO::PARAM_STR);
             $stmt->bindValue(3, $agencia->getEndereco(), PDO::PARAM_STR);
             $stmt->bindValue(4, $agencia->getCapacidade(), PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+
+            $db = null;
+        } catch (\PDOException $e) {
+            throw new \Exception("Erro model");
+        }
+    }
+
+    static public function delete ($agencia_id) {
+
+        $db = static::getConnection();
+
+        $sql = 'DELETE FROM agencias WHERE id_agencia = ?';
+
+        try {
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(1, $agencia_id, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
                 return true;

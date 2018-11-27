@@ -24,6 +24,7 @@
                         <th scope="col">Rendimento</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Número da Agência</th>
+                        <th scope="col">Operações</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -37,6 +38,19 @@
                             <td>{{ conta.rendimento }}%</td>
                             <td>{{ conta.tipo }}</td>
                             <td>{{ conta.numero_agencia }}</td>
+                            <td>
+                                <a href="" data-toggle="tooltip" data-placement="top" title="Editar">
+                                    <i class="fas fa-edit icon"></i>
+                                </a>
+                                <i class="fas icon">|</i>
+                                <a href="" data-toggle="tooltip" data-placement="top" title="Deletar">
+                                    <i class="fas fa-trash-alt icon"></i>
+                                </a>
+                                <i class="fas icon">|</i>
+                                <a href="" data-toggle="tooltip" data-placement="top" title="Sincronizar">
+                                    <i class="fas fa-sync-alt icon"></i>
+                                </a>
+                            </td>
                         </tr>
                     {% endfor %}
 

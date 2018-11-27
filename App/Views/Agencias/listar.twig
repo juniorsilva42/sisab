@@ -31,9 +31,17 @@
                     <td>{{ agencia.endereco }}</td>
                     <td>{{ agencia.capacidade }}</td>
                     <td>
-                        <a href="" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit icon"></i></a>
+                        <a href="" data-toggle="tooltip" data-placement="top" title="Editar">
+                            <i class="fas fa-edit icon"></i>
+                        </a>
                         <i class="fas icon">|</i>
-                        <a href="" data-toggle="tooltip" data-placement="top" title="Deletar"><i class="fas fa-trash-alt icon"></i></a>
+                        <a href="{{ path }}agencias/deletar/{{ agencia.id_agencia }}">
+                            <i class="fas fa-trash-alt icon" data-toggle="tooltip" data-placement="top" title="Deletar" data-id="{{ agencia.id_agencia }}"></i>
+                        </a>
+                        <i class="fas icon">|</i>
+                        <a href="" data-toggle="tooltip" data-placement="top" title="Sincronizar">
+                            <i class="fas fa-sync-alt icon"></i>
+                        </a>
                     </td>
                 </tr>
             {% endfor %}
@@ -41,7 +49,18 @@
             </tbody>
         </table>
 
+        {% if newMessage == true %}
+            <div class="alert alert-{{ flashAlert }}" role="alert">{{ flashMessage }}</div>
+        {% endif %}
+
     </div> <!--container-->
 
-{% endblock %}
 
+    <script>
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+    </script>
+
+
+{% endblock %}

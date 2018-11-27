@@ -34,4 +34,14 @@ final class HttpHelpers {
         return self::getAction($url);
     }
 
+    public static function getId ($url) {
+
+        $brokedUrl = self::breakUrl($url);
+
+        if ($brokedUrl != null && isset($brokedUrl[2]))
+            return $brokedUrl[2];
+
+        return self::getId($url);
+    }
+
 }
