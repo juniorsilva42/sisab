@@ -1,0 +1,53 @@
+{% extends "pagePrototype.twig" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Agência Bancária</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+    <div class="menu-system-wrapper">
+        <a href="clientes/" class="card-style">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Criar uma agencia</h5>
+                    <p class="card-text">Módulo para uma nova agencia</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="clientes/" class="card-style">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Adicionar um cliente</h5>
+                    <p class="card-text">Módulo para adicionar um nova conta a uma agencia</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="clientes/" class="card-style">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Listagem de sistema</h5>
+                    <p class="card-text">Módulo para ver contas ou agencias cadastradas</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+
+
+    <p>Nome: {{ name }}</p>
+    <p>Mensagem: {{ message }}</p>
+    <p>Assinatura: {{ signature }}</p>
+
+    <a href="clientes/{{ signature }}">
+        <button type="button" class="btn btn-primary">Clientes Rota</button>
+    </a>
+
+{% endblock %}
