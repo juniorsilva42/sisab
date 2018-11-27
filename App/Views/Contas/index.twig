@@ -8,46 +8,86 @@
 
     <div class="container">
 
-        <div class="row">
+        <div class="card">
 
-            <h2 class="h2-heading">Lista de contas do sistema</h2>
+            <div class="card-header">Adicionar uma nova conta</div>
 
-            <div class="col-12">
+            <div class="card-body">
 
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Número</th>
-                        <th scope="col">Saldo</th>
-                        <th scope="col">Limite</th>
-                        <th scope="col">Rendimento</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Número da Agência</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                <form class="needs-validation" novalidate method="GET">
+                    <div class="form-group row">
+                        <label for="inputEmail" class="col-sm-2 col-form-label">Número</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="numero" id="inputEmail" placeholder="Número da conta" required>
+                        </div>
+                        <div class="valid-feedback">
+                            Parece bom!
+                        </div>
+                        <div class="invalid-feedback">
+                            Digite um número válido
+                        </div>
+                    </div>
 
-                    {% for conta in contas %}
-                        <tr>
-                            <th scope="row">{{ conta.id }}</th>
-                            <td>{{ conta.numero }}</td>
-                            <td>{{ conta.saldo }}</td>
-                            <td>{{ conta.limite }}</td>
-                            <td>{{ conta.rendimento }}%</td>
-                            <td>{{ conta.tipo }}</td>
-                            <td>{{ conta.agencia_numero }}</td>
-                        </tr>
-                    {% endfor %}
+                    <div class="form-group row">
+                        <label for="inputLimite" class="col-sm-2 col-form-label">Limite</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="limite" id="inputLimite" placeholder="Limite" required>
+                        </div>
+                        <div class="valid-feedback">
+                            Parece Bom!
+                        </div>
+                        <div class="invalid-feedback">
+                            Digite um valor numérico válido
+                        </div>
+                    </div>
 
-                    </tbody>
-                </table>
+                    <div class="form-group row">
+                        <label for="inputRendimento" class="col-sm-2 col-form-label">Rendimento</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="rendimento" id="inputRendimento" placeholder="Rendimento" required>
+                        </div>
+                        <div class="valid-feedback">
+                            Parece Bom!
+                        </div>
+                        <div class="invalid-feedback">
+                            Digite um rendimento anual para a conta (valor que representa o percentual)
+                        </div>
+                    </div>
 
-            </div> <!--col-sm-8-->
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button class="btn btn-primary" type="submit">Adicionar Conta</button>
+                        </div>
+                    </div>
 
-        </div> <!--row-->
+                </form>
+
+            </div> <!--card-body-->
+
+        </div> <!--card-->
 
     </div> <!--container-->
+
+    <script>
+
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+
+                var forms = document.getElementsByClassName('needs-validation');
+
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
 
 {% endblock %}
 
