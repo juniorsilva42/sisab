@@ -23,10 +23,12 @@ class View {
 
         static $twig = null;
         $template .= self::$defaultViewExtension;
+        $args = array_merge(['path' => 'http://localhost/sisab/'], $args);
 
         if ($twig == null) {
             $loader = new \Twig_Loader_Filesystem(dirname(__DIR__)
                 .DIRECTORY_SEPARATOR.'App'.DIRECTORY_SEPARATOR . 'Views');
+
             $twig = new \Twig_Environment($loader);
         }
 
