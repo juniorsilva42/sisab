@@ -9,8 +9,6 @@ use App\Models\AgenciasModel;
 
 class AgenciasController extends \Core\Controller {
 
-    private static $flashMessage;
-
     public function indexAction () {
         View::renderTemplate('Agencias/index', [
             'signature' => hash("sha256", "902ef2c77423503981468993d8aec16f.id")
@@ -37,13 +35,17 @@ class AgenciasController extends \Core\Controller {
         $state = AgenciasModel::createNewAgency($agencia);
 
         if ($state) {
-            self::$flashMessage = 'A agência foi cadastrada com sucesso!';
+            $flashMessage = 'A agência foi cadastrada com sucesso!';
+            $alert = 'success';
         } else {
-            self::$flashMessage = 'Erro ao inserir a agência!';
+            $flashMessage = 'Erro ao inserir a agência!';
+            $alert = 'danger';
         }
 
         View::renderTemplate('Agencias/index', [
-            'flashMessage' => self::$flashMessage
+            'flashMessage' => $flashMessage,
+            'flashAlert' => $alert,
+            'newMessage' => true
         ]);
     }
 }

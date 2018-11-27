@@ -13,7 +13,6 @@
                 Adicionar uma nova agência
             </div>
 
-
             <div class="card-body">
 
                 <form class="needs-validation" novalidate method="GET" action="{{ path }}agencias/criar">
@@ -79,6 +78,10 @@
                     </div>
 
                 </form>
+
+                {% if newMessage == true %}
+                    <div class="alert alert-{{ flashAlert }}" role="alert">{{ flashMessage }}</div>
+                {% endif %}
 
             </div> <!--card-body-->
 
