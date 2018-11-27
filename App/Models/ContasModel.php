@@ -10,7 +10,8 @@ class ContasModel extends \Core\Model {
 
     static public function getAll () {
         $db = static::getConnection();
-        $sql = 'SELECT * FROM teste';
+
+        $sql = 'SELECT * FROM contas';
 
         try {
             $stmt = $db->prepare($sql);
@@ -20,6 +21,7 @@ class ContasModel extends \Core\Model {
 
             return $contas_list;
 
+            $db = null;
         } catch (\PDOException $e) {
             throw new \Exception("Erro model");
         }

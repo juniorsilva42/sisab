@@ -8,7 +8,11 @@
     <h1>Contas</h1>
 
     {% for conta in contas %}
-        <p>{{ conta.id }} - {{ conta.nome }}</p>
+        <p>Número: {{ conta.numero}}</p>
+        <p>Saldo: {{ conta.saldo }}</p>
+        <p>Limite: {{ conta.limite }}</p>
+        <p>Rendimento: {{ conta.rendimento }}</p>
+        <p>Tipo: {{ conta.tipo }}</p>
     {% endfor %}
 
 {% endblock %}
