@@ -18,6 +18,7 @@
                 <th scope="col">Nome</th>
                 <th scope="col">Endereço</th>
                 <th scope="col">Capacidade</th>
+                <th scope="col">Operações</th>
             </tr>
             </thead>
             <tbody>
@@ -29,6 +30,11 @@
                     <td>{{ agencia.nome }}</td>
                     <td>{{ agencia.endereco }}</td>
                     <td>{{ agencia.capacidade }}</td>
+                    <td>
+                        <a href="" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit icon"></i></a>
+                        <i class="fas icon">|</i>
+                        <a href="" data-toggle="tooltip" data-placement="top" title="Deletar"><i class="fas fa-trash-alt icon"></i></a>
+                    </td>
                 </tr>
             {% endfor %}
 
