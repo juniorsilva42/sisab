@@ -16,8 +16,9 @@ if (!file_exists($autoloadFile))
 $router = new Core\Router();
 
 $router->iterateRoutes(\App\Http\IndexRoute::register());
-$router->iterateRoutes(\App\Http\ClientesRoute::register());
 $router->iterateRoutes(\App\Http\ContasRoute::register());
+$router->iterateRoutes(\App\Http\AgenciasRoute::register());
+$router->iterateRoutes(\App\Http\ListagemRoute::register());
 
 $router->dispatch($_SERVER['QUERY_STRING']);
 
