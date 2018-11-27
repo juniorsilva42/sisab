@@ -16,7 +16,8 @@
 
             <div class="card-body">
 
-                <form class="needs-validation" novalidate method="GET">
+                <form class="needs-validation" novalidate method="GET" action="{{ path }}agencias/criar">
+
                     <div class="form-group row">
                         <label for="inputNome" class="col-sm-2 col-form-label">Nome da Agência</label>
                         <div class="col-sm-10">
@@ -27,6 +28,19 @@
                         </div>
                         <div class="invalid-feedback">
                             Digite um nome para a agência
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputNumero" class="col-sm-2 col-form-label">Número</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="numero" id="inputNumero" placeholder="Número da Agência" required>
+                        </div>
+                        <div class="valid-feedback">
+                            Parece bom!
+                        </div>
+                        <div class="invalid-feedback">
+                            Digite um número para a agência
                         </div>
                     </div>
 
@@ -55,6 +69,8 @@
                             Digite uma capacidade máxima para a agencia
                         </div>
                     </div>
+
+                    <input type="hidden" name="sign" value="{{ signature }}">
 
                     <div class="form-group row">
                         <div class="col-sm-10">
