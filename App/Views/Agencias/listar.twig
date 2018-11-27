@@ -1,0 +1,42 @@
+{% extends "pagePrototype.twig" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+    {% include "partials/header.twig" %}
+
+    <div class="container">
+
+        <h1>Agências cadastradas no Sistema</h1>
+        <br>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Número</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Endereço</th>
+                <th scope="col">Capacidade</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for agencia in agencias %}
+                <tr>
+                    <th scope="row">{{ agencia.id }}</th>
+                    <td>{{ agencia.agencia_numero }}</td>
+                    <td>{{ agencia.nome }}</td>
+                    <td>{{ agencia.endereco }}</td>
+                    <td>{{ agencia.capacidade }}</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div> <!--container-->
+
+{% endblock %}
+

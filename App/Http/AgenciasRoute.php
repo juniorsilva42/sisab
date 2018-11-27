@@ -8,6 +8,10 @@ final class AgenciasRoute {
         'agencias' => [
             'controller' => 'AgenciasController',
             'action' => 'index'
+        ],
+        'agencias/listar' => [
+            'controller' => 'AgenciasController',
+            'action' => 'listar'
         ]
     ];
 

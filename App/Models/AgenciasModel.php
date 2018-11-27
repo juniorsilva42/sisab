@@ -4,22 +4,22 @@ namespace App\Models;
 
 use PDO;
 
-class ContasModel extends \Core\Model {
+class AgenciasModel extends \Core\Model {
 
     private static $db_instance;
 
     static public function getAll () {
         $db = static::getConnection();
 
-        $sql = 'SELECT c.*, a.agencia_numero FROM contas c JOIN agencias a ON a.id = c.fk_id_agencia';
+        $sql = 'SELECT * FROM agencias';
 
         try {
             $stmt = $db->prepare($sql);
             $stmt->execute();
 
-            $contas_list = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $agenciasList = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-            return $contas_list;
+            return $agenciasList;
 
             $db = null;
         } catch (\PDOException $e) {

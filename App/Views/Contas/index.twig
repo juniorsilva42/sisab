@@ -5,15 +5,42 @@
 {% block body %}
 
     {% include "partials/header.twig" %}
-    <h1>Contas</h1>
 
-    {% for conta in contas %}
-        <p>Número: {{ conta.numero}}</p>
-        <p>Saldo: {{ conta.saldo }}</p>
-        <p>Limite: {{ conta.limite }}</p>
-        <p>Rendimento: {{ conta.rendimento }}</p>
-        <p>Tipo: {{ conta.tipo }}</p>
-    {% endfor %}
+    <div class="container">
+
+        <h1>Lista de contas do sistema</h1>
+        <br>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Número</th>
+                <th scope="col">Saldo</th>
+                <th scope="col">Limite</th>
+                <th scope="col">Rendimento</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Número da Agência</th>
+            </tr>
+            </thead>
+            <tbody>
+
+        {% for conta in contas %}
+            <tr>
+                <th scope="row">{{ conta.id }}</th>
+                <td>{{ conta.numero }}</td>
+                <td>{{ conta.saldo }}</td>
+                <td>{{ conta.limite }}</td>
+                <td>{{ conta.rendimento }}%</td>
+                <td>{{ conta.tipo }}</td>
+                <td>{{ conta.agencia_numero }}</td>
+            </tr>
+        {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
 
 {% endblock %}
 
