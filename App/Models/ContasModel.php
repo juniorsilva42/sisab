@@ -75,7 +75,7 @@ class ContasModel extends \Core\Model {
 
             // Atualiza o novo saldo
             $stmt2 = $db->prepare($sql2);
-            $stmt2->bindValue(1, $linha->saldo + $valor, PDO::PARAM_INT);
+            $stmt2->bindValue(1, ($linha->saldo >= 1) ? $linha->saldo + $valor : $valor, PDO::PARAM_INT);
             $stmt2->bindValue(2, $id_conta, PDO::PARAM_INT);
 
             if ($stmt2->execute()) {
@@ -104,15 +104,18 @@ class ContasModel extends \Core\Model {
             $stmt1->execute();
             $linha = $stmt1->fetch(PDO::FETCH_OBJ);
 
-            // Atualiza o novo saldo
-            $stmt2 = $db->prepare($sql2);
-            $stmt2->bindValue(1, $linha->saldo - $valor, PDO::PARAM_INT);
-            $stmt2->bindValue(2, $id_conta, PDO::PARAM_INT);
+            // Tem valor para saque
+            if ($linha->saldo >= $valor) {
+                // Atualiza o novo saldo
+                $stmt2 = $db->prepare($sql2);
+                $stmt2->bindValue(1, $linha->saldo - $valor, PDO::PARAM_INT);
+                $stmt2->bindValue(2, $id_conta, PDO::PARAM_INT);
 
-            if ($stmt2->execute()) {
-                return true;
-            } else {
-                return false;
+                if ($stmt2->execute()) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
 
             $db = null;

@@ -33,7 +33,7 @@ class AgenciasModel extends \Core\Model {
 
         $db = static::getConnection();
 
-        $sql = 'INSERT INTO agencias (numero_agencia, nome, endereco, capacidade) VALUES (?, ?, ?, ?)';
+        $sql = 'INSERT INTO agencias (numero_agencia, nome_agencia, endereco, capacidade) VALUES (?, ?, ?, ?)';
 
         try {
             $stmt = $db->prepare($sql);

@@ -16,8 +16,8 @@ class ListagemController extends \Core\Controller {
         View::renderTemplate('Listagem/index', [
             'agencias' => $agencias,
             'contas' => $contas,
-            'qtd_contas' => count($contas),
-            'qtd_agencias' => count($agencias)
+            'quantidade' => count($contas),
+            'quantidade_agencias' => count($agencias)
         ]);
     }
 }

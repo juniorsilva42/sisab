@@ -25,7 +25,7 @@
             {% for conta in contas %}
                 <tr>
                     <td>{{ conta.numero }}</td>
-                    <td>{{ conta.saldo }}</td>
+                    <td>R$ {{ conta.saldo }}</td>
 
                     {% if conta.limite != NULL or conta.limite != 0 %}
                         <td>{{ conta.limite }}</td>
@@ -52,8 +52,8 @@
                                 <i class="fas fa-trash-alt icon"></i>
                             </a>
                             <i class="fas icon">|</i>
-                            <a href="" data-toggle="tooltip" data-placement="top" title="Sincronizar">
-                                <i class="fas fa-sync-alt icon"></i>
+                            <a href="" data-toggle="tooltip" data-placement="top" title="Ver extrato">
+                                <i class="fas fa-file-alt icon"></i>
                             </a>
                         </td>
                     {% endif %}

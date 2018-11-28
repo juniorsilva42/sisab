@@ -16,14 +16,14 @@ class AgenciasController extends \Core\Controller {
             'signature' => hash("sha256", "902ef2c77423503981468993d8aec16f.id")
         ]);
     }
-
+    
     public function listarAction () {
 
         $agenciasList = AgenciasModel::getAll();
 
         View::renderTemplate('Agencias/listar', [
             'agencias' => $agenciasList,
-            'quantidade' => count($agenciasList)
+            'quantidade_agencias' => count($agenciasList)
         ]);
     }
 

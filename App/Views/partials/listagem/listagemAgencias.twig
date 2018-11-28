@@ -1,8 +1,8 @@
 <div class="col-12">
 
-    {% if quantidade == 0 %}
+    {% if quantidade_agencias == 0 %}
 
-        <h4 class="h2-heading text-align-center">Ainda não há nenhuma conta</h4>
+        <h4 class="h2-heading text-align-center">Ainda não há nenhuma agência</h4>
 
     {% else %}
 
@@ -11,7 +11,6 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">#</th>
                 <th scope="col">Número</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Endereço</th>
@@ -23,7 +22,6 @@
 
             {% for agencia in agencias %}
                 <tr>
-                    <th scope="row">{{ agencia.id_agencia }}</th>
                     <td>{{ agencia.numero_agencia }}</td>
                     <td>{{ agencia.nome_agencia }}</td>
                     <td>{{ agencia.endereco }}</td>
