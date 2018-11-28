@@ -61,7 +61,11 @@ class ContasController extends \Core\Controller {
     }
 
     public function depositoAction () {
-        View::renderTemplate('Contas/deposito/index');
+        $contas = ContasModel::getAll();
+
+        View::renderTemplate('Contas/deposito/index', [
+            'contas' => $contas
+        ]);
     }
 
     public function transferenciaAction () {
