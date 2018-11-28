@@ -24,7 +24,8 @@ class ContasController extends \Core\Controller {
        $contas = ContasModel::getAll();
 
         View::renderTemplate('Contas/listar', [
-            'contas' => $contas
+            'contas' => $contas,
+            'quantidade' => count($contas)
         ]);
     }
 

@@ -1,61 +1,69 @@
 <div class="col-12">
 
-    <h2 class="h2-heading">Contas cadastradas no Sistema</h2>
+    {% if quantidade == 0 %}
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Número</th>
-            <th scope="col">Saldo</th>
-            <th scope="col">Limite</th>
-            <th scope="col">Rendimento</th>
-            <th scope="col">Tipo</th>
-            <th scope="col">Agência</th>
-            {% if controller != 'listagem' %}<th scope="col">Operações</th>{% endif %}
-        </tr>
-        </thead>
-        <tbody>
+        <h4 class="h2-heading text-align-center">Ainda não há nenhuma conta</h4>
 
-        {% for conta in contas %}
+    {% else %}
+
+        <h2 class="h2-heading">Contas cadastradas no Sistema</h2>
+
+        <table class="table">
+            <thead>
             <tr>
-                <td>{{ conta.numero }}</td>
-                <td>{{ conta.saldo }}</td>
-
-                {% if conta.limite != NULL or conta.limite != 0 %}
-                    <td>{{ conta.limite }}</td>
-                {% else %}
-                    <td>Não se aplica</td>
-                {% endif %}
-
-                {% if conta.rendimento != NULL or conta.rendimento != 0 %}
-                    <td>{{ conta.rendimento }}%</td>
-                {% else %}
-                    <td>Não se aplica</td>
-                {% endif %}
-
-                <td>{{ conta.tipo }}</td>
-                <td>{{ conta.nome_agencia }}, {{ conta.numero_agencia }}</td>
-
-                {% if controller  != 'listagem' %}
-                <td>
-                    <a href="" data-toggle="tooltip" data-placement="top" title="Editar">
-                        <i class="fas fa-edit icon"></i>
-                    </a>
-                    <i class="fas icon">|</i>
-                    <a href="" data-toggle="tooltip" data-placement="top" title="Deletar">
-                        <i class="fas fa-trash-alt icon"></i>
-                    </a>
-                    <i class="fas icon">|</i>
-                    <a href="" data-toggle="tooltip" data-placement="top" title="Sincronizar">
-                        <i class="fas fa-sync-alt icon"></i>
-                    </a>
-                </td>
-                {% endif %}
-
+                <th scope="col">Número</th>
+                <th scope="col">Saldo</th>
+                <th scope="col">Limite</th>
+                <th scope="col">Rendimento</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Agência</th>
+                {% if controller != 'listagem' %}<th scope="col">Operações</th>{% endif %}
             </tr>
-        {% endfor %}
+            </thead>
+            <tbody>
 
-        </tbody>
-    </table>
+            {% for conta in contas %}
+                <tr>
+                    <td>{{ conta.numero }}</td>
+                    <td>{{ conta.saldo }}</td>
+
+                    {% if conta.limite != NULL or conta.limite != 0 %}
+                        <td>{{ conta.limite }}</td>
+                    {% else %}
+                        <td>Não se aplica</td>
+                    {% endif %}
+
+                    {% if conta.rendimento != NULL or conta.rendimento != 0 %}
+                        <td>{{ conta.rendimento }}%</td>
+                    {% else %}
+                        <td>Não se aplica</td>
+                    {% endif %}
+
+                    <td>{{ conta.tipo }}</td>
+                    <td>{{ conta.nome_agencia }}, {{ conta.numero_agencia }}</td>
+
+                    {% if controller  != 'listagem' %}
+                        <td>
+                            <a href="" data-toggle="tooltip" data-placement="top" title="Editar">
+                                <i class="fas fa-edit icon"></i>
+                            </a>
+                            <i class="fas icon">|</i>
+                            <a href="" data-toggle="tooltip" data-placement="top" title="Deletar">
+                                <i class="fas fa-trash-alt icon"></i>
+                            </a>
+                            <i class="fas icon">|</i>
+                            <a href="" data-toggle="tooltip" data-placement="top" title="Sincronizar">
+                                <i class="fas fa-sync-alt icon"></i>
+                            </a>
+                        </td>
+                    {% endif %}
+
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+    {% endif %}
 
 </div> <!--col-sm-8-->

@@ -22,7 +22,8 @@ class AgenciasController extends \Core\Controller {
         $agenciasList = AgenciasModel::getAll();
 
         View::renderTemplate('Agencias/listar', [
-            'agencias' => $agenciasList
+            'agencias' => $agenciasList,
+            'quantidade' => count($agenciasList)
         ]);
     }
 

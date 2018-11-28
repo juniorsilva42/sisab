@@ -40,3 +40,9 @@ body {
 .icon {
     color: #969a9b;
 }
+
+.text-align-center {
+    margin: 19% 35%;
+    position: relative;
+    float: left;
+}

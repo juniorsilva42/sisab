@@ -1,28 +1,19 @@
 {% extends "pagePrototype.twig" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Agências | SISAB{% endblock %}
 
 {% block body %}
 
     {% include "partials/header.twig" %}
 
     <div class="container">
-
         <div class="row">
-
             {% include "partials/listagem/listagemAgencias.twig" %}
 
             {% if newMessage == true %}
                 <div class="alert alert-{{ flashAlert }}" role="alert">{{ flashMessage }}</div>
             {% endif %}
-
         </div>
-
     </div> <!--container-->
 
-    <script>
-        $('#myModal').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })
-    </script>
 {% endblock %}
