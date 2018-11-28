@@ -6,9 +6,9 @@ final class ContaPoupanca extends Conta {
 
     private $rendimento;
 
-    public function __construct($numeroConta) {
-        parent::__construct($numeroConta);
-        $this->rendimento = 3.7;
+    public function __construct($numeroConta, $tipo, $rendimento = 5) {
+        parent::__construct($numeroConta, $tipo);
+        $this->rendimento = $rendimento;
     }
 
     public function extrato() {

@@ -8,10 +8,11 @@ abstract class Conta implements ContaInterface {
 
     protected $numero;
     protected $saldo;
-    protected $cliente;
+    protected $tipo;
 
-    public function __construct($numeroConta) {
+    public function __construct($numeroConta, $tipo) {
         $this->numero = $numeroConta;
+        $this->tipo = $tipo;
         $this->saldo = 0;
     }
 
@@ -46,4 +47,22 @@ abstract class Conta implements ContaInterface {
     public function extrato () {
         return "Extrato da conta";
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * @param mixed $tipo
+     */
+    public function setTipo($tipo): void
+    {
+        $this->tipo = $tipo;
+    }
+
+
 }

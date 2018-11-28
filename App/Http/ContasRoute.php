@@ -13,9 +13,9 @@ final class ContasRoute {
             'controller' => 'ContasController',
             'action' => 'listar'
         ],
-        'contas/{id:([a-zA-Z0-9])\w+}' => [
-            'controller' => 'HomeController',
-            'action' => 'index'
+        'contas/criar' => [
+            'controller' => 'ContasController',
+            'action' => 'criar'
         ]
     ];
 

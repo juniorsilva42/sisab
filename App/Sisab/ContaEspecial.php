@@ -8,8 +8,8 @@ final class ContaEspecial extends Conta {
 
     private $limite;
 
-    public function __construct($numConta, $limite = 1500) {
-        parent::__construct($numConta);
+    public function __construct($numConta, $tipo, $limite = 1500) {
+        parent::__construct($numConta, $tipo);
         $this->limite = $limite;
     }
 
