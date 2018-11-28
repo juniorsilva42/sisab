@@ -94,9 +94,11 @@ class ContasController extends \Core\Controller {
 
         switch ($operacao) {
             case 'deposito':
-
                 ContasModel::deposito($id_conta, $valor);
+                break;
 
+            case 'saque':
+                ContasModel::saque($id_conta, $valor);
                 break;
 
             default:

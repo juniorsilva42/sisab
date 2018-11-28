@@ -89,4 +89,35 @@ class ContasModel extends \Core\Model {
             throw new \Exception("Erro model");
         }
     }
+
+    static public function saque ($id_conta, $valor) {
+
+        $db = static::getConnection();
+
+        $sql1 = 'SELECT saldo FROM contas WHERE id = ? LIMIT 1';
+        $sql2 = 'UPDATE contas SET saldo = ? WHERE id = ?';
+
+        try {
+            // Obtem o saldo que está na conta no momento
+            $stmt1 = $db->prepare($sql1);
+            $stmt1->bindValue(1, $id_conta, PDO::PARAM_INT);
+            $stmt1->execute();
+            $linha = $stmt1->fetch(PDO::FETCH_OBJ);
+
+            // Atualiza o novo saldo
+            $stmt2 = $db->prepare($sql2);
+            $stmt2->bindValue(1, $linha->saldo - $valor, PDO::PARAM_INT);
+            $stmt2->bindValue(2, $id_conta, PDO::PARAM_INT);
+
+            if ($stmt2->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+
+            $db = null;
+        } catch (\PDOException $e) {
+            throw new \Exception("Erro model");
+        }
+    }
 }
