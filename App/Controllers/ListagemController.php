@@ -19,8 +19,7 @@ class ListagemController extends \Core\Controller {
             'agencias' => $agencias,
             'contas' => $contas,
             'quantidade' => count($contas),
-            'quantidade_agencias' => count($agencias),
-            'token' => hash('sha256', $timestamp)
+            'quantidade_agencias' => count($agencias)
         ]);
     }
 }

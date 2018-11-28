@@ -75,7 +75,6 @@ class AgenciasController extends \Core\Controller {
                 $alert = 'danger';
             endif;
 
-            header('location: http://localhost/sisab/agencias/listar');
         } catch (ModelException $e) {
             $flashMessage = "Erro ao deletar a agência!";
             $alert = 'danger';
@@ -84,8 +83,9 @@ class AgenciasController extends \Core\Controller {
         // Renderiza o template implantando as variáveis de controle
         View::renderTemplate('Agencias/listar', [
             'flashMessage' => $flashMessage,
-            'flashAlert' => isset($alert),
-            'newMessage' => true
+            'flashAlert' => $alert,
+            'newMessage' => true,
+            'quantidade_agencias' => 'undefined'
         ]);
     }
 
@@ -127,7 +127,7 @@ class AgenciasController extends \Core\Controller {
 
                 View::renderTemplate("Agencias/editar", [
                     'flashMessage' => $flashMessage,
-                    'flashAlert' => isset($alert),
+                    'flashAlert' => $alert,
                     'newMessage' => true
                 ]);
             } catch (ModelException $e) {}
