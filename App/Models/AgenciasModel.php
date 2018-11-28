@@ -100,8 +100,7 @@ class AgenciasModel extends \Core\Model {
     static public function editar (Agencia $agencia) {
 
         $db = static::getConnection();
-
-        $sql = 'UPDATE agencias SET numero_agencia = ? AND nome_agencia = ? AND endereco = ? AND capacidade = ? WHERE id_agencia = ?';
+        $sql = 'UPDATE agencias SET numero_agencia = ?, nome_agencia = ?, endereco = ?, capacidade = ? WHERE id_agencia = ?';
 
         try {
             $stmt = $db->prepare($sql);
@@ -122,4 +121,5 @@ class AgenciasModel extends \Core\Model {
             throw new ModelException("Erro ao atualizar o registro");
         }
     }
+
 }

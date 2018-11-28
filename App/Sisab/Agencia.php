@@ -10,7 +10,7 @@ class Agencia {
     private $endereco;
     private $capacidade;
 
-    public function __construct ($numero, $nome, $endereco, $capacidade, $id = null) {
+    public function __construct ($numero, $nome, $endereco, $capacidade, $id = 0) {
         $this->nome = $nome;
         $this->numero = $numero;
         $this->endereco = $endereco;

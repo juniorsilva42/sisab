@@ -100,15 +100,15 @@ class AgenciasController extends \Core\Controller {
 
         $sign = (isset($_REQUEST['sign'])) ? $_REQUEST['sign'] : null;
 
-        View::renderTemplate("Agencias/editar", [
-            'id_agencia' => $id_agencia,
-            'nome_agencia' => $nome_agencia,
-            'numero_agencia' => $numero,
-            'endereco' => $endereco,
-            'capacidade' => $capacidade
-        ]);
-
-        if (isset($sign) && $sign == 'do') {
+        if (!isset($sign) || $sign != 'do') {
+            View::renderTemplate("Agencias/editar", [
+                'id_agencia' => $id_agencia,
+                'nome_agencia' => $nome_agencia,
+                'numero_agencia' => $numero,
+                'endereco' => $endereco,
+                'capacidade' => $capacidade
+            ]);
+        } else {
 
             try {
                 // Atualiza o objeto com os novos dados atualizados (ou não)
@@ -131,6 +131,7 @@ class AgenciasController extends \Core\Controller {
                     'newMessage' => true
                 ]);
             } catch (ModelException $e) {}
+
         }
     }
 }
