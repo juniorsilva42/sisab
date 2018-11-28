@@ -7,6 +7,8 @@ use Core\View;
 use App\Models\ContasModel;
 use App\Models\AgenciasModel;
 
+use DateTime;
+
 class ListagemController extends \Core\Controller {
 
     public function indexAction () {
@@ -17,7 +19,8 @@ class ListagemController extends \Core\Controller {
             'agencias' => $agencias,
             'contas' => $contas,
             'quantidade' => count($contas),
-            'quantidade_agencias' => count($agencias)
+            'quantidade_agencias' => count($agencias),
+            'token' => hash('sha256', $timestamp)
         ]);
     }
 }

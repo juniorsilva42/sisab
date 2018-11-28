@@ -73,7 +73,7 @@
                             <select name="agencia" class="form-control custom-select" id="selectAgencias" required>
                                 <option selected>Selecione a agência...</option>
                                 {% for agencia in agencias %}
-                                    <option value="{{ agencia.id_agencia }}">{{ agencia.nome }} {{ agencia.numero_agencia }}, {{ agencia.endereco }}</option>
+                                    <option value="{{ agencia.id_agencia }}">{{ agencia.nome_agencia }} {{ agencia.numero_agencia }}, {{ agencia.endereco }}</option>
                                 {% endfor %}
                             </select>
                         </div>

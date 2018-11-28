@@ -8,6 +8,7 @@ use Core\Util\HttpHelpers;
 use Core\View;
 
 use App\Models\AgenciasModel;
+use DateTime;
 
 class AgenciasController extends \Core\Controller {
 
@@ -30,10 +31,10 @@ class AgenciasController extends \Core\Controller {
     public function criarAction () {
 
         // Obtem os dados do formulário pela Query String do Request
-        $nome = ($_REQUEST['nome']) ? $_REQUEST['nome'] : 'Agência Bradesco Sem nome';
-        $numero = ($_REQUEST['numero']) ? $_REQUEST['numero'] : 'Agência Bradesco Sem nome';
-        $endereco = ($_REQUEST['endereco']) ? $_REQUEST['endereco'] : 'Endereço Padrão';
-        $capacidade = ($_REQUEST['capacidade']) ? $_REQUEST['capacidade'] : 500;
+        $nome = (isset($_REQUEST['nome'])) ? $_REQUEST['nome'] : 'Agência Bradesco Sem nome';
+        $numero = (isset($_REQUEST['numero'])) ? $_REQUEST['numero'] : 'Agência Bradesco Sem nome';
+        $endereco = (isset($_REQUEST['endereco'])) ? $_REQUEST['endereco'] : 'Endereço Padrão';
+        $capacidade = (isset($_REQUEST['capacidade'])) ? $_REQUEST['capacidade'] : 500;
 
         // Povoa o objeto pelos dados obtidos
         $agencia = new Agencia($numero, $nome, $endereco, $capacidade);
@@ -86,5 +87,50 @@ class AgenciasController extends \Core\Controller {
             'flashAlert' => isset($alert),
             'newMessage' => true
         ]);
+    }
+
+    public function editar () {
+
+        // Obtem os dados do formulário pela Query String do Request
+        $id_agencia = (isset($_REQUEST['id'])) ? $_REQUEST['id'] : null;
+        $nome_agencia = (isset($_REQUEST['nome'])) ? $_REQUEST['nome'] : null;
+        $numero = (isset($_REQUEST['numero'])) ? $_REQUEST['numero'] : null;
+        $endereco = (isset($_REQUEST['endereco'])) ? $_REQUEST['endereco'] : null;
+        $capacidade = (isset($_REQUEST['capacidade'])) ? $_REQUEST['capacidade'] : null;
+
+        $sign = (isset($_REQUEST['sign'])) ? $_REQUEST['sign'] : null;
+
+        View::renderTemplate("Agencias/editar", [
+            'id_agencia' => $id_agencia,
+            'nome_agencia' => $nome_agencia,
+            'numero_agencia' => $numero,
+            'endereco' => $endereco,
+            'capacidade' => $capacidade
+        ]);
+
+        if (isset($sign) && $sign == 'do') {
+
+            try {
+                // Atualiza o objeto com os novos dados atualizados (ou não)
+                $agencia = new Agencia($numero, $nome_agencia, $endereco, $capacidade, $id_agencia);
+
+                $state = AgenciasModel::editar($agencia);
+
+                // Controle as flash messages baseado no retorno do Model
+                if ($state):
+                    $flashMessage = 'A agência foi editada com sucesso!';
+                    $alert = 'success';
+                else:
+                    $flashMessage = 'Erro ao editar a agência!';
+                    $alert = 'danger';
+                endif;
+
+                View::renderTemplate("Agencias/editar", [
+                    'flashMessage' => $flashMessage,
+                    'flashAlert' => isset($alert),
+                    'newMessage' => true
+                ]);
+            } catch (ModelException $e) {}
+        }
     }
 }

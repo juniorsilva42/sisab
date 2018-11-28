@@ -28,7 +28,7 @@
                     <td>{{ agencia.capacidade }}</td>
                     {% if controller  != 'listagem' %}
                     <td>
-                        <a href="" data-toggle="tooltip" data-placement="top" title="Editar">
+                        <a href="{{ path }}agencias/editar?nome={{ agencia.nome_agencia }}&numero={{ agencia.numero_agencia }}&id={{ agencia.id_agencia }}&endereco={{ agencia.endereco }}&capacidade={{ agencia.capacidade }}" data-toggle="tooltip" data-placement="top" title="Editar">
                             <i class="fas fa-edit icon"></i>
                         </a>
                         <i class="fas icon">|</i>

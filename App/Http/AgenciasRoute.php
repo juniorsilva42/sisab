@@ -20,6 +20,10 @@ final class AgenciasRoute {
         'agencias/deletar/{id:([0-9]+)}' => [
             'controller' => 'AgenciasController',
             'action' => 'deletar'
+        ],
+        'agencias/editar' => [
+            'controller' => 'AgenciasController',
+            'action' => 'editar'
         ]
     ];
 
