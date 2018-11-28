@@ -16,6 +16,18 @@ final class ContasRoute {
         'contas/criar' => [
             'controller' => 'ContasController',
             'action' => 'criar'
+        ],
+        'contas/deposito' => [
+            'controller' => 'ContasController',
+            'action' => 'deposito'
+        ],
+        'contas/transferencia' => [
+            'controller' => 'ContasController',
+            'action' => 'transferencia'
+        ],
+        'contas/saque' => [
+            'controller' => 'ContasController',
+            'action' => 'saque'
         ]
     ];
 

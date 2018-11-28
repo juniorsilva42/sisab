@@ -59,4 +59,16 @@ class ContasController extends \Core\Controller {
         // Seta o estado pro model, onde vai utilizar esses dados para inserir no banco de dados
         $state = ContasModel::create($conta);
     }
+
+    public function depositoAction () {
+        View::renderTemplate('Contas/deposito/index');
+    }
+
+    public function transferenciaAction () {
+        View::renderTemplate('Contas/transferencia/index');
+    }
+
+    public function saqueAction () {
+        View::renderTemplate('Contas/saque/index');
+    }
 }
