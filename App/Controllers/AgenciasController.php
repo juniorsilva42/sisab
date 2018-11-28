@@ -65,7 +65,7 @@ class AgenciasController extends \Core\Controller {
             $state = AgenciasModel::delete($agencia_id);
 
             // Controle as flash messages baseado no retorno do Model
-            if (isset($state)):
+            if ($state):
                 $flashMessage = 'A agência foi deletada com sucesso!';
                 $alert = 'success';
             else:

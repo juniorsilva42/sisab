@@ -7,60 +7,9 @@
     {% include "partials/header.twig" %}
 
     <div class="container">
-
         <div class="row">
-
-            <h2 class="h2-heading">Lista de contas do sistema</h2>
-
-            <div class="col-12">
-
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Número</th>
-                        <th scope="col">Saldo</th>
-                        <th scope="col">Limite</th>
-                        <th scope="col">Rendimento</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Número da Agência</th>
-                        <th scope="col">Operações</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    {% for conta in contas %}
-                        <tr>
-                            <th scope="row">{{ conta.id }}</th>
-                            <td>{{ conta.numero }}</td>
-                            <td>{{ conta.saldo }}</td>
-                            <td>{{ conta.limite }}</td>
-                            <td>{{ conta.rendimento }}%</td>
-                            <td>{{ conta.tipo }}</td>
-                            <td>{{ conta.numero_agencia }}</td>
-                            <td>
-                                <a href="" data-toggle="tooltip" data-placement="top" title="Editar">
-                                    <i class="fas fa-edit icon"></i>
-                                </a>
-                                <i class="fas icon">|</i>
-                                <a href="" data-toggle="tooltip" data-placement="top" title="Deletar">
-                                    <i class="fas fa-trash-alt icon"></i>
-                                </a>
-                                <i class="fas icon">|</i>
-                                <a href="" data-toggle="tooltip" data-placement="top" title="Sincronizar">
-                                    <i class="fas fa-sync-alt icon"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-
-                    </tbody>
-                </table>
-
-            </div> <!--col-sm-8-->
-
+            {% include "partials/listagem/listagemContas.twig" %}
         </div> <!--row-->
-
     </div>
 
 {% endblock %}

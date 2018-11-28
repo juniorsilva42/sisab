@@ -8,59 +8,21 @@
 
     <div class="container">
 
-        <h2 class="h2-heading">Agências cadastradas no Sistema</h2>
+        <div class="row">
 
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Número</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Endereço</th>
-                <th scope="col">Capacidade</th>
-                <th scope="col">Operações</th>
-            </tr>
-            </thead>
-            <tbody>
+            {% include "partials/listagem/listagemAgencias.twig" %}
 
-            {% for agencia in agencias %}
-                <tr>
-                    <th scope="row">{{ agencia.id_agencia }}</th>
-                    <td>{{ agencia.numero_agencia }}</td>
-                    <td>{{ agencia.nome }}</td>
-                    <td>{{ agencia.endereco }}</td>
-                    <td>{{ agencia.capacidade }}</td>
-                    <td>
-                        <a href="" data-toggle="tooltip" data-placement="top" title="Editar">
-                            <i class="fas fa-edit icon"></i>
-                        </a>
-                        <i class="fas icon">|</i>
-                        <a href="{{ path }}agencias/deletar/{{ agencia.id_agencia }}">
-                            <i class="fas fa-trash-alt icon" data-toggle="tooltip" data-placement="top" title="Deletar" data-id="{{ agencia.id_agencia }}"></i>
-                        </a>
-                        <i class="fas icon">|</i>
-                        <a href="" data-toggle="tooltip" data-placement="top" title="Sincronizar">
-                            <i class="fas fa-sync-alt icon"></i>
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
+            {% if newMessage == true %}
+                <div class="alert alert-{{ flashAlert }}" role="alert">{{ flashMessage }}</div>
+            {% endif %}
 
-            </tbody>
-        </table>
-
-        {% if newMessage == true %}
-            <div class="alert alert-{{ flashAlert }}" role="alert">{{ flashMessage }}</div>
-        {% endif %}
+        </div>
 
     </div> <!--container-->
-
 
     <script>
         $('#myModal').on('shown.bs.modal', function () {
             $('#myInput').trigger('focus')
         })
     </script>
-
-
 {% endblock %}

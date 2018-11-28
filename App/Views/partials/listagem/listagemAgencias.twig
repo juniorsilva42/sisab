@@ -1,0 +1,46 @@
+<div class="col-12">
+
+    <h2 class="h2-heading">Agências cadastradas no Sistema</h2>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Número</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Endereço</th>
+            <th scope="col">Capacidade</th>
+            {% if controller  != 'listagem' %}<th scope="col">Operações</th>{% endif %}
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for agencia in agencias %}
+            <tr>
+                <th scope="row">{{ agencia.id_agencia }}</th>
+                <td>{{ agencia.numero_agencia }}</td>
+                <td>{{ agencia.nome }}</td>
+                <td>{{ agencia.endereco }}</td>
+                <td>{{ agencia.capacidade }}</td>
+                {% if controller  != 'listagem' %}
+                <td>
+                    <a href="" data-toggle="tooltip" data-placement="top" title="Editar">
+                        <i class="fas fa-edit icon"></i>
+                    </a>
+                    <i class="fas icon">|</i>
+                    <a href="{{ path }}agencias/deletar/{{ agencia.id_agencia }}">
+                        <i class="fas fa-trash-alt icon" data-toggle="tooltip" data-placement="top" title="Deletar" data-id="{{ agencia.id_agencia }}"></i>
+                    </a>
+                    <i class="fas icon">|</i>
+                    <a href="" data-toggle="tooltip" data-placement="top" title="Sincronizar">
+                        <i class="fas fa-sync-alt icon"></i>
+                    </a>
+                </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+</div>
