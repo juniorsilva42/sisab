@@ -69,10 +69,18 @@ class ContasController extends \Core\Controller {
     }
 
     public function transferenciaAction () {
-        View::renderTemplate('Contas/transferencia/index');
+        $contas = ContasModel::getAll();
+
+        View::renderTemplate('Contas/transferencia/index', [
+            'contas' => $contas
+        ]);
     }
 
     public function saqueAction () {
-        View::renderTemplate('Contas/saque/index');
+        $contas = ContasModel::getAll();
+
+        View::renderTemplate('Contas/saque/index', [
+            'contas' => $contas
+        ]);
     }
 }

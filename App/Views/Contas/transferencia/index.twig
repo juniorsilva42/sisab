@@ -7,11 +7,74 @@
     {% include "partials/header.twig" %}
 
     <div class="container">
-        <div class="row">
 
-            <h2 class="h2-heading">Efetuar uma transferência</h2>
+        <h2 class="h2-heading">Efetuar uma transferência</h2>
 
-        </div> <!--row-->
+        <div class="card">
+
+            <div class="card-header">Registrar uma operação de transferência</div>
+
+            <div class="card-body">
+
+                <form class="needs-validation" novalidate method="GET" action="{{ path }}contas/operacao">
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputContaOrigem">Número da conta de origem</label>
+                            <select name="agencia" class="form-control custom-select" id="selectAgencias" required>
+                                <option selected>Selecione a conta...</option>
+                                {% for conta in contas %}
+                                    <option value="{{ conta.id }}">{{ conta.numero }} de {{ conta.nome_agencia }}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="valid-feedback">
+                                Parece bom!
+                            </div>
+                            <div class="invalid-feedback">
+                                Digite um número válido
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="inputContaDestino">Número da conta de destino</label>
+                            <select name="agencia" class="form-control custom-select" id="selectAgencias" required>
+                                <option selected>Selecione a conta...</option>
+                                {% for conta in contas %}
+                                    <option value="{{ conta.id }}">{{ conta.numero }} de {{ conta.nome_agencia }}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="valid-feedback">
+                                Parece bom!
+                            </div>
+                            <div class="invalid-feedback">
+                                Digite um número válido
+                            </div>
+                        </div>
+                    </div> <!--form-row-->
+
+                    <div class="form-group">
+                        <label for="inputAddress">Valor da transferência</label>
+                        <input type="number" class="form-control" name="valor" id="inputValor" placeholder="Valor da transferência" required>
+                        <div class="valid-feedback">
+                            Parece bom!
+                        </div>
+                        <div class="invalid-feedback">
+                            Digite um número válido
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button class="btn btn-primary" type="submit">Efetuar operação</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div> <!--card-body-->
+
+        </div> <!--card-->
+
     </div>
 
 {% endblock %}
