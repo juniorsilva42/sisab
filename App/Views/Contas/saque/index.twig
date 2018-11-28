@@ -32,7 +32,7 @@
                     <div class="form-group row">
                         <label for="inputValor" class="col-sm-2 col-form-label">Valor</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" name="valor" id="inputValor" placeholder="Valor do depósito" required>
+                            <input type="number" class="form-control" name="valor" id="inputValor" placeholder="Valor do saque" required>
                         </div>
                         <div class="valid-feedback">
                             Parece bom!
@@ -41,6 +41,8 @@
                             Digite um número válido
                         </div>
                     </div>
+
+                    <input type="hidden" name="operacao" value="saque">
 
                     <div class="form-group row">
                         <div class="col-sm-10">

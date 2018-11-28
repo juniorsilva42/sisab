@@ -43,5 +43,4 @@ final class HttpHelpers {
 
         return self::getId($url);
     }
-
 }

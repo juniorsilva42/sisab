@@ -83,4 +83,24 @@ class ContasController extends \Core\Controller {
             'contas' => $contas
         ]);
     }
+
+    public function operacaoAction () {
+
+        // Obtem os dados do formulário pela Query String do Request
+        $agencia = (isset($_REQUEST['agencia'])) ? $_REQUEST['agencia'] : false;
+        $id_conta = (isset($_REQUEST['conta'])) ? $_REQUEST['conta'] : null;
+        $valor = (isset($_REQUEST['valor'])) ? $_REQUEST['valor'] : 0;
+        $operacao = (isset($_REQUEST['operacao'])) ? $_REQUEST['operacao'] : 0;
+
+        switch ($operacao) {
+            case 'deposito':
+
+                ContasModel::deposito($id_conta, $valor);
+
+                break;
+
+            default:
+                echo 'Operação inválida!';
+        }
+    }
 }

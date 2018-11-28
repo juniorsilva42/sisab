@@ -20,8 +20,8 @@
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="inputContaOrigem">Número da conta de origem</label>
-                            <select name="agencia" class="form-control custom-select" id="selectAgencias" required>
+                            <label for="selectContaOrigem">Número da conta de origem</label>
+                            <select name="conta_origem" class="form-control custom-select" id="selectContaOrigem" required>
                                 <option selected>Selecione a conta...</option>
                                 {% for conta in contas %}
                                     <option value="{{ conta.id }}">{{ conta.numero }} de {{ conta.nome_agencia }}</option>
@@ -36,8 +36,8 @@
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="inputContaDestino">Número da conta de destino</label>
-                            <select name="agencia" class="form-control custom-select" id="selectAgencias" required>
+                            <label for="selectContaDestino">Número da conta de destino</label>
+                            <select name="conta_destino" class="form-control custom-select" id="selectContaDestino" required>
                                 <option selected>Selecione a conta...</option>
                                 {% for conta in contas %}
                                     <option value="{{ conta.id }}">{{ conta.numero }} de {{ conta.nome_agencia }}</option>
@@ -62,6 +62,8 @@
                             Digite um número válido
                         </div>
                     </div>
+
+                    <input type="hidden" name="operacao" value="transferencia">
 
                     <div class="form-group row">
                         <div class="col-sm-10">

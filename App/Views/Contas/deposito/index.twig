@@ -19,9 +19,9 @@
                 <form class="needs-validation" novalidate method="GET" action="{{ path }}contas/operacao">
 
                     <div class="form-group row">
-                        <label for="selectAgencias" class="col-sm-2 col-form-label">Número da conta</label>
+                        <label for="selectContas" class="col-sm-2 col-form-label">Número da conta</label>
                         <div class="col-sm-10">
-                            <select name="agencia" class="form-control custom-select" id="selectAgencias" required>
+                            <select name="conta" class="form-control custom-select" id="selectContas" required>
                                 <option selected>Selecione a conta...</option>
                                 {% for conta in contas %}
                                     <option value="{{ conta.id }}">{{ conta.numero }} de {{ conta.nome_agencia }}</option>
@@ -42,6 +42,8 @@
                             Digite um número válido
                         </div>
                     </div>
+
+                    <input type="hidden" name="operacao" value="deposito">
 
                     <div class="form-group row">
                         <div class="col-sm-10">

@@ -28,6 +28,10 @@ final class ContasRoute {
         'contas/saque' => [
             'controller' => 'ContasController',
             'action' => 'saque'
+        ],
+        'contas/operacao' => [
+            'controller' => 'ContasController',
+            'action' => 'operacao'
         ]
     ];
 
