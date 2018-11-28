@@ -8,8 +8,8 @@ final class ContaEspecial extends Conta {
 
     private $limite;
 
-    public function __construct($numConta, $tipo, $limite = 1500) {
-        parent::__construct($numConta, $tipo);
+    public function __construct($numConta, $tipo, $id_agencia, $limite = 1500) {
+        parent::__construct($numConta, $tipo, $id_agencia);
         $this->limite = $limite;
     }
 
@@ -33,5 +33,13 @@ final class ContaEspecial extends Conta {
 
     public function extrato() {
         return "Conta Especial: <br> Numero da Conta: {$this->numero} <br> Saldo: {$this->saldo} <br> Limite: {$this->limite}";
+    }
+
+    /**
+     * @return int
+     */
+    public function getLimite()
+    {
+        return $this->limite;
     }
 }

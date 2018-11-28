@@ -6,8 +6,8 @@ use App\Sisab\Exception\EstouroSaldoException;
 
 final class ContaCorrente extends Conta {
 
-    public function __construct($numConta, $tipo) {
-        parent::__construct($numConta, $tipo);
+    public function __construct($numConta, $tipo, $id_agencia) {
+        parent::__construct($numConta, $tipo, $id_agencia);
     }
 
     public function saque($valor) {

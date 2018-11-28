@@ -31,32 +31,31 @@ class ContasController extends \Core\Controller {
     public function criarAction () {
 
         // Obtem os dados do formulário pela Query String do Request
-        $numero = ($_REQUEST['numero']) ? $_REQUEST['numero'] : false;
-        $limite = ($_REQUEST['limite']) ? $_REQUEST['limite'] : 1500;
+        $numero = ($_REQUEST['numero']) ? $_REQUEST['numero'] : null;
+        $limite = ($_REQUEST['limite']) ? $_REQUEST['limite'] : 0;
         $rendimento = ($_REQUEST['rendimento']) ? $_REQUEST['rendimento'] : 0;
         $tipo = ($_REQUEST['tipo']) ? $_REQUEST['tipo'] : 'CONTA_POUPANCA';
-        $agencia = ($_REQUEST['agencia']) ? $_REQUEST['agencia'] : false;
+        $id_agencia = ($_REQUEST['agencia']) ? $_REQUEST['agencia'] : 0;
 
         switch ($tipo) {
             case 'CONTA_POUPANCA':
-
-                $conta = new ContaPoupanca($numero, $tipo, $rendimento);
-
+                $conta = new ContaPoupanca($numero, $tipo, $id_agencia, $rendimento);
                 break;
 
             case 'CONTA_CORRENTE':
-
-                $conta = new ContaCorrente($numero, $tipo);
-
+                $conta = new ContaCorrente($numero, $tipo, $id_agencia);
                 break;
 
             case 'CONTA_ESPECIAL':
-
-                $conta = new ContaEspecial($numero, $tipo, $limite);
+                $conta = new ContaEspecial($numero, $tipo, $id_agencia, $limite);
                 break;
 
             default:
+                $conta = new ContaPoupanca($numero, $tipo, $id_agencia, $rendimento);
                 $tipo = 'CONTA_POUPANCA';
         }
+
+        // Seta o estado pro model, onde vai utilizar esses dados para inserir no banco de dados
+        $state = ContasModel::create($conta);
     }
 }
