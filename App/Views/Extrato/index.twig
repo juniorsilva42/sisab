@@ -1,0 +1,54 @@
+{% extends "pagePrototype.twig" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+    {% include "partials/header.twig" %}
+
+    <div class="container">
+        <div class="row">
+            <h2 class="h2-heading">Extrato completo da conta {{ conta.numero }}</h2>
+
+            <table class="table">
+
+                <thead>
+                <tr>
+                    <th scope="col">Número</th>
+                    <th scope="col">Saldo</th>
+                    <th scope="col">Limite</th>
+                    <th scope="col">Rendimento</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Agência</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>{{ conta.numero }}</td>
+                        <td>R$ {{ conta.saldo }}</td>
+
+                        {% if conta.limite != NULL or conta.limite != 0 %}
+                            <td>R$ {{ conta.limite }}</td>
+                        {% else %}
+                            <td>Não se aplica</td>
+                        {% endif %}
+
+                        {% if conta.rendimento != NULL or conta.rendimento != 0 %}
+                            <td>{{ conta.rendimento }}%</td>
+                        {% else %}
+                            <td>Não se aplica</td>
+                        {% endif %}
+
+                        <td>{{ conta.tipo }}</td>
+                        <td>{{ conta.nome_agencia }}, {{ conta.numero_agencia }}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div> <!--container-->
+
+{% endblock %}

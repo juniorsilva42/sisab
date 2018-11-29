@@ -28,6 +28,24 @@ class ContasModel extends \Core\Model {
         }
     }
 
+    static public function getById ($id_conta) {
+        $db = static::getConnection();
+
+        $sql = 'SELECT c.*, a.id_agencia, a.numero_agencia, a.nome_agencia FROM contas c JOIN agencias a ON a.id_agencia = c.fk_id_agencia WHERE c.id = ? LIMIT 1';
+
+        try {
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(1, $id_conta, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_OBJ);
+
+            $db = null;
+        } catch (\PDOException $e) {
+            throw new \Exception("Erro model");
+        }
+    }
+
     static public function create (Conta $conta) {
 
         $db = static::getConnection();

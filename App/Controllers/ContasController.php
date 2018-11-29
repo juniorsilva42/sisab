@@ -106,9 +106,17 @@ class ContasController extends \Core\Controller {
         ]);
     }
 
-    public function operacaoAction () {
+    public function extratoAction () {
 
-        $alert = null;
+        $id = HttpHelpers::getId($_SERVER['QUERY_STRING']);
+        $conta = ContasModel::getById($id);
+
+        View::renderTemplate('Extrato/index', [
+            'conta' => $conta
+        ]);
+    }
+
+    public function operacaoAction () {
 
         // Obtem os dados do formulário pela Query String do Request
         $agencia = (isset($_REQUEST['agencia'])) ? $_REQUEST['agencia'] : false;

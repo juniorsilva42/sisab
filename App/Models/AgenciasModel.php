@@ -32,16 +32,14 @@ class AgenciasModel extends \Core\Model {
     static public function getById ($id_agencia) {
         $db = static::getConnection();
 
-        $sql = 'SELECT * FROM agencias WHERE id_agencia = ?';
+        $sql = 'SELECT * FROM agencias WHERE id_agencia = ? LIMIT 1';
 
         try {
             $stmt = $db->prepare($sql);
             $stmt->bindValue(1, $id_agencia, PDO::PARAM_INT);
             $stmt->execute();
 
-            $agencia = $stmt->fetch(PDO::FETCH_OBJ);
-
-            return $agencia;
+            return $stmt->fetch(PDO::FETCH_OBJ);
 
             $db = null;
         } catch (\PDOException $e) {

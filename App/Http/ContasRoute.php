@@ -32,6 +32,10 @@ final class ContasRoute {
         'contas/operacao' => [
             'controller' => 'ContasController',
             'action' => 'operacao'
+        ],
+        'contas/extrato/{id:([0-9]+)}' => [
+            'controller' => 'ContasController',
+            'action' => 'extrato'
         ]
     ];
 
