@@ -108,6 +108,59 @@ class ContasController extends \Core\Controller {
         ]);
     }
 
+    public function editarAction () {
+
+        // Obtem os dados do formulário pela Query String do Request
+        $id_conta = (isset($_REQUEST['cid'])) ? $_REQUEST['cid'] : null;
+        $numero = (isset($_REQUEST['numero'])) ? $_REQUEST['numero'] : null;
+        $saldo = (isset($_REQUEST['saldo'])) ? $_REQUEST['saldo'] : null;
+        $limite = (isset($_REQUEST['limite'])) ? $_REQUEST['limite'] : null;
+        $rendimento = (isset($_REQUEST['rendimento'])) ? $_REQUEST['rendimento'] : null;
+        $tipo = (isset($_REQUEST['tipo'])) ? $_REQUEST['tipo'] : null;
+
+        $sign = (isset($_REQUEST['sign'])) ? $_REQUEST['sign'] : null;
+
+        if (!isset($sign) || $sign != 'do') {
+            View::renderTemplate("Contas/editar", [
+                'id_conta' => $id_conta,
+                'numero' => $numero,
+                'saldo' => $saldo,
+                'limite' => $limite,
+                'rendimento' => $rendimento,
+                'tipo' => $tipo
+            ]);
+        } else {
+
+            $conta = new ContaCorrente();
+            $conta->setNumero($numero);
+            $conta->setSaldo($saldo);
+            $conta->setTipo($tipo);
+            $conta->setId($id_conta);
+
+            try {
+
+                $state = ContasModel::editar($conta);
+
+                // Controle as flash messages baseado no retorno do Model
+                if ($state):
+                    $flashMessage = 'A agência foi atualizada com sucesso!';
+                    $alert = 'success';
+                else:
+                    $flashMessage = 'OPA! Houve algum erro ao atualizar à agência!';
+                    $alert = 'danger';
+                endif;
+
+                View::renderTemplate("Agencias/editar", [
+                    'flashMessage' => $flashMessage,
+                    'flashAlert' => $alert,
+                    'newMessage' => true
+                ]);
+
+            } catch (ModelException $e) {}
+
+        }
+    }
+
     public function depositoAction () {
         $contas = ContasModel::getAll();
 

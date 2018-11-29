@@ -1,0 +1,111 @@
+{% extends "pagePrototype.twig" %}
+
+{% block title %}Editar agência | SISAB{% endblock %}
+
+{% block body %}
+
+    {% include "partials/header.twig" %}
+
+    <div class="container">
+
+        <div class="card">
+            <div class="card-header">
+                Editar conta
+            </div>
+
+            <div class="card-body">
+
+                <form class="needs-validation" novalidate method="GET" action="{{ path }}contas/editar">
+
+                    <div class="form-group row">
+                        <label for="inputNumero" class="col-sm-2 col-form-label">Número da conta</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="nome" id="inputNumero" placeholder="Número da conta" value="{{ numero }}" required>
+                        </div>
+                        <div class="valid-feedback">
+                            Parece bom!
+                        </div>
+                        <div class="invalid-feedback">
+                            Digite um nome válido para a conta
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="selectTipo" class="col-sm-2 col-form-label">Tipo</label>
+                        <div class="col-sm-10">
+                            <select name="tipo" class="form-control custom-select" id="selectTipo" required>
+                                <option {% if tipo == 'CONTA_CORRENTE' %} selected {% endif%} value="CONTA_CORRENTE">Conta Corrente</option>
+                                <option {% if tipo == 'CONTA_POUPANCA' %} selected {% endif%} value="CONTA_POUPANCA">Conta Poupança</option>
+                                <option {% if tipo == 'CONTA_ESPECIAL' %} selected {% endif%}value="CONTA_ESPECIAL">Conta Especial</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputRendimento" class="col-sm-2 col-form-label">Rendimento</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="inputRendimento" value="{{ rendimento }}" disabled>
+                        </div>
+                    </div>
+
+                    {% if tipo == 'CONTA_ESPECIAL' %}
+                        <div class="form-group row">
+                            <label for="inputLimite" class="col-sm-2 col-form-label">Limite</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" name="limite" id="inputLimite" placeholder="Limite" value="{{ limite }}"required>
+                            </div>
+                            <div class="valid-feedback">
+                                Parece Bom!
+                            </div>
+                            <div class="invalid-feedback">
+                                Digite um limite válido para a conta
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <input type="hidden" name="sign" value="do">
+                    <input type="hidden" name="id" value="{{ id_conta }}">
+
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button class="btn btn-primary" type="submit">Atualizar conta</button>
+                        </div>
+                    </div>
+
+                </form>
+
+                {% if newMessage == true %}
+                    <div class="alert alert-{{ flashAlert }}" role="alert">{{ flashMessage }} <a href="{{ path }}contas/listar">Ver</a> </div>
+                    <script>
+                        setTimeout("document.location = '{{ path }}contas/listar' ", 2000);
+                    </script>
+                {% endif %}
+
+            </div> <!--card-body-->
+
+        </div>
+
+    </div> <!--container-->
+
+    <script>
+
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+
+                var forms = document.getElementsByClassName('needs-validation');
+
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+{% endblock %}
+

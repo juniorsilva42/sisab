@@ -86,7 +86,7 @@ class AgenciasController extends \Core\Controller {
         ]);
     }
 
-    public function editar () {
+    public function editarAction () {
 
         // Obtem os dados do formulário pela Query String do Request
         $id_agencia = (isset($_REQUEST['id'])) ? $_REQUEST['id'] : null;

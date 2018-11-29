@@ -52,16 +52,16 @@ class ContasModel extends \Core\Model {
 
         $sql = 'INSERT INTO contas (numero, saldo, limite, rendimento, tipo, fk_id_agencia) VALUES (?, ?, ?, ?, ?, ?)';
 
-        $condicaoEspecial = ($conta->getTipo() == 'CONTA_ESPECIAL') ? $conta->getLimite() : null;
-        $condicaoCorrente = ($conta->getTipo() == 'CONTA_POUPANCA') ? $conta->getRendimento() : null;
+        $condicaoContaEspecial = ($conta->getTipo() == 'CONTA_ESPECIAL') ? $conta->getLimite() : null;
+        $condicaoContaPoupanca = ($conta->getTipo() == 'CONTA_POUPANCA') ? $conta->getRendimento() : null;
 
         try {
             $stmt = $db->prepare($sql);
 
             $stmt->bindValue(1, $conta->getNumero(), PDO::PARAM_STR);
             $stmt->bindValue(2, $conta->getSaldo(), PDO::PARAM_INT);
-            $stmt->bindValue(3, $condicaoEspecial , PDO::PARAM_INT);
-            $stmt->bindValue(4, $condicaoCorrente, PDO::PARAM_INT);
+            $stmt->bindValue(3, $condicaoContaEspecial , PDO::PARAM_INT);
+            $stmt->bindValue(4, $condicaoContaPoupanca, PDO::PARAM_INT);
             $stmt->bindValue(5, $conta->getTipo(), PDO::PARAM_STR);
             $stmt->bindValue(6, $conta->getIdAgencia(), PDO::PARAM_INT);
 
@@ -96,6 +96,32 @@ class ContasModel extends \Core\Model {
             $db = null;
         } catch (\PDOException $e) {
             throw new ModelException("Erro ao deletar o registro");
+        }
+    }
+
+    static public function editar (Conta $conta) {
+
+        $db = static::getConnection();
+        $sql = 'UPDATE contas SET numero = ?, saldo = ?, limite = ? WHERE id = ?';
+
+        $condicaoContaEspecial = ($conta->getTipo() == 'CONTA_ESPECIAL') ? $conta->getLimite() : null;
+
+        try {
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(1, $conta->getNumero(), PDO::PARAM_STR);
+            $stmt->bindValue(2, $conta->getSaldo(), PDO::PARAM_STR);
+            $stmt->bindValue(3, $condicaoContaEspecial, PDO::PARAM_STR);
+            $stmt->bindValue(5, $conta->getId(), PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+
+            $db = null;
+        } catch (\PDOException $e) {
+            throw new ModelException("Erro ao atualizar o registro");
         }
     }
 

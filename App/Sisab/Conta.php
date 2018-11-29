@@ -6,12 +6,13 @@ use App\Sisab\Interfaces\ContaInterface;
 
 abstract class Conta implements ContaInterface {
 
+    private $id;
     protected $id_agencia;
     protected $numero;
     protected $saldo;
     protected $tipo;
 
-    public function __construct($numeroConta, $tipo, $id_agencia) {
+    public function __construct($numeroConta, $tipo, $id_conta, $id_agencia = null) {
         $this->numero = $numeroConta;
         $this->tipo = $tipo;
         $this->id_agencia = $id_agencia;
@@ -50,27 +51,23 @@ abstract class Conta implements ContaInterface {
         return "Extrato da conta";
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTipo()
-    {
+    public function getTipo() {
         return $this->tipo;
     }
 
-    /**
-     * @param mixed $tipo
-     */
-    public function setTipo($tipo): void
-    {
+    public function setTipo($tipo)  {
         $this->tipo = $tipo;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getIdAgencia()
-    {
+    public function getIdAgencia() {
         return $this->id_agencia;
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id){
+        $this->id = $id;
     }
 }

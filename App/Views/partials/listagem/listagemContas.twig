@@ -44,7 +44,7 @@
 
                     {% if controller  != 'listagem' %}
                         <td>
-                            <a href="{{ path }}contas/editar?numero={{ conta.numero }}&saldo={{ conta.saldo }}&limite={{ conta.saldo }}&rendimento={{ conta.rendimento }}&tipo={{ conta.tipo }}" data-toggle="tooltip" data-placement="top" title="Editar">
+                            <a href="{{ path }}contas/editar?numero={{ conta.numero }}&saldo={{ conta.saldo }}&limite={{ conta.saldo }}&rendimento={{ conta.rendimento }}&tipo={{ conta.tipo }}&cid={{ conta.id }}" data-toggle="tooltip" data-placement="top" title="Editar">
                                 <i class="fas fa-edit icon"></i>
                             </a>
                             <i class="fas icon">|</i>
