@@ -4,11 +4,11 @@ namespace App\Http;
 
 final class ContasRoute {
 
-    private static $prototype = [
-        'contas' => [
-            'controller' => 'ContasController',
-            'action' => 'index'
-        ],
+    /**
+     *
+     * Rotas que dispacham e operam o CRUD
+     * */
+    private static $crud_way = [
         'contas/listar' => [
             'controller' => 'ContasController',
             'action' => 'listar'
@@ -24,6 +24,17 @@ final class ContasRoute {
         'contas/editar' => [
             'controller' => 'ContasController',
             'action' => 'editar'
+        ]
+    ];
+
+    /**
+     *
+     * Rotas que dispacham as outras rotas de contas: deposito, transferencia, saque e etc
+     * */
+    private static $default_way = [
+        'contas' => [
+            'controller' => 'ContasController',
+            'action' => 'index'
         ],
         'contas/deposito' => [
             'controller' => 'ContasController',
@@ -48,6 +59,6 @@ final class ContasRoute {
     ];
 
     public static function register () {
-        return self::$prototype;
+        return array_merge(self::$crud_way, self::$default_way);
     }
 }

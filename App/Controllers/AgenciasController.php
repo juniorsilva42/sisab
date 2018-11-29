@@ -20,6 +20,11 @@ class AgenciasController extends \Core\Controller {
     
     public function listarAction () {
 
+        /* *
+         *
+         * TO-DO: adicionar exceção
+         *
+         * */
         $agenciasList = AgenciasModel::getAll();
 
         View::renderTemplate('Agencias/listar', [
@@ -39,6 +44,11 @@ class AgenciasController extends \Core\Controller {
         // Povoa o objeto pelos dados obtidos
         $agencia = new Agencia($numero, $nome, $endereco, $capacidade);
 
+        /* *
+         *
+         * TO-DO: adicionar exceção
+         *
+         * */
         // Seta o estado pro model, onde vai utilizar esses dados para inserir no banco de dados
         $state = AgenciasModel::create($agencia);
 

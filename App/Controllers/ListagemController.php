@@ -12,6 +12,12 @@ use DateTime;
 class ListagemController extends \Core\Controller {
 
     public function indexAction () {
+
+        /* *
+         *
+         * TO-DO: adicionar exceção
+         *
+         * */
         $agencias = AgenciasModel::getAll();
         $contas = ContasModel::getAll();
 

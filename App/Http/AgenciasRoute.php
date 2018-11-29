@@ -4,11 +4,14 @@ namespace App\Http;
 
 final class AgenciasRoute {
 
-    private static $prototype = [
+    private static $default_way = [
         'agencias' => [
             'controller' => 'AgenciasController',
             'action' => 'index'
-        ],
+        ]
+    ];
+
+    private static $crud_way = [
         'agencias/listar' => [
             'controller' => 'AgenciasController',
             'action' => 'listar'
@@ -28,6 +31,6 @@ final class AgenciasRoute {
     ];
 
     public static function register () {
-        return self::$prototype;
+        return array_merge(self::$crud_way, self::$default_way);
     }
 }
