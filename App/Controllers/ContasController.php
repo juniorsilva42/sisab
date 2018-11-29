@@ -79,7 +79,33 @@ class ContasController extends \Core\Controller {
             'newMessage' => true,
             'quantidade_agencias' => 'undefined'
         ]);
+    }
 
+    public function deletarAction () {
+
+        $id_conta = HttpHelpers::getId($_SERVER['QUERY_STRING']);
+
+        try {
+            $state = ContasModel::delete($id_conta);
+
+            // Controle as flash messages baseado no retorno do Model
+            if ($state):
+                $flashMessage = 'A conta foi deletada com sucesso!';
+                $alert = 'success';
+            endif;
+
+        } catch (ModelException $e) {
+            $flashMessage = "OPA! Houve algum erro ao deletar a conta.";
+            $alert = 'danger';
+        }
+
+        // Renderiza o template implantando as variáveis de controle
+        View::renderTemplate('Contas/listar', [
+            'flashMessage' => $flashMessage,
+            'flashAlert' => $alert,
+            'newMessage' => true,
+            'quantidade_contas' => 'undefined'
+        ]);
     }
 
     public function depositoAction () {

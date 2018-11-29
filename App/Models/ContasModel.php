@@ -77,6 +77,28 @@ class ContasModel extends \Core\Model {
         }
     }
 
+    static public function delete ($conta_id) {
+
+        $db = static::getConnection();
+
+        $sql = 'DELETE FROM contas WHERE id = ?';
+
+        try {
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(1, $conta_id, PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+
+            $db = null;
+        } catch (\PDOException $e) {
+            throw new ModelException("Erro ao deletar o registro");
+        }
+    }
+
     static public function deposito ($id_conta, $valor) {
 
         $db = static::getConnection();

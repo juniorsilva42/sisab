@@ -1,6 +1,6 @@
 <div class="col-12">
 
-    {% if quantidade == 0 %}
+    {% if quantidade == 0 and quantidade_contas != 'undefined' %}
 
         <h4 class="h2-heading text-align-center">Ainda não há nenhuma conta</h4>
 
@@ -44,11 +44,11 @@
 
                     {% if controller  != 'listagem' %}
                         <td>
-                            <a href="" data-toggle="tooltip" data-placement="top" title="Editar">
+                            <a href="{{ path }}contas/editar?numero={{ conta.numero }}&saldo={{ conta.saldo }}&limite={{ conta.saldo }}&rendimento={{ conta.rendimento }}&tipo={{ conta.tipo }}" data-toggle="tooltip" data-placement="top" title="Editar">
                                 <i class="fas fa-edit icon"></i>
                             </a>
                             <i class="fas icon">|</i>
-                            <a href="" data-toggle="tooltip" data-placement="top" title="Deletar">
+                            <a href="{{ path }}contas/deletar/{{ conta.id }}" data-toggle="tooltip" data-placement="top" title="Deletar">
                                 <i class="fas fa-trash-alt icon"></i>
                             </a>
                             <i class="fas icon">|</i>
@@ -63,6 +63,11 @@
 
             </tbody>
         </table>
+
+        {% if newMessage == true %}
+            <div class="alert alert-{{ flashAlert }}" role="alert"> {{ flashMessage }}</div>
+            <script> setTimeout("document.location = '{{ path }}contas/listar' ", 3000); </script>
+        {% endif %}
 
     {% endif %}
 

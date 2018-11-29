@@ -17,6 +17,14 @@ final class ContasRoute {
             'controller' => 'ContasController',
             'action' => 'criar'
         ],
+        'contas/deletar/{id:([0-9]+)}' => [
+            'controller' => 'ContasController',
+            'action' => 'deletar'
+        ],
+        'contas/editar' => [
+            'controller' => 'ContasController',
+            'action' => 'editar'
+        ],
         'contas/deposito' => [
             'controller' => 'ContasController',
             'action' => 'deposito'

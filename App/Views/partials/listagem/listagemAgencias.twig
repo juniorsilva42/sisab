@@ -47,5 +47,10 @@
             </tbody>
         </table>
 
+        {% if newMessage == true %}
+            <div class="alert alert-{{ flashAlert }}" role="alert"> {{ flashMessage }}</div>
+            <script> setTimeout("document.location = '{{ path }}contas/listar' ", 3000); </script>
+        {% endif %}
+
     {% endif %}
 </div>
