@@ -53,10 +53,20 @@
                 </form>
 
                 {% if newMessage == true %}
-                    <div class="alert alert-{{ flashAlert }}" role="alert">{{ flashMessage }} <a href="{{ path }}contas/listar">Ver</a> </div>
-                    <script>
-                        setTimeout("document.location = '{{ path }}contas/saque' ", 3000);
-                    </script>
+                    <div class="alert alert-{{ flashAlert }}" role="alert">
+                        {{ flashMessage }}
+
+                        {% if flashAlert == 'success' and tipo != 'operacao' %}
+                            <a href="{{ path }}contas/listar">Ver</a>
+                        {% endif %}
+
+                        {% if flashAlert == 'success' and tipo == 'operacao' and operacao == 'saque' %}
+                            <a href="{{ path }}contas/extrato/{{ id_conta }}">Ver extrato</a>
+                        {% endif %}
+                    </div>
+
+                    <script> setTimeout("document.location = '{{ path }}contas/saque' ", 5000); </script>
+
                 {% endif %}
 
             </div> <!--card-body-->

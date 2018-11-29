@@ -8,6 +8,7 @@ use App\Sisab\ContaCorrente;
 use App\Sisab\ContaEspecial;
 use App\Sisab\ContaPoupanca;
 use App\Sisab\Exception\ModelException;
+use Core\Util\HttpHelpers;
 use Core\View;
 
 class ContasController extends \Core\Controller {
@@ -107,6 +108,8 @@ class ContasController extends \Core\Controller {
 
     public function operacaoAction () {
 
+        $alert = null;
+
         // Obtem os dados do formulário pela Query String do Request
         $agencia = (isset($_REQUEST['agencia'])) ? $_REQUEST['agencia'] : false;
         $id_conta = (isset($_REQUEST['conta'])) ? $_REQUEST['conta'] : null;
@@ -114,6 +117,7 @@ class ContasController extends \Core\Controller {
         $operacao = (isset($_REQUEST['operacao'])) ? $_REQUEST['operacao'] : 0;
 
         switch ($operacao) {
+
             case 'deposito':
 
                 try {
@@ -141,9 +145,12 @@ class ContasController extends \Core\Controller {
                     if ($state):
                         $flashMessage = "O saque de R$ ${valor} foi transacionado com sucesso!";
                         $alert = 'success';
+                    else:
+                        $flashMessage = "Erro ao transacionar este saque de R$ ${valor}. Verifique seu saldo e tente novamente mais tarde!";
+                        $alert = 'danger';
                     endif;
 
-                } catch (ModelException $e) {
+                } catch (\PDOException $e) {
                     $flashMessage = "Erro ao transacionar este saque de R$ ${valor}. Verifique seu saldo e tente novamente mais tarde!";
                     $alert = 'danger';
                 }
@@ -154,10 +161,19 @@ class ContasController extends \Core\Controller {
                 echo 'Operação inválida!';
         }
 
-        View::renderTemplate('Contas/deposito/index', [
+        if ($operacao == 'deposito') {
+            $view = 'Contas/deposito/index';
+        } else if ($operacao == 'saque') {
+            $view = 'Contas/saque/index';
+        }
+
+        View::renderTemplate($view, [
             'flashMessage' => $flashMessage,
             'flashAlert' => $alert,
             'newMessage' => true,
+            'tipo' => 'operacao',
+            'operacao' => $operacao,
+            'id_conta' => $id_conta,
             'quantidade_agencias' => 'undefined'
         ]);
     }

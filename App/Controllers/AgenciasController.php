@@ -127,6 +127,7 @@ class AgenciasController extends \Core\Controller {
                     'flashAlert' => $alert,
                     'newMessage' => true
                 ]);
+
             } catch (ModelException $e) {}
 
         }
