@@ -139,7 +139,7 @@ class ContasController extends \Core\Controller {
 
             try {
 
-                $state = ContasModel::editar($conta);
+                $state = ContasModel::update($conta);
 
                 // Controle as flash messages baseado no retorno do Model
                 if ($state):
@@ -202,6 +202,8 @@ class ContasController extends \Core\Controller {
         $id_conta = (isset($_REQUEST['conta'])) ? $_REQUEST['conta'] : null;
         $valor = (isset($_REQUEST['valor'])) ? $_REQUEST['valor'] : 0;
         $operacao = (isset($_REQUEST['operacao'])) ? $_REQUEST['operacao'] : 0;
+        $id_conta_origem = (isset($_REQUEST['conta_origem'])) ? $_REQUEST['conta_origem'] : 0;
+        $id_conta_destino = (isset($_REQUEST['conta_destino'])) ? $_REQUEST['conta_destino'] : 0;
 
         switch ($operacao) {
 
@@ -244,6 +246,27 @@ class ContasController extends \Core\Controller {
 
                 break;
 
+            case 'transferencia':
+
+                try {
+                    $state = ContasModel::transferencia($id_conta_origem, $id_conta_destino, $valor);
+
+                    // Controle as flash messages baseado no retorno do Model
+                    if ($state):
+                        $flashMessage = "A transferência de R$ ${valor} foi transacionada entre as contas com sucesso!";
+                        $alert = 'success';
+                    else:
+                        $flashMessage = "Erro ao transacionar esta transferência de R$ ${valor}. Tente novamente mais tarde.";
+                        $alert = 'danger';
+                    endif;
+
+                } catch (\PDOException $e) {
+                    $flashMessage = "Erro ao transacionar esta transferência de R$ ${valor}. Tente novamente mais tarde.";
+                    $alert = 'danger';
+                }
+
+                break;
+
             default:
                 echo 'Operação inválida!';
         }
@@ -252,6 +275,8 @@ class ContasController extends \Core\Controller {
             $view = 'Contas/deposito/index';
         } else if ($operacao == 'saque') {
             $view = 'Contas/saque/index';
+        } else if ($operacao == 'transferencia') {
+            $view = 'Contas/transferencia/index';
         }
 
         View::renderTemplate($view, [

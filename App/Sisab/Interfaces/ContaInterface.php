@@ -4,9 +4,9 @@ namespace App\Sisab\Interfaces;
 
 interface ContaInterface {
 
-    function saque($valor);
+    public function saque($valor);
 
-    function deposito($valor);
+    public function deposito($valor);
 
-    function extrato();
+    public function extrato();
 }

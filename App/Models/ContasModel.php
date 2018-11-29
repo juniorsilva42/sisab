@@ -3,11 +3,43 @@
 namespace App\Models;
 
 use App\Sisab\Conta;
+use App\Sisab\Helpers\DBUtils;
 use PDO;
 
 class ContasModel extends \Core\Model {
 
     private static $db_instance;
+
+    static public function create (Conta $conta) {
+
+        $db = static::getConnection();
+
+        $sql = 'INSERT INTO contas (numero, saldo, limite, rendimento, tipo, fk_id_agencia) VALUES (?, ?, ?, ?, ?, ?)';
+
+        $condicaoContaEspecial = ($conta->getTipo() == 'CONTA_ESPECIAL') ? $conta->getLimite() : 0;
+        $condicaoContaPoupanca = ($conta->getTipo() == 'CONTA_POUPANCA') ? $conta->getRendimento() : 0;
+
+        try {
+            $stmt = $db->prepare($sql);
+
+            $stmt->bindValue(1, $conta->getNumero(), PDO::PARAM_STR);
+            $stmt->bindValue(2, $conta->getSaldo(), PDO::PARAM_INT);
+            $stmt->bindValue(3, $condicaoContaEspecial , PDO::PARAM_INT);
+            $stmt->bindValue(4, $condicaoContaPoupanca, PDO::PARAM_INT);
+            $stmt->bindValue(5, $conta->getTipo(), PDO::PARAM_STR);
+            $stmt->bindValue(6, $conta->getIdAgencia(), PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+
+            $db = null;
+        } catch (\PDOException $e) {
+            throw new \Exception("Erro model");
+        }
+    }
 
     static public function getAll () {
         $db = static::getConnection();
@@ -46,37 +78,6 @@ class ContasModel extends \Core\Model {
         }
     }
 
-    static public function create (Conta $conta) {
-
-        $db = static::getConnection();
-
-        $sql = 'INSERT INTO contas (numero, saldo, limite, rendimento, tipo, fk_id_agencia) VALUES (?, ?, ?, ?, ?, ?)';
-
-        $condicaoContaEspecial = ($conta->getTipo() == 'CONTA_ESPECIAL') ? $conta->getLimite() : 0;
-        $condicaoContaPoupanca = ($conta->getTipo() == 'CONTA_POUPANCA') ? $conta->getRendimento() : 0;
-
-        try {
-            $stmt = $db->prepare($sql);
-
-            $stmt->bindValue(1, $conta->getNumero(), PDO::PARAM_STR);
-            $stmt->bindValue(2, $conta->getSaldo(), PDO::PARAM_INT);
-            $stmt->bindValue(3, $condicaoContaEspecial , PDO::PARAM_INT);
-            $stmt->bindValue(4, $condicaoContaPoupanca, PDO::PARAM_INT);
-            $stmt->bindValue(5, $conta->getTipo(), PDO::PARAM_STR);
-            $stmt->bindValue(6, $conta->getIdAgencia(), PDO::PARAM_INT);
-
-            if ($stmt->execute()) {
-                return true;
-            } else {
-                return false;
-            }
-
-            $db = null;
-        } catch (\PDOException $e) {
-            throw new \Exception("Erro model");
-        }
-    }
-
     static public function delete ($conta_id) {
 
         $db = static::getConnection();
@@ -99,7 +100,7 @@ class ContasModel extends \Core\Model {
         }
     }
 
-    static public function editar (Conta $conta) {
+    static public function update (Conta $conta) {
 
         $db = static::getConnection();
         $sql = 'UPDATE contas SET numero = ?, saldo = ?, limite = ? WHERE id = ?';
@@ -187,6 +188,24 @@ class ContasModel extends \Core\Model {
             $db = null;
         } catch (\PDOException $e) {
             throw new \Exception("Erro model");
+        }
+    }
+
+    static public function transferencia ($id_conta_origem, $id_conta_destino, $valor) {
+        try {
+
+            $saque = self::saque($id_conta_origem, $valor);
+
+            if ($saque) {
+                $deposito = self::deposito($id_conta_destino, $valor);
+
+                if ($deposito)
+                    return true;
+            }
+
+            return false;
+        } catch (\PDOException $e) {
+            throw new \Exception("Erro ao tentar realizar a transferência");
         }
     }
 }

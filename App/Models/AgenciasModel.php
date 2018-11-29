@@ -10,6 +10,11 @@ class AgenciasModel extends \Core\Model {
 
     private static $db_instance;
 
+    /**
+     *
+     * Obtém todas agências
+     *
+     * */
     static public function getAll () {
         $db = static::getConnection();
 
@@ -93,7 +98,6 @@ class AgenciasModel extends \Core\Model {
             throw new ModelException("Erro ao deletar o registro");
         }
     }
-
 
     static public function editar (Agencia $agencia) {
 
