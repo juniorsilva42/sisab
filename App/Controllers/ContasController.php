@@ -7,6 +7,7 @@ use App\Models\ContasModel;
 use App\Sisab\ContaCorrente;
 use App\Sisab\ContaEspecial;
 use App\Sisab\ContaPoupanca;
+use App\Sisab\Exception\ModelException;
 use Core\View;
 
 class ContasController extends \Core\Controller {
@@ -56,8 +57,28 @@ class ContasController extends \Core\Controller {
                 $tipo = 'CONTA_POUPANCA';
         }
 
-        // Seta o estado pro model, onde vai utilizar esses dados para inserir no banco de dados
-        $state = ContasModel::create($conta);
+        try {
+            $state = ContasModel::create($conta);
+
+            // Controle as flash messages baseado no retorno do Model
+            if ($state):
+                $flashMessage = 'A conta foi criada com sucesso!';
+                $alert = 'success';
+            endif;
+
+        } catch (ModelException $e) {
+            $flashMessage = "OPA! Houve algum erro ao criar a conta";
+            $alert = 'danger';
+        }
+
+        // Renderiza o template implantando as variáveis de controle
+        View::renderTemplate('Contas/index', [
+            'flashMessage' => $flashMessage,
+            'flashAlert' => $alert,
+            'newMessage' => true,
+            'quantidade_agencias' => 'undefined'
+        ]);
+
     }
 
     public function depositoAction () {
@@ -94,15 +115,50 @@ class ContasController extends \Core\Controller {
 
         switch ($operacao) {
             case 'deposito':
-                ContasModel::deposito($id_conta, $valor);
+
+                try {
+                    $state = ContasModel::deposito($id_conta, $valor);
+
+                    // Controle as flash messages baseado no retorno do Model
+                    if ($state):
+                        $flashMessage = "O depósito de R$ ${valor} foi transacionado com sucesso!";
+                        $alert = 'success';
+                    endif;
+
+                } catch (ModelException $e) {
+                    $flashMessage = "Erro ao transacionar este depósito de R$ ${valor}. Tente novamente mais tarde!";
+                    $alert = 'danger';
+                }
+
                 break;
 
             case 'saque':
-                ContasModel::saque($id_conta, $valor);
+
+                try {
+                    $state = ContasModel::saque($id_conta, $valor);
+
+                    // Controle as flash messages baseado no retorno do Model
+                    if ($state):
+                        $flashMessage = "O saque de R$ ${valor} foi transacionado com sucesso!";
+                        $alert = 'success';
+                    endif;
+
+                } catch (ModelException $e) {
+                    $flashMessage = "Erro ao transacionar este saque de R$ ${valor}. Verifique seu saldo e tente novamente mais tarde!";
+                    $alert = 'danger';
+                }
+
                 break;
 
             default:
                 echo 'Operação inválida!';
         }
+
+        View::renderTemplate('Contas/deposito/index', [
+            'flashMessage' => $flashMessage,
+            'flashAlert' => $alert,
+            'newMessage' => true,
+            'quantidade_agencias' => 'undefined'
+        ]);
     }
 }

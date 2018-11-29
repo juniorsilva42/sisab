@@ -87,6 +87,13 @@
 
                 </form>
 
+                {% if newMessage == true %}
+                    <div class="alert alert-{{ flashAlert }}" role="alert">{{ flashMessage }} <a href="{{ path }}agencias/listar">Ver</a> </div>
+                    <script>
+                        setTimeout("document.location = '{{ path }}contas/listar' ", 3000);
+                    </script>
+                {% endif %}
+
             </div> <!--card-body-->
 
         </div> <!--card-->

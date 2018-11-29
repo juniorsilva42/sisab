@@ -70,13 +70,10 @@ class AgenciasController extends \Core\Controller {
             if ($state):
                 $flashMessage = 'A agência foi deletada com sucesso!';
                 $alert = 'success';
-            else:
-                $flashMessage = 'Erro ao deletar a agência!';
-                $alert = 'danger';
             endif;
 
         } catch (ModelException $e) {
-            $flashMessage = "Erro ao deletar a agência!";
+            $flashMessage = "OPA! Erro ao deletar a agência!";
             $alert = 'danger';
         }
 
@@ -118,10 +115,10 @@ class AgenciasController extends \Core\Controller {
 
                 // Controle as flash messages baseado no retorno do Model
                 if ($state):
-                    $flashMessage = 'A agência foi editada com sucesso!';
+                    $flashMessage = 'A agência foi atualizada com sucesso!';
                     $alert = 'success';
                 else:
-                    $flashMessage = 'Erro ao editar a agência!';
+                    $flashMessage = 'OPA! Houve algum erro ao atualizar à agência!';
                     $alert = 'danger';
                 endif;
 

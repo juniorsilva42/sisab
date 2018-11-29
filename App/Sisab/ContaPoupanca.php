@@ -9,6 +9,7 @@ final class ContaPoupanca extends Conta {
     public function __construct($numeroConta, $tipo, $id_agencia, $rendimento = 5) {
         parent::__construct($numeroConta, $tipo, $id_agencia);
         $this->rendimento = $rendimento;
+        $this->saldo += ($this->rendimento * $this->saldo) / 100;
     }
 
     public function extrato() {

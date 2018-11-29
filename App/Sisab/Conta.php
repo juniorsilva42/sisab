@@ -35,7 +35,7 @@ abstract class Conta implements ContaInterface {
     }
 
     public final function deposito ($valor) {
-        $conta->saldo += $valor;
+        $this->saldo += $valor;
     }
 
     public function saque($valor) {
