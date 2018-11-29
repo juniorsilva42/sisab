@@ -34,11 +34,11 @@ class ContasController extends \Core\Controller {
     public function criarAction () {
 
         // Obtem os dados do formulário pela Query String do Request
-        $numero = ($_REQUEST['numero']) ? $_REQUEST['numero'] : null;
-        $limite = ($_REQUEST['limite']) ? $_REQUEST['limite'] : 0;
-        $rendimento = ($_REQUEST['rendimento']) ? $_REQUEST['rendimento'] : 0;
-        $tipo = ($_REQUEST['tipo']) ? $_REQUEST['tipo'] : 'CONTA_POUPANCA';
-        $id_agencia = ($_REQUEST['agencia']) ? $_REQUEST['agencia'] : 0;
+        $numero = (isset($_REQUEST['numero'])) ? $_REQUEST['numero'] : null;
+        $limite = (isset($_REQUEST['limite'])) ? $_REQUEST['limite'] : null;
+        $rendimento = (isset($_REQUEST['rendimento'])) ? $_REQUEST['rendimento'] : null;
+        $tipo = (isset($_REQUEST['tipo'])) ? $_REQUEST['tipo'] : 'CONTA_POUPANCA';
+        $id_agencia = (isset($_REQUEST['agencia'])) ? $_REQUEST['agencia'] : 0;
 
         switch ($tipo) {
             case 'CONTA_POUPANCA':

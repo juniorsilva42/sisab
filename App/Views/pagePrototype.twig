@@ -26,11 +26,18 @@
         $('#selectTipo').change(function() {
             $('.input-limite').hide();
             $('.input-rendimento').hide();
+            $('#inputLimite').remove();
+            $('#inputRendimento').remove();
 
             if ($('#selectTipo').val() === 'CONTA_ESPECIAL') {
+                $('.input-limite .col-sm-10').append('<input type="number" class="form-control" name="limite" id="inputLimite" placeholder="Limite">');
                 $('.input-limite').show();
             } else if ($('#selectTipo').val() === 'CONTA_POUPANCA') {
+                $('.input-rendimento .col-sm-10').append('<input type="number" class="form-control" name="rendimento" id="inputRendimento" placeholder="Rendimento">');
                 $('.input-rendimento').show();
+            } else {
+                $('#inputLimite').remove();
+                $('#inputRendimento').remove();
             }
         });
     });

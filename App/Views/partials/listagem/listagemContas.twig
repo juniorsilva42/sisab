@@ -27,16 +27,16 @@
                     <td>{{ conta.numero }}</td>
                     <td>R$ {{ conta.saldo }}</td>
 
-                    {% if conta.limite != NULL or conta.limite != 0 %}
-                        <td>R$ {{ conta.limite }}</td>
-                    {% else %}
+                    {% if conta.limite == NULL or conta.limite == 0 %}
                         <td>Não se aplica</td>
+                    {% else %}
+                        <td>R$ {{ conta.limite }}</td>
                     {% endif %}
 
-                    {% if conta.rendimento != NULL or conta.rendimento != 0 %}
-                        <td>{{ conta.rendimento }}%</td>
-                    {% else %}
+                    {% if conta.rendimento == NULL or conta.rendimento == 0 %}
                         <td>Não se aplica</td>
+                    {% else %}
+                        <td>{{ conta.rendimento }}%</td>
                     {% endif %}
 
                     <td>{{ conta.tipo }}</td>

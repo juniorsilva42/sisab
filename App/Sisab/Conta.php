@@ -12,7 +12,7 @@ abstract class Conta implements ContaInterface {
     protected $saldo;
     protected $tipo;
 
-    public function __construct($numeroConta, $tipo, $id_conta, $id_agencia = null) {
+    public function __construct($numeroConta, $tipo, $id_agencia = null) {
         $this->numero = $numeroConta;
         $this->tipo = $tipo;
         $this->id_agencia = $id_agencia;
