@@ -248,21 +248,26 @@ class ContasController extends \Core\Controller {
 
             case 'transferencia':
 
-                try {
-                    $state = ContasModel::transferencia($id_conta_origem, $id_conta_destino, $valor);
+                if ($id_conta_origem == $id_conta_destino) {
+                    $flashMessage = "Erro ao transacionar esta transferência de R$ ${valor}. A conta de origem não pode ser igual a conta de destino.";
+                    $alert = 'danger';
+                } else {
+                    try {
+                        $state = ContasModel::transferencia($id_conta_origem, $id_conta_destino, $valor);
 
-                    // Controle as flash messages baseado no retorno do Model
-                    if ($state):
-                        $flashMessage = "A transferência de R$ ${valor} foi transacionada entre as contas com sucesso!";
-                        $alert = 'success';
-                    else:
+                        // Controle as flash messages baseado no retorno do Model
+                        if ($state):
+                            $flashMessage = "A transferência de R$ ${valor} foi transacionada entre as contas com sucesso!";
+                            $alert = 'success';
+                        else:
+                            $flashMessage = "Erro ao transacionar esta transferência de R$ ${valor}. Tente novamente mais tarde.";
+                            $alert = 'danger';
+                        endif;
+
+                    } catch (\PDOException $e) {
                         $flashMessage = "Erro ao transacionar esta transferência de R$ ${valor}. Tente novamente mais tarde.";
                         $alert = 'danger';
-                    endif;
-
-                } catch (\PDOException $e) {
-                    $flashMessage = "Erro ao transacionar esta transferência de R$ ${valor}. Tente novamente mais tarde.";
-                    $alert = 'danger';
+                    }
                 }
 
                 break;

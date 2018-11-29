@@ -74,10 +74,29 @@
                 </form>
 
                 {% if newMessage == true %}
-                    <div class="alert alert-{{ flashAlert }}" role="alert">{{ flashMessage }} <a href="{{ path }}contas/listar">Ver</a> </div>
-                    <script>
-                        setTimeout("document.location = '{{ path }}contas/listar' ", 2000);
-                    </script>
+                    <div class="alert alert-{{ flashAlert }}" role="alert">
+                        {{ flashMessage }}
+
+                        {% if flashAlert == 'success' and tipo != 'operacao' %}
+                            <a href="{{ path }}contas/listar">Ver</a>
+                            <script>
+                                setTimeout("document.location = '{{ path }}contas/listar' ", 2000);
+                            </script>
+                        {% endif %}
+
+                        {% if flashAlert == 'success' and tipo == 'operacao' and operacao == 'transferencia' %}
+                            <a href="{{ path }}contas/listar">Mostrar</a>
+                            <script>
+                                setTimeout("document.location = '{{ path }}contas/listar' ", 2000);
+                            </script>
+                        {% endif %}
+
+                        {% if flashAlert == 'danger' and tipo == 'operacao' and operacao == 'transferencia' %}
+                            <script>
+                                setTimeout("document.location = '{{ path }}contas/transferencia' ", 2000);
+                            </script>
+                        {% endif %}
+                    </div>
                 {% endif %}
 
             </div> <!--card-body-->

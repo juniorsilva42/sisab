@@ -54,7 +54,18 @@
                 </form>
 
                 {% if newMessage == true %}
-                    <div class="alert alert-{{ flashAlert }}" role="alert">{{ flashMessage }} <a href="{{ path }}contas/listar">Ver</a> </div>
+                    <div class="alert alert-{{ flashAlert }}" role="alert">
+                        <div class="alert alert-{{ flashAlert }}" role="alert">
+                            {{ flashMessage }}
+
+                            {% if flashAlert == 'success' and tipo != 'operacao' %}
+                                <a href="{{ path }}contas/listar">Ver</a>
+                            {% endif %}
+
+                            {% if flashAlert == 'success' and tipo == 'operacao' and operacao == 'deposito' %}
+                                <a href="{{ path }}contas/extrato/{{ id_conta }}">Ver extrato</a>
+                            {% endif %}
+                        </div>
                     <script>
                         setTimeout("document.location = '{{ path }}contas/deposito' ", 3000);
                     </script>
