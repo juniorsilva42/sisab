@@ -7,6 +7,7 @@ use App\Models\ContasModel;
 use App\Sisab\ContaCorrente;
 use App\Sisab\ContaEspecial;
 use App\Sisab\ContaPoupanca;
+use App\Sisab\Exception\EstouroSaldoException;
 use App\Sisab\Exception\ModelException;
 use Core\Util\HttpHelpers;
 use Core\View;
@@ -131,10 +132,7 @@ class ContasController extends \Core\Controller {
             ]);
         } else {
 
-            $conta = new ContaCorrente();
-            $conta->setNumero($numero);
-            $conta->setSaldo($saldo);
-            $conta->setTipo($tipo);
+            $conta = new ContaCorrente($numero, $tipo);
             $conta->setId($id_conta);
 
             try {
@@ -143,14 +141,14 @@ class ContasController extends \Core\Controller {
 
                 // Controle as flash messages baseado no retorno do Model
                 if ($state):
-                    $flashMessage = 'A agência foi atualizada com sucesso!';
+                    $flashMessage = 'A conta foi atualizada com sucesso!';
                     $alert = 'success';
                 else:
-                    $flashMessage = 'OPA! Houve algum erro ao atualizar à agência!';
+                    $flashMessage = 'OPA! Houve algum erro ao atualizar a conta!';
                     $alert = 'danger';
                 endif;
 
-                View::renderTemplate("Agencias/editar", [
+                View::renderTemplate("Contas/listar", [
                     'flashMessage' => $flashMessage,
                     'flashAlert' => $alert,
                     'newMessage' => true
@@ -241,6 +239,9 @@ class ContasController extends \Core\Controller {
 
                 } catch (\PDOException $e) {
                     $flashMessage = "Erro ao transacionar este saque de R$ ${valor}. Verifique seu saldo e tente novamente mais tarde!";
+                    $alert = 'danger';
+                } catch (EstouroSaldoException $e) {
+                    $flashMessage = $e->getMessage();
                     $alert = 'danger';
                 }
 

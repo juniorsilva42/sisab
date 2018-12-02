@@ -20,7 +20,7 @@
                     <div class="form-group row">
                         <label for="inputNumero" class="col-sm-2 col-form-label">Número da conta</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="nome" id="inputNumero" placeholder="Número da conta" value="{{ numero }}" required>
+                            <input type="text" class="form-control" name="numero" id="inputNumero" placeholder="Número da conta" value="{{ numero }}" required>
                         </div>
                         <div class="valid-feedback">
                             Parece bom!
@@ -74,13 +74,14 @@
 
                 </form>
 
+                <!--
                 {% if newMessage == true %}
                     <div class="alert alert-{{ flashAlert }}" role="alert">{{ flashMessage }} <a href="{{ path }}contas/listar">Ver</a> </div>
                     <script>
                         setTimeout("document.location = '{{ path }}contas/listar' ", 2000);
                     </script>
                 {% endif %}
-
+                   -->
             </div> <!--card-body-->
 
         </div>

@@ -67,7 +67,7 @@ class Router {
                 throw new \Exception("A classe de Controller ${controller} não foi encontrada");
             }
         } else {
-            throw new \Exception('Rota não encontrada', 404);
+            throw new \Exception('OPA! Esta página não foi encontrada!', 404);
         }
     }
 
