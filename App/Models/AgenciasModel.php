@@ -10,15 +10,16 @@ class AgenciasModel extends \Core\Model {
 
     private static $db_instance;
 
-    private static function getDbinstance () {
+    private static function getDbInstance () {
         try {
             self::$db_instance = static::getConnection();
             return self::$db_instance;
         } catch (\PDOException $e) {
             die($e->getMessage());
+        } finally {
+            self::$db_instance = null;
         }
     }
-
     /**
      *
      * Obtém todas agências

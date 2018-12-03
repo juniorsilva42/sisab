@@ -18,6 +18,17 @@
                 <form class="needs-validation" novalidate method="GET" action="{{ path }}contas/editar">
 
                     <div class="form-group row">
+                        <label for="selectTipo" class="col-sm-2 col-form-label">Tipo</label>
+                        <div class="col-sm-10">
+                            <select name="tipo" class="form-control custom-select" id="selectTipo" required>
+                                <option {% if tipo == 'CONTA_CORRENTE' %} selected {% endif%} value="CONTA_CORRENTE">Conta Corrente</option>
+                                <option {% if tipo == 'CONTA_POUPANCA' %} selected {% endif%} value="CONTA_POUPANCA">Conta Poupança</option>
+                                <option {% if tipo == 'CONTA_ESPECIAL' %} selected {% endif%}value="CONTA_ESPECIAL">Conta Especial</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label for="inputNumero" class="col-sm-2 col-form-label">Número da conta</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="numero" id="inputNumero" placeholder="Número da conta" value="{{ numero }}" required>
@@ -30,41 +41,18 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label for="selectTipo" class="col-sm-2 col-form-label">Tipo</label>
-                        <div class="col-sm-10">
-                            <select name="tipo" class="form-control custom-select" id="selectTipo" required>
-                                <option {% if tipo == 'CONTA_CORRENTE' %} selected {% endif%} value="CONTA_CORRENTE">Conta Corrente</option>
-                                <option {% if tipo == 'CONTA_POUPANCA' %} selected {% endif%} value="CONTA_POUPANCA">Conta Poupança</option>
-                                <option {% if tipo == 'CONTA_ESPECIAL' %} selected {% endif%}value="CONTA_ESPECIAL">Conta Especial</option>
-                            </select>
-                        </div>
+                    <div class="form-group row input-limite" style="display: none;">
+                        <label for="inputLimite" class="col-sm-2 col-form-label">Limite</label>
+                        <div class="col-sm-10"></div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row input-rendimento" style="display: none;">
                         <label for="inputRendimento" class="col-sm-2 col-form-label">Rendimento</label>
-                        <div class="col-sm-10">
-                            <input type="number" class="form-control" id="inputRendimento" value="{{ rendimento }}" disabled>
-                        </div>
+                        <div class="col-sm-10"></div>
                     </div>
-
-                    {% if tipo == 'CONTA_ESPECIAL' %}
-                        <div class="form-group row">
-                            <label for="inputLimite" class="col-sm-2 col-form-label">Limite</label>
-                            <div class="col-sm-10">
-                                <input type="number" class="form-control" name="limite" id="inputLimite" placeholder="Limite" value="{{ limite }}"required>
-                            </div>
-                            <div class="valid-feedback">
-                                Parece Bom!
-                            </div>
-                            <div class="invalid-feedback">
-                                Digite um limite válido para a conta
-                            </div>
-                        </div>
-                    {% endif %}
 
                     <input type="hidden" name="sign" value="do">
-                    <input type="hidden" name="id" value="{{ id_conta }}">
+                    <input type="hidden" name="cid" value="{{ id_conta }}">
 
                     <div class="form-group row">
                         <div class="col-sm-10">

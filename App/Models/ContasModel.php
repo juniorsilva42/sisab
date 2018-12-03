@@ -91,16 +91,19 @@ class ContasModel extends \Core\Model {
 
     static public function update (Conta $conta) {
 
-        $sql = 'UPDATE contas SET numero = ?, saldo = ?, limite = ? WHERE id = ?';
+        $sql = 'UPDATE contas SET numero = ?, saldo = ?, limite = ?, rendimento = ?, tipo = ? WHERE id = ?';
 
-        $condicaoContaEspecial = ($conta->getTipo() == 'CONTA_ESPECIAL') ? $conta->getLimite() : null;
+        $condicaoContaEspecial = ($conta->getTipo() == 'CONTA_ESPECIAL') ? $conta->getLimite() : NULL;
+        $condicaoContaPoupanca = ($conta->getTipo() == 'CONTA_POUPANCA') ? $conta->getRendimento() : NULL;
 
         try {
             $stmt = self::getDbInstance()->prepare($sql);
             $stmt->bindValue(1, $conta->getNumero(), PDO::PARAM_STR);
             $stmt->bindValue(2, $conta->getSaldo(), PDO::PARAM_INT);
             $stmt->bindValue(3, $condicaoContaEspecial, PDO::PARAM_INT);
-            $stmt->bindValue(4, $conta->getId(), PDO::PARAM_INT);
+            $stmt->bindValue(4, $condicaoContaPoupanca, PDO::PARAM_INT);
+            $stmt->bindValue(5, $conta->getTipo(), PDO::PARAM_STR);
+            $stmt->bindValue(6, $conta->getId(), PDO::PARAM_INT);
 
             return $stmt->execute();
         } catch (\PDOException $e) {

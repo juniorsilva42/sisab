@@ -22,7 +22,7 @@ Normalmente costuma-se dizer que um parâmetro é do tipo mixed. Este tipo não 
      *
      * */
 
-    public function __construct($numConta = null, $tipo = null, $id_agencia = 0) {
+    public function __construct($numConta = null, $tipo) {
         parent::__construct($numConta, $tipo);
     }
 

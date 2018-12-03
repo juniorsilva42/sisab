@@ -55,22 +55,22 @@ class ContasController extends \Core\Controller {
         switch ($tipo) {
             case 'CONTA_POUPANCA':
                 $conta = new ContaPoupanca($numero, $tipo, $rendimento);
-                $conta->setIdAgenca($id_agencia);
+                $conta->setIdAgencia($id_agencia);
                 break;
 
             case 'CONTA_CORRENTE':
                 $conta = new ContaCorrente($numero, $tipo);
-                $conta->setIdAgenca($id_agencia);
+                $conta->setIdAgencia($id_agencia);
                 break;
 
             case 'CONTA_ESPECIAL':
                 $conta = new ContaEspecial($numero, $tipo, $limite);
-                $conta->setIdAgenca($id_agencia);
+                $conta->setIdAgencia($id_agencia);
                 break;
 
             default:
                 $conta = new ContaPoupanca($numero, $tipo, $rendimento);
-                $conta->setIdAgenca($id_agencia);
+                $conta->setIdAgencia($id_agencia);
         }
 
         try {
@@ -151,10 +151,29 @@ class ContasController extends \Core\Controller {
             ]);
         } else {
 
-            $conta = new ContaCorrente($numero, $tipo);
-            $conta->setId($id_conta);
+            switch ($tipo) {
+                case 'CONTA_POUPANCA':
+                    $conta = new ContaPoupanca($numero, $tipo, $rendimento);
+                    $conta->setId($id_conta);
+                    break;
+
+                case 'CONTA_CORRENTE':
+                    $conta = new ContaCorrente($numero, $tipo);
+                    $conta->setId($id_conta);
+                    break;
+
+                case 'CONTA_ESPECIAL':
+                    $conta = new ContaEspecial($numero, $tipo, $limite);
+                    $conta->setId($id_conta);
+                    break;
+
+                default:
+                    $conta = new ContaPoupanca($numero, $tipo, $rendimento);
+                    $conta->setId($id_conta);
+            }
 
             try {
+
 
                 $state = ContasModel::update($conta);
 
@@ -168,9 +187,12 @@ class ContasController extends \Core\Controller {
                 endif;
 
                 View::renderTemplate("Contas/listar", [
-                    'flashMessage' => $flashMessage,
-                    'flashAlert' => $alert,
-                    'newMessage' => true
+                    'notification' => [
+                        'flashMessage' => $flashMessage,
+                        'flashAlert' => $alert,
+                        'newMessage' => true,
+                        'state' => true
+                    ]
                 ]);
 
             } catch (ModelException $e) {}
