@@ -8,6 +8,7 @@ use App\Sisab\ContaCorrente;
 use App\Sisab\ContaEspecial;
 use App\Sisab\ContaPoupanca;
 use App\Sisab\Exception\EstouroSaldoException;
+use App\Sisab\Exception\FormatoNumeroException;
 use App\Sisab\Exception\ModelException;
 use Core\Util\HttpHelpers;
 use Core\View;
@@ -76,22 +77,31 @@ class ContasController extends \Core\Controller {
         try {
             $state = ContasModel::create($conta);
 
-            // Controle as flash messages baseado no retorno do Model
-            if ($state):
-                $flashMessage = 'A conta foi criada com sucesso!';
-                $alert = 'success';
-            endif;
-
-        } catch (ModelException $e) {
-            $flashMessage = "OPA! Houve algum erro ao criar a conta";
-            $alert = 'danger';
+            $notification = [
+                'newMessage' => true,
+                'state' => true,
+                'flashMessage' => 'Conta adicionada com sucesso!',
+                'flashAlert' => 'success'
+            ];
+        } catch (\PDOException $e) {
+            $notification = [
+                'newMessage' => true,
+                'state' => false,
+                'flashMessage' => $e->getMessage(),
+                'flashAlert' => 'danger'
+            ];
+        } catch (FormatoNumeroException $e) {
+            $notification = [
+                'newMessage' => true,
+                'state' => false,
+                'flashMessage' => $e->getMessage(),
+                'flashAlert' => 'danger'
+            ];
         }
 
         // Renderiza o template implantando as variáveis de controle
         View::renderTemplate('Contas/index', [
-            'flashMessage' => $flashMessage,
-            'flashAlert' => $alert,
-            'newMessage' => true,
+            'notification' => $notification,
             'quantidade_agencias' => 'undefined'
         ]);
     }
@@ -107,7 +117,7 @@ class ContasController extends \Core\Controller {
                 'newMessage' => true,
                 'state' => true,
                 'redirect' => true,
-                'flashMessage' => 'A conta foi deletada com sucesso!',
+                'flashMessage' => 'Conta deletada com sucesso!',
                 'flashAlert' => 'success'
             ];
         } catch (\PDOException $e) {
@@ -155,32 +165,28 @@ class ContasController extends \Core\Controller {
                 case 'CONTA_POUPANCA':
                     $conta = new ContaPoupanca($numero, $tipo, $rendimento);
                     $conta->setId($id_conta);
-                    $conta->setSaldo($saldo);
                     break;
 
                 case 'CONTA_CORRENTE':
                     $conta = new ContaCorrente($numero, $tipo);
                     $conta->setId($id_conta);
-                    $conta->setSaldo($saldo);
                     break;
 
                 case 'CONTA_ESPECIAL':
                     $conta = new ContaEspecial($numero, $tipo, $limite);
                     $conta->setId($id_conta);
-                    $conta->setSaldo($saldo);
                     break;
 
                 default:
                     $conta = new ContaPoupanca($numero, $tipo, $rendimento);
                     $conta->setId($id_conta);
-                    $conta->setSaldo($saldo);
             }
 
             try {
                 $state = ContasModel::update($conta);
 
                 $notification = [
-                    'flashMessage' => 'A conta foi atualizada com sucesso!',
+                    'flashMessage' => 'Conta atualizada com sucesso!',
                     'alert' => 'success',
                     'newMessage' => true,
                     'state' => true
@@ -196,7 +202,8 @@ class ContasController extends \Core\Controller {
             }
 
             View::renderTemplate("Contas/listar", [
-                'notification' => $notification
+                'notification' => $notification,
+                'quantidade' => 'undefined'
             ]);
         }
     }

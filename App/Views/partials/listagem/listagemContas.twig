@@ -6,15 +6,15 @@
 
     {% else %}
 
-    {% if notification.newMessage == true and notification.state == false %}
+        {% if notification.newMessage == true and notification.state == false %}
 
-        <div class="alert alert-{{ notification.flashAlert }}" role="alert"> {{ notification.flashMessage }}</div>
+            <div class="alert alert-{{ notification.flashAlert }}" role="alert"> {{ notification.flashMessage }}</div>
 
-        {% if notification.redirect == true %}
-            <script> setTimeout("document.location = '{{ path }}contas/listar' ", 2000); </script>
-        {% endif %}
+            {% if notification.redirect == true %}
+                <script> setTimeout("document.location = '{{ path }}contas/listar' ", 2000); </script>
+            {% endif %}
 
-    {% else %}
+        {% else %}
 
         <h2 class="h2-heading">Contas cadastradas no Sistema</h2>
 
@@ -74,13 +74,13 @@
             </tbody>
         </table>
 
-        {% endif %}
-
         {% if notification.newMessage == true and notification.state == true %}
             <div class="alert alert-{{ notification.flashAlert }}" role="alert"> {{ notification.flashMessage }}</div>
             {% if notification.redirect == true %}
                 <script> setTimeout("document.location = '{{ path }}contas/listar' ", 1250); </script>
             {% endif %}
+        {% endif %}
+
         {% endif %}
 
     {% endif %}

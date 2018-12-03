@@ -71,14 +71,21 @@
 
                 </form>
 
-                {% if newMessage == true %}
-                    <div class="alert alert-{{ flashAlert }}" role="alert">
-                        {{ flashMessage }} <a href="{{ path }}contas/listar">Ver</a>
-                    </div>
+                {% if notification.newMessage == true %}
+                    <div class="alert alert-{{ notification.flashAlert }}" role="alert">
+                        {{ notification.flashMessage }}
 
-                    <script>
-                        setTimeout("document.location = '{{ path }}contas/listar' ", 2300);
-                    </script>
+                        {% if notification.state == true %}
+                            <a href="{{ path }}contas/listar">Mostrar</a>
+                            <script>
+                                setTimeout("document.location = '{{ path }}contas/listar' ", 2300);
+                            </script>
+                        {% else %}
+                            <script>
+                                setTimeout("document.location = '{{ path }}contas' ", 2000);
+                            </script>
+                        {% endif %}
+                    </div>
                 {% endif %}
 
             </div> <!--card-body-->

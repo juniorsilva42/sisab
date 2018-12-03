@@ -20,6 +20,7 @@ class AgenciasModel extends \Core\Model {
             self::$db_instance = null;
         }
     }
+
     /**
      *
      * Obtém todas agências
@@ -35,7 +36,7 @@ class AgenciasModel extends \Core\Model {
 
             return $stmt->fetchAll(PDO::FETCH_OBJ);
         } catch (\PDOException $e) {
-            throw new \Exception("Erro model");
+            throw new \PDOException("Erro model");
         }
     }
 

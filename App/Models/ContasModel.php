@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Sisab\Conta;
 use App\Sisab\Exception\EstouroSaldoException;
+use App\Sisab\Exception\FormatoNumeroException;
 use App\Sisab\Exception\ModelException;
 use PDO;
 
@@ -11,6 +12,11 @@ class ContasModel extends \Core\Model {
 
     private static $db_instance;
 
+    /**
+     *
+     * Obtém a instância do banco de dados
+     *
+     */
     private static function getDbInstance () {
         try {
             self::$db_instance = static::getConnection();
@@ -32,6 +38,25 @@ class ContasModel extends \Core\Model {
         try {
             $stmt = self::getDbinstance()->prepare($sql);
 
+            $numero = str_split($conta->getNumero());
+
+            $quantidadeNumeros = 0;
+            $quantidadeLetras = 0;
+
+            foreach ($numero as $numeroPorCaractere) {
+                if (is_numeric($numeroPorCaractere)) {
+                    $quantidadeNumeros++;
+                } else if ($numeroPorCaractere != '-') {
+                    $quantidadeLetras++;
+                }
+            }
+
+            if ($quantidadeLetras >= 3) {
+                throw new FormatoNumeroException('A conta não pode conter mais que duas letras!');
+            } else if (strlen($conta->getNumero()) < 4 || strlen($conta->getNumero()) >= 10) {
+                throw new FormatoNumeroException('A conta deve conter um número entre 4 e 10 caracteres');
+            }
+
             $stmt->bindValue(1, $conta->getNumero(), PDO::PARAM_STR);
             $stmt->bindValue(2, $conta->getSaldo(), PDO::PARAM_INT);
             $stmt->bindValue(3, $condicaoContaEspecial , PDO::PARAM_INT);
@@ -42,7 +67,7 @@ class ContasModel extends \Core\Model {
             return $stmt->execute();
 
         } catch (\PDOException $e) {
-            throw new \PDOException("Erro model");
+            throw new \PDOException("OOPS! Houve algum erro ao tentar criar esta conta, tente novamente mais tarde.");
         }
     }
 
@@ -95,8 +120,6 @@ class ContasModel extends \Core\Model {
 
         $condicaoContaEspecial = ($conta->getTipo() == 'CONTA_ESPECIAL') ? $conta->getLimite() : NULL;
         $condicaoContaPoupanca = ($conta->getTipo() == 'CONTA_POUPANCA') ? $conta->getRendimento() : NULL;
-
-
 
         try {
             $stmt = self::getDbInstance()->prepare($sql);
