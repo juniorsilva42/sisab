@@ -107,7 +107,7 @@ class ContasModel extends \Core\Model {
 
             return $stmt->execute();
         } catch (\PDOException $e) {
-            throw new ModelException("Erro ao atualizar o registro");
+            throw new \PDOException("Erro ao atualizar o registro");
         }
     }
 
@@ -134,7 +134,7 @@ class ContasModel extends \Core\Model {
 
             return $stmt2->execute();
         } catch (\PDOException $e) {
-            throw new \Exception("Erro model");
+            throw new \PDOException("Erro ao transacionar este depósito. Tente novamente mais tarde.");
         }
     }
 
@@ -160,14 +160,12 @@ class ContasModel extends \Core\Model {
                 $stmt2->bindValue(2, $id_conta, PDO::PARAM_INT);
 
                 return $stmt2->execute();
-
             } else {
-                throw new EstouroSaldoException("O seu saldo é insuficiente para transacionar este saque. ");
+                throw new EstouroSaldoException("Saldo insuficiente para transacionar este saque.");
             }
 
-            $db = null;
         } catch (\PDOException $e) {
-            throw new \PDOException("Erro ao tentar fazer a operação no banco de dados, tente novamente mais tarde.");
+            throw new \PDOException("OPS! Houve um erro interno ao transacionar este saque. Contate o administrador do sistema.");
         }
     }
 
@@ -184,7 +182,9 @@ class ContasModel extends \Core\Model {
 
             return false;
         } catch (\PDOException $e) {
-            throw new \Exception("Erro ao tentar realizar a transferência");
+            throw new \PDOException("OPS! Houve um erro interno ao transacionar esta transferência. Contate o administrador do sistema.");
+        } catch (EstouroSaldoException $e) {
+            throw new EstouroSaldoException("Saldo insuficiente para transacionar esta transferência.");
         }
     }
 }

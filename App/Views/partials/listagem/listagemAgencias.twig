@@ -22,18 +22,18 @@
 
             {% for agencia in agencias %}
                 <tr>
-                    <td>{{ agencia.numero_agencia }}</td>
-                    <td>{{ agencia.nome_agencia }}</td>
+                    <td>{{ agencia.numero }}</td>
+                    <td>{{ agencia.nome }}</td>
                     <td>{{ agencia.endereco }}</td>
                     <td>{{ agencia.capacidade }}</td>
                     {% if controller  != 'listagem' %}
                     <td>
-                        <a href="{{ path }}agencias/editar?nome={{ agencia.nome_agencia }}&numero={{ agencia.numero_agencia }}&id={{ agencia.id_agencia }}&endereco={{ agencia.endereco }}&capacidade={{ agencia.capacidade }}" data-toggle="tooltip" data-placement="top" title="Editar">
+                        <a href="{{ path }}agencias/editar?nome={{ agencia.nome }}&numero={{ agencia.numero }}&id={{ agencia.id }}&endereco={{ agencia.endereco }}&capacidade={{ agencia.capacidade }}" data-toggle="tooltip" data-placement="top" title="Editar">
                             <i class="fas fa-edit icon"></i>
                         </a>
                         <i class="fas icon">|</i>
-                        <a href="{{ path }}agencias/deletar/{{ agencia.id_agencia }}">
-                            <i class="fas fa-trash-alt icon" data-toggle="tooltip" data-placement="top" title="Deletar" data-id="{{ agencia.id_agencia }}"></i>
+                        <a href="{{ path }}agencias/deletar/{{ agencia.id }}">
+                            <i class="fas fa-trash-alt icon" data-toggle="tooltip" data-placement="top" title="Deletar" data-id="{{ agencia.id }}"></i>
                         </a>
                         <i class="fas icon">|</i>
                         <a href="" data-toggle="tooltip" data-placement="top" title="Sincronizar">
@@ -47,9 +47,9 @@
             </tbody>
         </table>
 
-        {% if newMessage == true %}
-            <div class="alert alert-{{ flashAlert }}" role="alert"> {{ flashMessage }}</div>
-            <script> setTimeout("document.location = '{{ path }}contas/listar' ", 3000); </script>
+        {% if notification.newMessage == true and notification.state == true %}
+            <div class="alert alert-{{ notification.flashAlert }}" role="alert"> {{ notification.flashMessage }}</div>
+            <script> setTimeout("document.location = '{{ path }}contas/listar' ", 2000); </script>
         {% endif %}
 
     {% endif %}

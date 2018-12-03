@@ -73,25 +73,25 @@
 
                 </form>
 
-                {% if newMessage == true %}
-                    <div class="alert alert-{{ flashAlert }}" role="alert">
-                        {{ flashMessage }}
+                {% if notification.newMessage == true %}
+                    <div class="alert alert-{{ notification.flashAlert }}" role="alert">
+                        {{ notification.flashMessage }}
 
-                        {% if flashAlert == 'success' and tipo != 'operacao' %}
-                            <a href="{{ path }}contas/listar">Ver</a>
-                            <script>
-                                setTimeout("document.location = '{{ path }}contas/listar' ", 2000);
-                            </script>
-                        {% endif %}
-
-                        {% if flashAlert == 'success' and tipo == 'operacao' and operacao == 'transferencia' %}
+                        {% if notification.flashAlert == 'success' and tipo != 'operacao' %}
                             <a href="{{ path }}contas/listar">Mostrar</a>
                             <script>
                                 setTimeout("document.location = '{{ path }}contas/listar' ", 2000);
                             </script>
                         {% endif %}
 
-                        {% if flashAlert == 'danger' and tipo == 'operacao' and operacao == 'transferencia' %}
+                        {% if notification.flashAlert == 'success' and tipo == 'operacao' and operacao == 'transferencia' %}
+                            <a href="{{ path }}contas/listar">Mostrar</a>
+                            <script>
+                                setTimeout("document.location = '{{ path }}contas/listar' ", 2000);
+                            </script>
+                        {% endif %}
+
+                        {% if notification.flashAlert == 'danger' and tipo == 'operacao' and operacao == 'transferencia' %}
                             <script>
                                 setTimeout("document.location = '{{ path }}contas/transferencia' ", 2000);
                             </script>

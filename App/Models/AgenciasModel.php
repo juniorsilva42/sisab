@@ -29,10 +29,10 @@ class AgenciasModel extends \Core\Model {
 
         $sql = 'SELECT * FROM agencias';
 
-        $db = static::getConnection();
-
         try {
-            $stmt = $db->prepare($sql);
+            $stmt = self::getDbInstance()->prepare($sql);
+            $stmt->execute();
+
             return $stmt->fetchAll(PDO::FETCH_OBJ);
         } catch (\PDOException $e) {
             throw new \Exception("Erro model");

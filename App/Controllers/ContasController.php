@@ -173,30 +173,27 @@ class ContasController extends \Core\Controller {
             }
 
             try {
-
-
                 $state = ContasModel::update($conta);
 
-                // Controle as flash messages baseado no retorno do Model
-                if ($state):
-                    $flashMessage = 'A conta foi atualizada com sucesso!';
-                    $alert = 'success';
-                else:
-                    $flashMessage = 'OPA! Houve algum erro ao atualizar a conta!';
-                    $alert = 'danger';
-                endif;
+                $notification = [
+                    'flashMessage' => 'A conta foi atualizada com sucesso!',
+                    'alert' => 'success',
+                    'newMessage' => true,
+                    'state' => true
+                ];
 
-                View::renderTemplate("Contas/listar", [
-                    'notification' => [
-                        'flashMessage' => $flashMessage,
-                        'flashAlert' => $alert,
-                        'newMessage' => true,
-                        'state' => true
-                    ]
-                ]);
+            } catch (\PDOException $e) {
+                $notification = [
+                  'flashMessage' => $e->getMessage(),
+                  'alert' => 'danger',
+                  'newMessage' => true,
+                  'state' => false
+                ];
+            }
 
-            } catch (ModelException $e) {}
-
+            View::renderTemplate("Contas/listar", [
+                'notification' => $notification
+            ]);
         }
     }
 
@@ -282,21 +279,26 @@ class ContasController extends \Core\Controller {
                 try {
                     $state = ContasModel::saque($id_conta, $valor);
 
-                    // Controle as flash messages baseado no retorno do Model
-                    if ($state):
-                        $flashMessage = "O saque de R$ ${valor} foi transacionado com sucesso!";
-                        $alert = 'success';
-                    else:
-                        $flashMessage = "Erro ao transacionar este saque de R$ ${valor}. Verifique seu saldo e tente novamente mais tarde!";
-                        $alert = 'danger';
-                    endif;
-
+                    $notification = [
+                        'newMessage' => true,
+                        'flashMessage' => "O saque de R$ {$valor} foi transacionado com sucesso!",
+                        'flashAlert' => 'success',
+                        'state' => true
+                    ];
                 } catch (\PDOException $e) {
-                    $flashMessage = "Erro ao transacionar este saque de R$ ${valor}. Verifique seu saldo e tente novamente mais tarde!";
-                    $alert = 'danger';
+                    $notification = [
+                        'newMessage' => true,
+                        'flashMessage' => $e->getMessage(),
+                        'flashAlert' => 'danger',
+                        'state' => false
+                    ];
                 } catch (EstouroSaldoException $e) {
-                    $flashMessage = $e->getMessage();
-                    $alert = 'danger';
+                    $notification = [
+                        'newMessage' => true,
+                        'flashMessage' => $e->getMessage(),
+                        'flashAlert' => 'danger',
+                        'state' => false
+                    ];
                 }
 
                 break;
@@ -304,24 +306,36 @@ class ContasController extends \Core\Controller {
             case 'transferencia':
 
                 if ($id_conta_origem == $id_conta_destino) {
-                    $flashMessage = "Erro ao transacionar esta transferência de R$ ${valor}. A conta de origem não pode ser igual a conta de destino.";
-                    $alert = 'danger';
+                    $notification = [
+                        'newMessage' => true,
+                        'flashMessage' => "Erro ao transacionar esta transferência. A conta de origem não pode ser igual a conta de destino.",
+                        'flashAlert' => 'danger',
+                        'state' => false
+                    ];
                 } else {
                     try {
                         $state = ContasModel::transferencia($id_conta_origem, $id_conta_destino, $valor);
 
-                        // Controle as flash messages baseado no retorno do Model
-                        if ($state):
-                            $flashMessage = "A transferência de R$ ${valor} foi transacionada entre as contas com sucesso!";
-                            $alert = 'success';
-                        else:
-                            $flashMessage = "Erro ao transacionar esta transferência de R$ ${valor}. Tente novamente mais tarde.";
-                            $alert = 'danger';
-                        endif;
-
+                        $notification = [
+                            'newMessage' => true,
+                            'flashMessage' => "A transferência de R$ ${valor} foi transacionada entre as contas com sucesso!",
+                            'flashAlert' => 'success',
+                            'state' => true
+                        ];
                     } catch (\PDOException $e) {
-                        $flashMessage = "Erro ao transacionar esta transferência de R$ ${valor}. Tente novamente mais tarde.";
-                        $alert = 'danger';
+                        $notification = [
+                            'newMessage' => true,
+                            'flashMessage' => $e->getMessage(),
+                            'flashAlert' => 'danger',
+                            'state' => false
+                        ];
+                    } catch (EstouroSaldoException $e) {
+                        $notification = [
+                            'newMessage' => true,
+                            'flashMessage' => $e->getMessage(),
+                            'flashAlert' => 'danger',
+                            'state' => false
+                        ];
                     }
                 }
 
@@ -340,9 +354,7 @@ class ContasController extends \Core\Controller {
         }
 
         View::renderTemplate($view, [
-            'flashMessage' => $flashMessage,
-            'flashAlert' => $alert,
-            'newMessage' => true,
+            'notification' => $notification,
             'tipo' => 'operacao',
             'operacao' => $operacao,
             'id_conta' => $id_conta,

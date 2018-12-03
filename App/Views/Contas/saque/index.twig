@@ -52,15 +52,15 @@
 
                 </form>
 
-                {% if newMessage == true %}
-                    <div class="alert alert-{{ flashAlert }}" role="alert">
-                        {{ flashMessage }}
+                {% if notification.newMessage == true %}
+                    <div class="alert alert-{{ notification.flashAlert }}" role="alert">
+                        {{ notification.flashMessage }}
 
-                        {% if flashAlert == 'success' and tipo != 'operacao' %}
-                            <a href="{{ path }}contas/listar">Ver</a>
+                        {% if notification.flashAlert == 'success' and tipo != 'operacao' %}
+                            <a href="{{ path }}contas/listar">Mostrar</a>
                         {% endif %}
 
-                        {% if flashAlert == 'success' and tipo == 'operacao' and operacao == 'saque' %}
+                        {% if notification.flashAlert == 'success' and tipo == 'operacao' and operacao == 'saque' %}
                             <a href="{{ path }}contas/extrato/{{ id_conta }}">Ver extrato</a>
                         {% endif %}
                     </div>
