@@ -53,7 +53,7 @@
 
                 </form>
 
-                {% if notification.newMessage == true and notification.state == true %}
+                {% if notification.newMessage == true %}
                         <div class="alert alert-{{ notification.flashAlert }}" role="alert">
                             {{ notification.flashMessage }}
 

@@ -155,21 +155,25 @@ class ContasController extends \Core\Controller {
                 case 'CONTA_POUPANCA':
                     $conta = new ContaPoupanca($numero, $tipo, $rendimento);
                     $conta->setId($id_conta);
+                    $conta->setSaldo($saldo);
                     break;
 
                 case 'CONTA_CORRENTE':
                     $conta = new ContaCorrente($numero, $tipo);
                     $conta->setId($id_conta);
+                    $conta->setSaldo($saldo);
                     break;
 
                 case 'CONTA_ESPECIAL':
                     $conta = new ContaEspecial($numero, $tipo, $limite);
                     $conta->setId($id_conta);
+                    $conta->setSaldo($saldo);
                     break;
 
                 default:
                     $conta = new ContaPoupanca($numero, $tipo, $rendimento);
                     $conta->setId($id_conta);
+                    $conta->setSaldo($saldo);
             }
 
             try {
@@ -261,17 +265,21 @@ class ContasController extends \Core\Controller {
                 try {
                     $state = ContasModel::deposito($id_conta, $valor);
 
-                    // Controle as flash messages baseado no retorno do Model
-                    if ($state):
-                        $flashMessage = "O depósito de R$ ${valor} foi transacionado com sucesso!";
-                        $alert = 'success';
-                    endif;
+                    $notification = [
+                        'newMessage' => true,
+                        'flashMessage' => "O depósito de R$ ${valor} foi transacionado com sucesso!",
+                        'flashAlert' => 'success',
+                        'state' => true
+                    ];
 
-                } catch (ModelException $e) {
-                    $flashMessage = "Erro ao transacionar este depósito de R$ ${valor}. Tente novamente mais tarde!";
-                    $alert = 'danger';
+                } catch (\PDOException $e) {
+                    $notification = [
+                        'newMessage' => true,
+                        'flashMessage' => $e->getMessage(),
+                        'flashAlert' => 'danger',
+                        'state' => false
+                    ];
                 }
-
                 break;
 
             case 'saque':

@@ -91,19 +91,20 @@ class ContasModel extends \Core\Model {
 
     static public function update (Conta $conta) {
 
-        $sql = 'UPDATE contas SET numero = ?, saldo = ?, limite = ?, rendimento = ?, tipo = ? WHERE id = ?';
+        $sql = 'UPDATE contas SET numero = ?, limite = ?, rendimento = ?, tipo = ? WHERE id = ?';
 
         $condicaoContaEspecial = ($conta->getTipo() == 'CONTA_ESPECIAL') ? $conta->getLimite() : NULL;
         $condicaoContaPoupanca = ($conta->getTipo() == 'CONTA_POUPANCA') ? $conta->getRendimento() : NULL;
 
+
+
         try {
             $stmt = self::getDbInstance()->prepare($sql);
             $stmt->bindValue(1, $conta->getNumero(), PDO::PARAM_STR);
-            $stmt->bindValue(2, $conta->getSaldo(), PDO::PARAM_INT);
-            $stmt->bindValue(3, $condicaoContaEspecial, PDO::PARAM_INT);
-            $stmt->bindValue(4, $condicaoContaPoupanca, PDO::PARAM_INT);
-            $stmt->bindValue(5, $conta->getTipo(), PDO::PARAM_STR);
-            $stmt->bindValue(6, $conta->getId(), PDO::PARAM_INT);
+            $stmt->bindValue(2, $condicaoContaEspecial, PDO::PARAM_INT);
+            $stmt->bindValue(3, $condicaoContaPoupanca, PDO::PARAM_INT);
+            $stmt->bindValue(4, $conta->getTipo(), PDO::PARAM_STR);
+            $stmt->bindValue(5, $conta->getId(), PDO::PARAM_INT);
 
             return $stmt->execute();
         } catch (\PDOException $e) {
@@ -134,7 +135,7 @@ class ContasModel extends \Core\Model {
 
             return $stmt2->execute();
         } catch (\PDOException $e) {
-            throw new \PDOException("Erro ao transacionar este depósito. Tente novamente mais tarde.");
+            throw new \PDOException("OPS! Houve um erro interno ao transacionar este depósito. Contate o administrador do sistema.");
         }
     }
 
@@ -184,7 +185,7 @@ class ContasModel extends \Core\Model {
         } catch (\PDOException $e) {
             throw new \PDOException("OPS! Houve um erro interno ao transacionar esta transferência. Contate o administrador do sistema.");
         } catch (EstouroSaldoException $e) {
-            throw new EstouroSaldoException("Saldo insuficiente para transacionar esta transferência.");
+            throw new EstouroSaldoException("O saldo na conta de origem é insuficiente para transacionar esta transferência.");
         }
     }
 }
