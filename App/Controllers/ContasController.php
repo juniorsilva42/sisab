@@ -22,7 +22,6 @@ class ContasController extends \Core\Controller {
         ]);
     }
 
-
     public function listar () {
 
         try {
@@ -55,20 +54,23 @@ class ContasController extends \Core\Controller {
 
         switch ($tipo) {
             case 'CONTA_POUPANCA':
-                $conta = new ContaPoupanca($numero, $tipo, $id_agencia, $rendimento);
+                $conta = new ContaPoupanca($numero, $tipo, $rendimento);
+                $conta->setIdAgenca($id_agencia);
                 break;
 
             case 'CONTA_CORRENTE':
-                $conta = new ContaCorrente($numero, $tipo, $id_agencia);
+                $conta = new ContaCorrente($numero, $tipo);
+                $conta->setIdAgenca($id_agencia);
                 break;
 
             case 'CONTA_ESPECIAL':
-                $conta = new ContaEspecial($numero, $tipo, $id_agencia, $limite);
+                $conta = new ContaEspecial($numero, $tipo, $limite);
+                $conta->setIdAgenca($id_agencia);
                 break;
 
             default:
-                $conta = new ContaPoupanca($numero, $tipo, $id_agencia, $rendimento);
-                $tipo = 'CONTA_POUPANCA';
+                $conta = new ContaPoupanca($numero, $tipo, $rendimento);
+                $conta->setIdAgenca($id_agencia);
         }
 
         try {

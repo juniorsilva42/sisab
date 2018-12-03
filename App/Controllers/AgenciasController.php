@@ -8,14 +8,11 @@ use Core\Util\HttpHelpers;
 use Core\View;
 
 use App\Models\AgenciasModel;
-use DateTime;
 
 class AgenciasController extends \Core\Controller {
 
     public function indexAction () {
-        View::renderTemplate('Agencias/index', [
-            'signature' => hash("sha256", "902ef2c77423503981468993d8aec16f.id")
-        ]);
+        View::renderTemplate('Agencias/index');
     }
     
     public function listarAction () {

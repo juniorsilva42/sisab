@@ -12,10 +12,9 @@ abstract class Conta implements ContaInterface {
     protected $saldo;
     protected $tipo;
 
-    public function __construct($numeroConta, $tipo, $id_agencia = null) {
+    public function __construct($numeroConta, $tipo) {
         $this->numero = $numeroConta;
         $this->tipo = $tipo;
-        $this->id_agencia = $id_agencia;
         $this->saldo = 0;
     }
 
@@ -39,11 +38,11 @@ abstract class Conta implements ContaInterface {
         $this->saldo += $valor;
     }
 
-    public function saque($valor) {
+    public function saque ($valor) {
         if ($valor <= $this->saldo) {
             $this->saldo -= $valor;
         } else {
-            throw new EstouroSaldoException("Saldo insuficiente");
+
         }
     }
 
@@ -61,6 +60,10 @@ abstract class Conta implements ContaInterface {
 
     public function getIdAgencia() {
         return $this->id_agencia;
+    }
+
+    public function setIdAgenca($id_agencia) {
+        return $this->id_agencia = $id_agencia;
     }
 
     public function getId() {
