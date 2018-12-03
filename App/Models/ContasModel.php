@@ -46,12 +46,12 @@ class ContasModel extends \Core\Model {
 
     static public function getAll () {
 
-        $sql = 'SELECT c.*, a.id_agencia, a.numero_agencia, a.nome_agencia FROM contas c JOIN agencias a ON a.id_agencia = c.fk_id_agencia';
+        $sql = 'SELECT c.*, a.id AS id_agencia, a.numero AS numero_agencia, a.nome AS nome_agencia FROM contas c JOIN agencias a ON a.id = c.fk_id_agencia';
+
+        $stmt = self::getDbinstance()->prepare($sql);
 
         try {
-            $stmt = self::getDbinstance()->prepare($sql);
             $stmt->execute();
-
             return $stmt->fetchAll(PDO::FETCH_OBJ);
         } catch (\PDOException $e) {
             throw new \PDOException("Houve algum erro ao tentar recuperar as contas do sistema. Tente novamente mais tarde.");
@@ -59,42 +59,31 @@ class ContasModel extends \Core\Model {
     }
 
     static public function getById ($id_conta) {
-        $db = static::getConnection();
 
-        $sql = 'SELECT c.*, a.id_agencia, a.numero_agencia, a.nome_agencia FROM contas c JOIN agencias a ON a.id_agencia = c.fk_id_agencia WHERE c.id = ? LIMIT 1';
+        $sql = 'SELECT c.*, a.id AS id_agencia, a.numero AS numero_agencia, a.nome AS nome_agencia FROM contas c JOIN agencias a ON a.id = c.fk_id_agencia WHERE c.id = ? LIMIT 1';
 
         try {
-            $stmt = $db->prepare($sql);
+            $stmt = self::getDbinstance()->prepare($sql);
             $stmt->bindValue(1, $id_conta, PDO::PARAM_INT);
             $stmt->execute();
 
             return $stmt->fetch(PDO::FETCH_OBJ);
-
-            $db = null;
         } catch (\PDOException $e) {
-            throw new \Exception("Erro model");
+            throw new \PDOException("Houve algum erro ao tentar recuperar esta conta do sistema. Tente novamente mais tarde.");
         }
     }
 
     static public function delete ($conta_id) {
 
-        $db = static::getConnection();
-
         $sql = 'DELETE FROM contas WHERE id = ?';
 
         try {
-            $stmt = $db->prepare($sql);
+            $stmt = self::getDbinstance()->prepare($sql);
             $stmt->bindValue(1, $conta_id, PDO::PARAM_INT);
 
-            if ($stmt->execute()) {
-                return true;
-            } else {
-                return false;
-            }
-
-            $db = null;
+            return $stmt->execute();
         } catch (\PDOException $e) {
-            throw new ModelException("Erro ao deletar o registro");
+            throw new \PDOException("OOPS! Houve algum erro ao tentar deletar esta conta, tente novamente mais tarde.");
         }
     }
 

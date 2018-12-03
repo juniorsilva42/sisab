@@ -22,16 +22,28 @@ class ContasController extends \Core\Controller {
         ]);
     }
 
+
     public function listar () {
 
-       $contas = ContasModel::getAll();
+        try {
+            $contas = ContasModel::getAll();
+        } catch (\PDOException $e) {
+            $contas = null;
+            $flashMessage = $e->getMessage();
+            $alert = 'danger';
+        }
 
         View::renderTemplate('Contas/listar', [
             'contas' => $contas,
-            'quantidade' => count($contas)
+            'quantidade' => ($contas) ? count($contas) : 'undefined',
+            'notification' => [
+                'newMessage' => true,
+                'state' => true,
+                'flashMessage' => isset($flashMessage) ? $flashMessage : false,
+                'flashAlert' => isset($alert) ? $alert : false
+            ]
         ]);
     }
-
     public function criarAction () {
 
         // Obtem os dados do formulário pela Query String do Request
@@ -89,23 +101,28 @@ class ContasController extends \Core\Controller {
         try {
             $state = ContasModel::delete($id_conta);
 
-            // Controle as flash messages baseado no retorno do Model
-            if ($state):
-                $flashMessage = 'A conta foi deletada com sucesso!';
-                $alert = 'success';
-            endif;
-
-        } catch (ModelException $e) {
-            $flashMessage = "OPA! Houve algum erro ao deletar a conta.";
-            $alert = 'danger';
+            $notification = [
+                'newMessage' => true,
+                'state' => true,
+                'redirect' => true,
+                'flashMessage' => 'A conta foi deletada com sucesso!',
+                'flashAlert' => 'success'
+            ];
+        } catch (\PDOException $e) {
+            $notification = [
+                'newMessage' => true,
+                'state' => false,
+                'quantidade' => 'undefined',
+                'redirect' => true,
+                'flashMessage' => $e->getMessage(),
+                'flashAlert' => 'danger'
+            ];
         }
 
         // Renderiza o template implantando as variáveis de controle
         View::renderTemplate('Contas/listar', [
-            'flashMessage' => $flashMessage,
-            'flashAlert' => $alert,
-            'newMessage' => true,
-            'quantidade_contas' => 'undefined'
+            'notification' => $notification,
+            'quantidade' => 'undefined'
         ]);
     }
 
@@ -186,10 +203,23 @@ class ContasController extends \Core\Controller {
     public function extratoAction () {
 
         $id = HttpHelpers::getId($_SERVER['QUERY_STRING']);
-        $conta = ContasModel::getById($id);
+
+        try {
+            $conta = ContasModel::getById($id);
+        } catch (\PDOException $e) {
+            $conta = null;
+            $flashMessage = $e->getMessage();
+            $alert = 'danger';
+        }
 
         View::renderTemplate('Extrato/index', [
-            'conta' => $conta
+            'conta' => $conta,
+            'notification' => [
+                'newMessage' => true,
+                'error' => ($conta == null) ? true : false,
+                'flashMessage' => isset($flashMessage) ? $flashMessage : false,
+                'flashAlert' => isset($alert) ? $alert : false
+            ]
         ]);
     }
 

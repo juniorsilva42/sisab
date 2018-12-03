@@ -1,8 +1,18 @@
 <div class="col-12">
 
-    {% if quantidade == 0 and quantidade_contas != 'undefined' %}
+    {% if quantidade <= 0 and quantidade != 'undefined' %}
 
         <h4 class="h2-heading text-align-center">Ainda não há nenhuma conta</h4>
+
+    {% else %}
+
+    {% if notification.newMessage == true and notification.state == false %}
+
+        <div class="alert alert-{{ notification.flashAlert }}" role="alert"> {{ notification.flashMessage }}</div>
+
+        {% if notification.redirect == true %}
+            <script> setTimeout("document.location = '{{ path }}contas/listar' ", 2000); </script>
+        {% endif %}
 
     {% else %}
 
@@ -64,9 +74,13 @@
             </tbody>
         </table>
 
-        {% if newMessage == true %}
-            <div class="alert alert-{{ flashAlert }}" role="alert"> {{ flashMessage }}</div>
-            <script> setTimeout("document.location = '{{ path }}contas/listar' ", 1250); </script>
+        {% endif %}
+
+        {% if notification.newMessage == true and notification.state == true %}
+            <div class="alert alert-{{ notification.flashAlert }}" role="alert"> {{ notification.flashMessage }}</div>
+            {% if notification.redirect == true %}
+                <script> setTimeout("document.location = '{{ path }}contas/listar' ", 1250); </script>
+            {% endif %}
         {% endif %}
 
     {% endif %}

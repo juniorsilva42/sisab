@@ -19,7 +19,7 @@ abstract class Model {
                 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             }
         } catch (\PDOException $e) {
-            throw new \PDOException("Erro ao tentar conectar-se à base de dados.");
+            throw new \PDOException("Erro ao tentar conectar-se à base de dados.<br>Contate o administrador do sistema.");
         }
 
         return $db;

@@ -8,6 +8,11 @@
 
     <div class="container">
         <div class="row">
+
+            {% if notification.newMessage == true and notification.error == true %}
+                <div class="alert alert-{{ notification.flashAlert }}" role="alert"> {{ notification.flashMessage }}</div>
+            {% else %}
+
             <h2 class="h2-heading">Extrato completo da conta {{ conta.numero }}</h2>
 
             <table class="table">
@@ -47,7 +52,7 @@
 
                 </tbody>
             </table>
-
+            {% endif %}
         </div>
     </div> <!--container-->
 
