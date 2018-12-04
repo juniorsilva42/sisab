@@ -35,7 +35,7 @@ class ContasController extends \Core\Controller {
 
         View::renderTemplate('Contas/listar', [
             'contas' => $contas,
-            'quantidade' => ($contas) ? count($contas) : 'undefined',
+            'quantidade' => (isset($contas)) ? count($contas) : 0,
             'notification' => [
                 'newMessage' => true,
                 'state' => true,
@@ -44,6 +44,7 @@ class ContasController extends \Core\Controller {
             ]
         ]);
     }
+
     public function criarAction () {
 
         // Obtem os dados do formulário pela Query String do Request

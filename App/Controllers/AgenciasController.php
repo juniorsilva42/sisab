@@ -17,16 +17,24 @@ class AgenciasController extends \Core\Controller {
     
     public function listarAction () {
 
-        /* *
-         *
-         * TO-DO: adicionar exceção
-         *
-         * */
-        $agenciasList = AgenciasModel::getAll();
+        try {
+            $agenciasList = AgenciasModel::getAll();
+        } catch (\PDOException $e) {
+            $contas = null;
+            $flashMessage = $e->getMessage();
+            $alert = 'danger';
+        }
 
         View::renderTemplate('Agencias/listar', [
-            'agencias' => $agenciasList,
-            'quantidade_agencias' => count($agenciasList)
+            'agencias' => (isset($agenciasList)) ? $agenciasList : null,
+            'quantidade_agencias' => isset($agenciasList) ? count($agenciasList) : null,
+            'notification' => [
+                'newMessage' => true,
+                'state' => true,
+                'flashMessage' => isset($flashMessage) ? $flashMessage : false,
+                'flashAlert' => isset($alert) ? $alert : false,
+                'redirect' => false
+            ]
         ]);
     }
 
@@ -41,28 +49,28 @@ class AgenciasController extends \Core\Controller {
         // Povoa o objeto pelos dados obtidos
         $agencia = new Agencia($numero, $nome, $endereco, $capacidade);
 
-        /* *
-         *
-         * TO-DO: adicionar exceção
-         *
-         * */
-        // Seta o estado pro model, onde vai utilizar esses dados para inserir no banco de dados
-        $state = AgenciasModel::create($agencia);
+        try {
+            $state = AgenciasModel::create($agencia);
 
-        // Controle as flash messages baseado no retorno do Model
-        if ($state):
-            $flashMessage = 'A agência foi cadastrada com sucesso!';
-            $alert = 'success';
-        else:
-            $flashMessage = 'Erro ao inserir a agência!';
-            $alert = 'danger';
-        endif;
+            $notification = [
+                'newMessage' => true,
+                'state' => true,
+                'flashMessage' => 'Agência adicionada com sucesso!',
+                'flashAlert' => 'success'
+            ];
+        } catch (\PDOException $e) {
+            $notification = [
+                'newMessage' => true,
+                'state' => false,
+                'flashMessage' => $e->getMessage(),
+                'flashAlert' => 'danger',
+                'redirect' => true
+            ];
+        }
 
         // Renderiza o template implantando as variáveis de controle
         View::renderTemplate('Agencias/index', [
-            'flashMessage' => $flashMessage,
-            'flashAlert' => $alert,
-            'newMessage' => true
+            'notification' => $notification
         ]);
     }
 
@@ -73,23 +81,28 @@ class AgenciasController extends \Core\Controller {
         try {
             $state = AgenciasModel::delete($agencia_id);
 
-            // Controle as flash messages baseado no retorno do Model
-            if ($state):
-                $flashMessage = 'A agência foi deletada com sucesso!';
-                $alert = 'success';
-            endif;
-
-        } catch (ModelException $e) {
-            $flashMessage = "OPA! Erro ao deletar a agência!";
-            $alert = 'danger';
+            $notification = [
+                'newMessage' => true,
+                'state' => true,
+                'redirect' => true,
+                'flashMessage' => 'Agência deletada com sucesso!',
+                'flashAlert' => 'success'
+            ];
+        } catch (\PDOException $e) {
+            $notification = [
+                'newMessage' => true,
+                'state' => false,
+                'quantidade' => 'undefined',
+                'redirect' => true,
+                'flashMessage' => $e->getMessage(),
+                'flashAlert' => 'danger'
+            ];
         }
 
         // Renderiza o template implantando as variáveis de controle
         View::renderTemplate('Agencias/listar', [
-            'flashMessage' => $flashMessage,
-            'flashAlert' => $alert,
-            'newMessage' => true,
-            'quantidade_agencias' => 'undefined'
+            'notification' => $notification,
+            'quantidade' => 'undefined'
         ]);
     }
 
@@ -118,7 +131,7 @@ class AgenciasController extends \Core\Controller {
                 // Atualiza o objeto com os novos dados atualizados (ou não)
                 $agencia = new Agencia($numero, $nome_agencia, $endereco, $capacidade, $id_agencia);
 
-                $state = AgenciasModel::editar($agencia);
+                $state = AgenciasModel::update($agencia);
 
                 // Controle as flash messages baseado no retorno do Model
                 if ($state):

@@ -1,6 +1,6 @@
 <div class="col-12">
 
-    {% if quantidade_agencias == 0 and quantidade_agencias != 'undefined' %}
+    {% if quantidade_agencias == 0 and quantidade_agencias != null  %}
 
         <h4 class="h2-heading text-align-center">Ainda não há nenhuma agência</h4>
 
@@ -49,7 +49,9 @@
 
         {% if notification.newMessage == true and notification.state == true %}
             <div class="alert alert-{{ notification.flashAlert }}" role="alert"> {{ notification.flashMessage }}</div>
-            <script> setTimeout("document.location = '{{ path }}contas/listar' ", 2000); </script>
+            {% if notification.redirect == true %}
+                <script> setTimeout("document.location = '{{ path }}agencias/listar' ", 2000); </script>
+            {% endif %}
         {% endif %}
 
     {% endif %}

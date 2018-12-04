@@ -96,7 +96,7 @@ class ContasModel extends \Core\Model {
 
             return $stmt->fetch(PDO::FETCH_OBJ);
         } catch (\PDOException $e) {
-            throw new \PDOException("Houve algum erro ao tentar recuperar esta conta do sistema. Tente novamente mais tarde.");
+            throw new \PDOException("Houve algum erro ao tentar recuperar esta conta. Tente novamente mais tarde.");
         }
     }
 
@@ -131,7 +131,7 @@ class ContasModel extends \Core\Model {
 
             return $stmt->execute();
         } catch (\PDOException $e) {
-            throw new \PDOException("Erro ao atualizar o registro");
+            throw new \PDOException("OOPS! Houve algum erro ao tentar atualizar esta conta, tente novamente mais tarde.");
         }
     }
 

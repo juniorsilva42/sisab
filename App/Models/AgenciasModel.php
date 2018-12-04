@@ -36,7 +36,7 @@ class AgenciasModel extends \Core\Model {
 
             return $stmt->fetchAll(PDO::FETCH_OBJ);
         } catch (\PDOException $e) {
-            throw new \PDOException("Erro model");
+            throw new \PDOException("Houve algum erro ao tentar recuperar as agências do sistema. Tente novamente mais tarde.");
         }
     }
 
@@ -51,7 +51,7 @@ class AgenciasModel extends \Core\Model {
 
             return $stmt->fetch(PDO::FETCH_OBJ);
         } catch (\PDOException $e) {
-            throw new \Exception("Erro model");
+            throw new \Exception("Houve algum erro ao tentar recuperar esta agência. Tente novamente mais tarde.");
         }
     }
 
@@ -67,7 +67,7 @@ class AgenciasModel extends \Core\Model {
 
             return $stmt->execute();
         } catch (\PDOException $e) {
-            throw new \Exception("Erro model");
+            throw new \PDOException("OOPS! Houve algum erro ao tentar criar esta agência, tente novamente mais tarde.");
         }
     }
 
@@ -81,11 +81,11 @@ class AgenciasModel extends \Core\Model {
 
             return $stmt->execute();
         } catch (\PDOException $e) {
-            throw new ModelException("Erro ao deletar o registro");
+            throw new ModelException("OOPS! Houve algum erro ao tentar deletar esta agência, tente novamente mais tarde.");
         }
     }
 
-    static public function editar (Agencia $agencia) {
+    static public function update (Agencia $agencia) {
 
         $sql = 'UPDATE agencias SET numero = ?, nome = ?, endereco = ?, capacidade = ? WHERE id = ?';
 
@@ -99,7 +99,7 @@ class AgenciasModel extends \Core\Model {
 
             return $stmt->execute();
         } catch (\PDOException $e) {
-            throw new ModelException("Erro ao atualizar o registro");
+            throw new \PDOException("OOPS! Houve algum erro ao tentar atualizar esta agência, tente novamente mais tarde.");
         }
     }
 }

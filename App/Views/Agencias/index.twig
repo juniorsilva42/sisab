@@ -79,8 +79,8 @@
 
                 </form>
 
-                {% if newMessage == true %}
-                    <div class="alert alert-{{ flashAlert }}" role="alert">{{ flashMessage }} <a href="{{ path }}agencias/listar">Ver</a> </div>
+                {% if notification.newMessage == true and notification.state == true %}
+                    <div class="alert alert-{{ notification.flashAlert }}" role="alert">{{ notification.flashMessage }} <a href="{{ path }}agencias/listar">Mostrar</a> </div>
                     <script>
                         setTimeout("document.location = '{{ path }}agencias/listar' ", 3000);
                     </script>

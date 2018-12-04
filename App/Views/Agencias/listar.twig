@@ -9,13 +9,6 @@
     <div class="container">
         <div class="row">
             {% include "partials/listagem/listagemAgencias.twig" %}
-
-            {% if newMessage == true %}
-                <div class="alert alert-{{ flashAlert }}" role="alert">{{ flashMessage }}</div>
-                <script>
-                    setTimeout("document.location = '{{ path }}agencias/listar' ", 2000);
-                </script>
-            {% endif %}
         </div>
     </div> <!--container-->
 
