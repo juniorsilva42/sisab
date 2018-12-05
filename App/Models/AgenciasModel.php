@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Sisab\Interfaces\ModelsCrudInterface;
 use App\Sisab\Interfaces\ModelsInterface;
+use App\Sisab\Interfaces\GenericModelInterface;
 use PDO;
 
-class AgenciasModel extends \Core\Model implements ModelsCrudInterface {
+class AgenciasModel extends \Core\Model implements ModelsInterface {
 
     private static $db_instance;
 
@@ -21,7 +21,7 @@ class AgenciasModel extends \Core\Model implements ModelsCrudInterface {
         }
     }
 
-    static public function create (ModelsInterface $agencia) {
+    static public function create (GenericModelInterface $agencia) {
         $sql = 'INSERT INTO agencias (numero, nome, endereco, capacidade) VALUES (?, ?, ?, ?)';
 
         try {
@@ -85,7 +85,7 @@ class AgenciasModel extends \Core\Model implements ModelsCrudInterface {
         }
     }
 
-    static public function update (ModelsInterface $agencia) {
+    static public function update (GenericModelInterface $agencia) {
 
         $sql = 'UPDATE agencias SET numero = ?, nome = ?, endereco = ?, capacidade = ? WHERE id = ?';
 

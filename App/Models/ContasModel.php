@@ -4,11 +4,11 @@ namespace App\Models;
 
 use App\Sisab\Exception\EstouroSaldoException;
 use App\Sisab\Exception\FormatoNumeroException;
-use App\Sisab\Interfaces\ModelsCrudInterface;
 use App\Sisab\Interfaces\ModelsInterface;
+use App\Sisab\Interfaces\GenericModelInterface;
 use PDO;
 
-class ContasModel extends \Core\Model implements ModelsCrudInterface {
+class ContasModel extends \Core\Model implements ModelsInterface {
 
     private static $db_instance;
 
@@ -28,7 +28,7 @@ class ContasModel extends \Core\Model implements ModelsCrudInterface {
         }
     }
 
-    static public function create (ModelsInterface $conta) {
+    static public function create (GenericModelInterface $conta) {
 
         $sql = 'INSERT INTO contas (numero, saldo, limite, rendimento, tipo, fk_id_agencia) VALUES (?, ?, ?, ?, ?, ?)';
 
@@ -71,7 +71,7 @@ class ContasModel extends \Core\Model implements ModelsCrudInterface {
         }
     }
 
-    static public function update (ModelsInterface $conta) {
+    static public function update (GenericModelInterface $conta) {
 
         $sql = 'UPDATE contas SET numero = ?, limite = ?, rendimento = ?, tipo = ? WHERE id = ?';
 

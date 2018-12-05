@@ -2,9 +2,9 @@
 
 namespace App\Sisab;
 
-use App\Sisab\Interfaces\ModelsInterface;
+use App\Sisab\Interfaces\GenericModelInterface;
 
-class Agencia implements ModelsInterface {
+class Agencia implements GenericModelInterface {
 
     private $id;
     private $nome;

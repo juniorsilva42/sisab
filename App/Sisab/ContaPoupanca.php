@@ -2,9 +2,9 @@
 
 namespace App\Sisab;
 
-use App\Sisab\Interfaces\ModelsInterface;
+use App\Sisab\Interfaces\GenericModelInterface;
 
-final class ContaPoupanca extends Conta implements ModelsInterface {
+final class ContaPoupanca extends Conta implements GenericModelInterface {
 
     private $rendimento;
 
