@@ -14,5 +14,5 @@ SISAB - Sistema Integrado Simulador de Agência Bancária. Trabalho Final da dis
 A ideia é, basicamente, utilizar todos os conceitos de Orientação a Objetos em um projeto (pseudo) real. 
 
 ### Informações
-  - Prazo de entrega e apresentação: 04/12/2018;
+  - Prazo de entrega e apresentação: 06/12/2018;
   - Equipe: Ivanicio Junior, Ítallo Giullian e Luís Henrique;
