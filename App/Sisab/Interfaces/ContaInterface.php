@@ -7,6 +7,4 @@ interface ContaInterface {
     public function saque($valor);
 
     public function deposito($valor);
-
-    public function extrato();
 }

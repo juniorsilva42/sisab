@@ -2,7 +2,9 @@
 
 namespace App\Sisab;
 
-class Agencia {
+use App\Sisab\Interfaces\ModelsInterface;
+
+class Agencia implements ModelsInterface {
 
     private $id;
     private $nome;

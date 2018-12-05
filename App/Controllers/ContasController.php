@@ -48,11 +48,13 @@ class ContasController extends \Core\Controller {
     public function criarAction () {
 
         // Obtem os dados do formulário pela Query String do Request
-        $numero = (isset($_REQUEST['numero'])) ? $_REQUEST['numero'] : null;
-        $limite = (isset($_REQUEST['limite'])) ? $_REQUEST['limite'] : null;
-        $rendimento = (isset($_REQUEST['rendimento'])) ? $_REQUEST['rendimento'] : null;
-        $tipo = (isset($_REQUEST['tipo'])) ? $_REQUEST['tipo'] : 'CONTA_POUPANCA';
-        $id_agencia = (isset($_REQUEST['agencia'])) ? $_REQUEST['agencia'] : 0;
+        // (isset($_REQUEST['numero'])) ? $_REQUEST['numero'] : null
+
+        $numero = $_REQUEST['numero'] ?? 'null';
+        $limite = $_REQUEST['limite'] ?? null;
+        $rendimento = $_REQUEST['rendimento'] ?? null;
+        $tipo = $_REQUEST['tipo'] ?? 'CONTA_POUPANCA';
+        $id_agencia = $_REQUEST['agencia'] ?? 0;
 
         switch ($tipo) {
             case 'CONTA_POUPANCA':
@@ -142,14 +144,14 @@ class ContasController extends \Core\Controller {
     public function editarAction () {
 
         // Obtem os dados do formulário pela Query String do Request
-        $id_conta = (isset($_REQUEST['cid'])) ? $_REQUEST['cid'] : null;
-        $numero = (isset($_REQUEST['numero'])) ? $_REQUEST['numero'] : null;
-        $saldo = (isset($_REQUEST['saldo'])) ? $_REQUEST['saldo'] : null;
-        $limite = (isset($_REQUEST['limite'])) ? $_REQUEST['limite'] : null;
-        $rendimento = (isset($_REQUEST['rendimento'])) ? $_REQUEST['rendimento'] : null;
-        $tipo = (isset($_REQUEST['tipo'])) ? $_REQUEST['tipo'] : null;
+        $id_conta = $_REQUEST['cid'] ?? null;
+        $numero = $_REQUEST['numero'] ?? null;
+        $saldo = $_REQUEST['saldo'] ?? null;
+        $limite = $_REQUEST['limite'] ?? null;
+        $rendimento = $_REQUEST['rendimento'] ?? null;
+        $tipo = $_REQUEST['tipo'] ?? null;
 
-        $sign = (isset($_REQUEST['sign'])) ? $_REQUEST['sign'] : null;
+        $sign = $_REQUEST['sign'] ?? null;
 
         if (!isset($sign) || $sign != 'do') {
             View::renderTemplate("Contas/editar", [
@@ -250,8 +252,8 @@ class ContasController extends \Core\Controller {
             'notification' => [
                 'newMessage' => true,
                 'error' => ($conta == null) ? true : false,
-                'flashMessage' => isset($flashMessage) ? $flashMessage : false,
-                'flashAlert' => isset($alert) ? $alert : false
+                'flashMessage' => $flashMessage ?? false,
+                'flashAlert' => $alert ?? false
             ]
         ]);
     }

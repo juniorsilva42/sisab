@@ -3,8 +3,9 @@
 namespace App\Sisab;
 
 use App\Sisab\Exception\EstouroSaldoException;
+use App\Sisab\Interfaces\ModelsInterface;
 
-final class ContaEspecial extends Conta {
+final class ContaEspecial extends Conta implements ModelsInterface {
 
     private $limite;
 

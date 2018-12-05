@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Sisab\Agencia;
-use App\Sisab\Exception\ModelException;
+use App\Sisab\Interfaces\ModelsCrudInterface;
+use App\Sisab\Interfaces\ModelsInterface;
 use PDO;
 
-class AgenciasModel extends \Core\Model {
+class AgenciasModel extends \Core\Model implements ModelsCrudInterface {
 
     private static $db_instance;
 
@@ -18,6 +18,22 @@ class AgenciasModel extends \Core\Model {
             die($e->getMessage());
         } finally {
             self::$db_instance = null;
+        }
+    }
+
+    static public function create (ModelsInterface $agencia) {
+        $sql = 'INSERT INTO agencias (numero, nome, endereco, capacidade) VALUES (?, ?, ?, ?)';
+
+        try {
+            $stmt = self::getDbinstance()->prepare($sql);
+            $stmt->bindValue(1, $agencia->getNumero(), PDO::PARAM_STR);
+            $stmt->bindValue(2, $agencia->getNome(), PDO::PARAM_STR);
+            $stmt->bindValue(3, $agencia->getEndereco(), PDO::PARAM_STR);
+            $stmt->bindValue(4, $agencia->getCapacidade(), PDO::PARAM_INT);
+
+            return $stmt->execute();
+        } catch (\PDOException $e) {
+            throw new \PDOException("OOPS! Houve algum erro ao tentar criar esta agência, tente novamente mais tarde.");
         }
     }
 
@@ -55,22 +71,6 @@ class AgenciasModel extends \Core\Model {
         }
     }
 
-    static public function create (Agencia $agencia) {
-        $sql = 'INSERT INTO agencias (numero, nome, endereco, capacidade) VALUES (?, ?, ?, ?)';
-
-        try {
-            $stmt = self::getDbinstance()->prepare($sql);
-            $stmt->bindValue(1, $agencia->getNumero(), PDO::PARAM_STR);
-            $stmt->bindValue(2, $agencia->getNome(), PDO::PARAM_STR);
-            $stmt->bindValue(3, $agencia->getEndereco(), PDO::PARAM_STR);
-            $stmt->bindValue(4, $agencia->getCapacidade(), PDO::PARAM_INT);
-
-            return $stmt->execute();
-        } catch (\PDOException $e) {
-            throw new \PDOException("OOPS! Houve algum erro ao tentar criar esta agência, tente novamente mais tarde.");
-        }
-    }
-
     static public function delete ($agencia_id) {
 
         $sql = 'DELETE FROM agencias WHERE id = ?';
@@ -85,7 +85,7 @@ class AgenciasModel extends \Core\Model {
         }
     }
 
-    static public function update (Agencia $agencia) {
+    static public function update (ModelsInterface $agencia) {
 
         $sql = 'UPDATE agencias SET numero = ?, nome = ?, endereco = ?, capacidade = ? WHERE id = ?';
 

@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Sisab\Conta;
 use App\Sisab\Exception\EstouroSaldoException;
 use App\Sisab\Exception\FormatoNumeroException;
-use App\Sisab\Exception\ModelException;
+use App\Sisab\Interfaces\ModelsCrudInterface;
+use App\Sisab\Interfaces\ModelsInterface;
 use PDO;
 
-class ContasModel extends \Core\Model {
+class ContasModel extends \Core\Model implements ModelsCrudInterface {
 
     private static $db_instance;
 
@@ -28,7 +28,7 @@ class ContasModel extends \Core\Model {
         }
     }
 
-    static public function create (Conta $conta) {
+    static public function create (ModelsInterface $conta) {
 
         $sql = 'INSERT INTO contas (numero, saldo, limite, rendimento, tipo, fk_id_agencia) VALUES (?, ?, ?, ?, ?, ?)';
 
@@ -71,6 +71,27 @@ class ContasModel extends \Core\Model {
         }
     }
 
+    static public function update (ModelsInterface $conta) {
+
+        $sql = 'UPDATE contas SET numero = ?, limite = ?, rendimento = ?, tipo = ? WHERE id = ?';
+
+        $condicaoContaEspecial = ($conta->getTipo() == 'CONTA_ESPECIAL') ? $conta->getLimite() : NULL;
+        $condicaoContaPoupanca = ($conta->getTipo() == 'CONTA_POUPANCA') ? $conta->getRendimento() : NULL;
+
+        try {
+            $stmt = self::getDbInstance()->prepare($sql);
+            $stmt->bindValue(1, $conta->getNumero(), PDO::PARAM_STR);
+            $stmt->bindValue(2, $condicaoContaEspecial, PDO::PARAM_INT);
+            $stmt->bindValue(3, $condicaoContaPoupanca, PDO::PARAM_INT);
+            $stmt->bindValue(4, $conta->getTipo(), PDO::PARAM_STR);
+            $stmt->bindValue(5, $conta->getId(), PDO::PARAM_INT);
+
+            return $stmt->execute();
+        } catch (\PDOException $e) {
+            throw new \PDOException("OOPS! Houve algum erro ao tentar atualizar esta conta, tente novamente mais tarde.");
+        }
+    }
+
     static public function getAll () {
 
         $sql = 'SELECT c.*, a.id AS id_agencia, a.numero AS numero_agencia, a.nome AS nome_agencia FROM contas c JOIN agencias a ON a.id = c.fk_id_agencia';
@@ -100,7 +121,7 @@ class ContasModel extends \Core\Model {
         }
     }
 
-    static public function delete ($conta_id) {
+        static public function delete ($conta_id) {
 
         $sql = 'DELETE FROM contas WHERE id = ?';
 
@@ -111,27 +132,6 @@ class ContasModel extends \Core\Model {
             return $stmt->execute();
         } catch (\PDOException $e) {
             throw new \PDOException("OOPS! Houve algum erro ao tentar deletar esta conta, tente novamente mais tarde.");
-        }
-    }
-
-    static public function update (Conta $conta) {
-
-        $sql = 'UPDATE contas SET numero = ?, limite = ?, rendimento = ?, tipo = ? WHERE id = ?';
-
-        $condicaoContaEspecial = ($conta->getTipo() == 'CONTA_ESPECIAL') ? $conta->getLimite() : NULL;
-        $condicaoContaPoupanca = ($conta->getTipo() == 'CONTA_POUPANCA') ? $conta->getRendimento() : NULL;
-
-        try {
-            $stmt = self::getDbInstance()->prepare($sql);
-            $stmt->bindValue(1, $conta->getNumero(), PDO::PARAM_STR);
-            $stmt->bindValue(2, $condicaoContaEspecial, PDO::PARAM_INT);
-            $stmt->bindValue(3, $condicaoContaPoupanca, PDO::PARAM_INT);
-            $stmt->bindValue(4, $conta->getTipo(), PDO::PARAM_STR);
-            $stmt->bindValue(5, $conta->getId(), PDO::PARAM_INT);
-
-            return $stmt->execute();
-        } catch (\PDOException $e) {
-            throw new \PDOException("OOPS! Houve algum erro ao tentar atualizar esta conta, tente novamente mais tarde.");
         }
     }
 

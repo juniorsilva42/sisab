@@ -3,8 +3,9 @@
 namespace App\Sisab;
 
 use App\Sisab\Exception\EstouroSaldoException;
+use App\Sisab\Interfaces\ModelsInterface;
 
-final class ContaCorrente extends Conta {
+final class ContaCorrente extends Conta implements ModelsInterface {
 
     /* *
      *

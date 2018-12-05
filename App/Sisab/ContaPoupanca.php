@@ -2,7 +2,9 @@
 
 namespace App\Sisab;
 
-final class ContaPoupanca extends Conta {
+use App\Sisab\Interfaces\ModelsInterface;
+
+final class ContaPoupanca extends Conta implements ModelsInterface {
 
     private $rendimento;
 
