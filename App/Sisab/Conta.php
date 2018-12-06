@@ -3,8 +3,9 @@
 namespace App\Sisab;
 
 use App\Sisab\Interfaces\ContaInterface;
+use App\Sisab\Interfaces\GenericModelInterface;
 
-abstract class Conta implements ContaInterface {
+abstract class Conta implements ContaInterface, GenericModelInterface {
 
     private $id;
     protected $id_agencia;

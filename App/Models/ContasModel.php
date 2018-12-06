@@ -94,7 +94,10 @@ class ContasModel extends \Core\Model implements ModelsInterface {
 
     static public function getAll () {
 
-        $sql = 'SELECT c.*, a.id AS id_agencia, a.numero AS numero_agencia, a.nome AS nome_agencia FROM contas c JOIN agencias a ON a.id = c.fk_id_agencia';
+        $sql = 'SELECT c.*, a.id AS id_agencia, a.numero AS numero_agencia, a.nome AS nome_agencia 
+                FROM contas c 
+                JOIN agencias a 
+                ON a.id = c.fk_id_agencia';
 
         try {
             $stmt = self::getDbInstance()->prepare($sql);
@@ -108,7 +111,10 @@ class ContasModel extends \Core\Model implements ModelsInterface {
 
     static public function getById ($id_conta) {
 
-        $sql = 'SELECT c.*, a.id AS id_agencia, a.numero AS numero_agencia, a.nome AS nome_agencia FROM contas c JOIN agencias a ON a.id = c.fk_id_agencia WHERE c.id = ? LIMIT 1';
+        $sql = 'SELECT c.*, a.id AS id_agencia, a.numero AS numero_agencia, a.nome AS nome_agencia 
+                FROM contas c JOIN agencias a 
+                ON a.id = c.fk_id_agencia 
+                WHERE c.id = ? LIMIT 1';
 
         try {
             $stmt = self::getDbinstance()->prepare($sql);
@@ -165,8 +171,9 @@ class ContasModel extends \Core\Model implements ModelsInterface {
     static public function saque ($id_conta, $valor) {
 
         $sql = [
-            '1' => 'SELECT saldo FROM contas WHERE id = ? LIMIT 1',
-            '2' => 'UPDATE contas SET saldo = ? WHERE id = ?'
+            '1' => 'SELECT saldo, limite, tipo FROM contas WHERE id = ? LIMIT 1',
+            '2' => 'UPDATE contas SET saldo = ? WHERE id = ?',
+            '3' => 'UPDATE contas SET saldo = ?, limite = ? WHERE id = ?'
         ];
 
         try {
@@ -177,15 +184,37 @@ class ContasModel extends \Core\Model implements ModelsInterface {
             $linha = $stmt1->fetch(PDO::FETCH_OBJ);
 
             // Verifica se tem valor para saque
-            if ($linha->saldo >= $valor) {
-                // Atualiza o novo saldo
-                $stmt2 = self::getDbInstance()->prepare($sql['2']);
-                $stmt2->bindValue(1, $linha->saldo - $valor, PDO::PARAM_INT);
-                $stmt2->bindValue(2, $id_conta, PDO::PARAM_INT);
+            if ($linha->tipo != 'CONTA_ESPECIAL') {
+                if ($linha->saldo >= $valor) {
+                    // Atualiza o novo saldo
+                    $stmt2 = self::getDbInstance()->prepare($sql['2']);
+                    $stmt2->bindValue(1, $linha->saldo - $valor, PDO::PARAM_INT);
+                    $stmt2->bindValue(2, $id_conta, PDO::PARAM_INT);
 
-                return $stmt2->execute();
+                    return $stmt2->execute();
+                } else {
+                    throw new EstouroSaldoException("Saldo insuficiente para transacionar este saque.");
+                }
             } else {
-                throw new EstouroSaldoException("Saldo insuficiente para transacionar este saque.");
+                if ($valor <= $linha->limite + $linha->saldo) {
+
+                    $limite = $linha->limite - $valor;
+                    $novoSaldo = (($linha->saldo - $valor) != 0) ? $linha->saldo - $valor : 0;
+
+                    if ($novoSaldo >= 1) {
+                        $stmt2 = self::getDbInstance()->prepare($sql['3']);
+                        $stmt2->bindValue(1, $novoSaldo, PDO::PARAM_INT);
+                        $stmt2->bindValue(2, $limite, PDO::PARAM_INT);
+                        $stmt2->bindValue(3, $id_conta, PDO::PARAM_INT);
+
+                        return $stmt2->execute();
+                    }
+
+                    throw new EstouroSaldoException("Saldo insuficiente para transacionar este saque.");
+
+                } else {
+                    throw new EstouroSaldoException("Saldo insuficiente para transacionar este saque.");
+                }
             }
 
         } catch (\PDOException $e) {

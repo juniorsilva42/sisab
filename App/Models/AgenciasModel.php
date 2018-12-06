@@ -44,7 +44,7 @@ class AgenciasModel extends \Core\Model implements ModelsInterface {
      * */
     static public function getAll () {
 
-        $sql = 'SELECT * FROM agencias';
+        $sql = 'SELECT * FROM agencias ORDER BY numero ASC';
 
         try {
             $stmt = self::getDbInstance()->prepare($sql);

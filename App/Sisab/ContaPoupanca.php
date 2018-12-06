@@ -2,9 +2,7 @@
 
 namespace App\Sisab;
 
-use App\Sisab\Interfaces\GenericModelInterface;
-
-final class ContaPoupanca extends Conta implements GenericModelInterface {
+final class ContaPoupanca extends Conta {
 
     private $rendimento;
 
@@ -18,8 +16,7 @@ final class ContaPoupanca extends Conta implements GenericModelInterface {
         return "Conta Poupança: <br> Numero da Conta: {$this->numero} <br> Saldo: {$this->saldo}";
     }
 
-    public function getRendimento()
-    {
+    public function getRendimento() {
         return $this->rendimento;
     }
 }

@@ -3,9 +3,8 @@
 namespace App\Sisab;
 
 use App\Sisab\Exception\EstouroSaldoException;
-use App\Sisab\Interfaces\GenericModelInterface;
 
-final class ContaEspecial extends Conta implements GenericModelInterface {
+final class ContaEspecial extends Conta {
 
     private $limite;
 
@@ -30,11 +29,7 @@ final class ContaEspecial extends Conta implements GenericModelInterface {
         return "Conta Especial: <br> Numero da Conta: {$this->numero} <br> Saldo: {$this->saldo} <br> Limite: {$this->limite}";
     }
 
-    /**
-     * @return int
-     */
-    public function getLimite()
-    {
+    public function getLimite()  {
         return $this->limite;
     }
 }
