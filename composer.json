@@ -5,8 +5,7 @@
   "type": "project",
   "require": {
     "php": "^7.1.11",
-    "twig/twig": "~2.0",
-    "nochso/html-compress-twig": "^2.0"
+    "twig/twig": "~2.0"
   },
   "autoload": {
     "psr-4": {
