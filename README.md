@@ -28,5 +28,5 @@ A ideia é, basicamente, utilizar todos os conceitos de Orientação a Objetos e
     
   4. Configurar o Banco de Dados   
   
-      4.1 Alterar os dados de login do seu Servidor de Banco de Dados local, encontrado em ``` \Config\Database.php ```     
-      4.2 Importar o arquivo SQL que está na raiz do projeto para o Servidor de Banco de Dados
+      - Alterar os dados de login do seu Servidor de Banco de Dados local, encontrado em ``` \Config\Database.php ```     
+      - Importar o arquivo SQL que está na raiz do projeto para o Servidor de Banco de Dados
